@@ -23,9 +23,12 @@ namespace Broker
 
     void Broker::set(int vt, int value)
     {
-        this->pushed_message[vt] = 0;
-        this->messages[vt] = value;
-        this->has_changes = true;
+        if (this->messages[vt] != value)
+        {
+            this->pushed_message[vt] = 0;
+            this->messages[vt] = value;
+            this->has_changes = true;
+        }
     }
 
     String Broker::get_transmission_data()
@@ -68,7 +71,8 @@ namespace Broker
         }
     }
 
-    bool Broker::get_has_changes(){
+    bool Broker::get_has_changes()
+    {
         return this->has_changes;
     }
 } // namespace Broker
