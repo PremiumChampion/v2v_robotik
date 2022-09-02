@@ -43,7 +43,7 @@ namespace Sensors
         if (avg_code != this->current_code_value)
         {
             this->current_code_value = avg_code;
-            SENSOR_MESSAGE_BROKER.set(Sensor::Pixi, avg_code);
+            Sensors::MESSAGE_BROKER.set(Sensor::Pixi, avg_code);
         }
 
         // update time after new feature request

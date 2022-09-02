@@ -15,7 +15,7 @@ namespace Sensors
     void update();
 
     // handles communicating changed sensor values
-    extern Broker::Broker SENSOR_MESSAGE_BROKER;
+    extern Broker::Broker MESSAGE_BROKER;
     // pixi cam and its necesarry methods
     extern HHN_Pixi PIXI;
 } // namespace Sensors

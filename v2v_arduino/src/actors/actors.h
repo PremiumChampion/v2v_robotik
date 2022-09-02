@@ -8,8 +8,8 @@ namespace Actors
 
     enum Actor
     {
-        motor_l_direction,
-        motor_l_speed,
+        motor_l_direction, // digital write 1/0
+        motor_l_speed, // analog write 0-255
         motor_r_direction,
         motor_r_speed,
     };
