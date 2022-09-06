@@ -1,15 +1,19 @@
 #include "sensors.h"
+#include "line/line.h"
+#include "barcode/barcodescannermodule.h"
 
 namespace Sensors
 {
     Broker::Broker MESSAGE_BROKER = Broker::Broker(SENSOR_TYPE_COUNT);
-    HHN_V_Pixi V_PIXI = HHN_V_Pixi();
-    //TODO: add line sensor
+    Sensors::HHN_V_BarcodeScannerModule BAR_CODE_SCANNER = Sensors::HHN_V_BarcodeScannerModule();
+    Sensors::HHN_V_Line LINE_SENSOR = Sensors::HHN_V_Line();
+    // TODO: add line sensor
 
-    void update()
+    void run()
     {
-        V_PIXI.update_position();
-        //TODO: update line sensor
+        BAR_CODE_SCANNER.run();
+        LINE_SENSOR.run();
+        // TODO: update line sensor
     }
 
 } // namespace Sensors

@@ -7,20 +7,19 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  
 }
 
 void loop()
 {
   // put your main code here, to run repeatedly:
-  Sensors::update();
-  Actors::update();
+  Sensors::run();
+  Actors::run();
 
   // send sensor values
   if (Sensors::MESSAGE_BROKER.get_has_changes())
   {
     String transmission_data = Sensors::MESSAGE_BROKER.get_transmission_data();
-    // Serial.println(transmission_data);
+    Serial.println(transmission_data);
 
     for (int i = 0; i < transmission_data.length(); i++)
     {

@@ -14,7 +14,6 @@ namespace Actors
     public:
         HHN_MotorSpeed(int pin, Actor actor);
         ~HHN_MotorSpeed();
-        void setup();
-        void update();
+        void run();
     };
 } // namespace Actors

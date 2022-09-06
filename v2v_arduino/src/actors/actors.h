@@ -16,5 +16,5 @@ namespace Actors
 
     extern Broker::Broker ACTOR_MESSAGE_BROKER;
 
-    void update();
+    void run();
 } // namespace Actors

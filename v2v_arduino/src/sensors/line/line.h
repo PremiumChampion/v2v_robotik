@@ -1,18 +1,19 @@
 #include <Arduino.h>
 #pragma once
 
-namespace Sensors
+namespace Line
 {
+    // Binray encoded L-C-R
     enum LineValue
     {
-        None,
-        L,
-        C,
-        R,
-        LC,
-        RC,
-        RL,
-        ALL
+        None = 0,
+        R = 1,
+        C = 2,
+        RC = 3,
+        L = 4,
+        RL = 5,
+        LC = 6,
+        ALL = 7
     };
 
     class HHN_Line
@@ -22,13 +23,12 @@ namespace Sensors
         int pinLeft;
         int pinCenter;
         int pinRight;
-        void update_reading();
+        bool onLine(int pin);
 
     public:
-        HHN_Line();
+        HHN_Line(int pinLeft, int pinCenter, int pinRight);
         ~HHN_Line();
-        void init();
-        void update();
+        void run();
     };
 
 } // namespace Sensors

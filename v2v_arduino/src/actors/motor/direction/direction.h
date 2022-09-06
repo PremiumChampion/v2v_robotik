@@ -14,7 +14,6 @@ namespace Actors
     public:
         HHN_MotorDirection(int pin, Actor actor);
         ~HHN_MotorDirection();
-        void update();
-        void setup();
+        void run();
     };
 } // namespace Actors

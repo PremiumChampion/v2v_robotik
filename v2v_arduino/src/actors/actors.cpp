@@ -5,7 +5,7 @@ namespace Actors
 {
     Broker::Broker ACTOR_MESSAGE_BROKER = Broker::Broker(ACTOR_TYPE_COUNT);
 
-    void update()
+    void run()
     {
     }
 } // namespace Actors

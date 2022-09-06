@@ -14,7 +14,7 @@ namespace Actors
     public:
         HHN_Motor(HHN_MotorSpeed *speed, HHN_MotorDirection *direction);
         ~HHN_Motor();
-        void update();
+        void run();
     };
 
     static const int MOTOR_LEFT_SPEED_PIN = 5;
