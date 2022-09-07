@@ -8,7 +8,6 @@ namespace QR
 
   BarcodeScannerModule::BarcodeScannerModule(SoftwareSerial *serialScannerConnection)
   {
-    Serial.begin(9600);
 
     this->scannerSerial = serialScannerConnection;
     this->i = 0;
@@ -16,11 +15,8 @@ namespace QR
     this->lastReadingTime = millis();
 
     this->scannerSerial->begin(9600);
-    Serial.println("Common_Setting");
     this->Common_Setting();
-    Serial.println("Set_Interface");
     this->Set_Interface();
-    Serial.println("Scan_Interval_Setting");
     this->Scan_Interval_Setting(0);
     // this->Scan_Command();
   }
@@ -103,10 +99,7 @@ namespace QR
     {
       do
       {
-        char nextChar = (char)this->scannerSerial->read();
-        // Serial.println(nextChar);
-        this->buffer += nextChar;
-        // Serial.println(Scan_Result);
+        this->buffer += (char)this->scannerSerial->read();
       } while (this->scannerSerial->available());
 
       lastReadingTime = millis();

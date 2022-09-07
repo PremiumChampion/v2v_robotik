@@ -9,13 +9,16 @@ namespace Broker
      * used for exchanging sensor and actor values between esp32 and arduino
      * if a value is changed with set the new value will be transmitted as soon as posibile
      */
+    template <class T>
     class Broker
     {
     private:
-        int* messages;
+        T* messages;
         bool* pushed_message;
         bool has_changes;
         int message_count;
+        T parse(String input);
+        String serialise(T input);
     public:
         Broker(int message_count);
         ~Broker();
@@ -25,8 +28,8 @@ namespace Broker
          * @param type the type to update
          * @param value the new value
          */
-        void set(int type, int value);
-        int get(int type);
+        void set(int type, T value);
+        T get(int type);
         bool get_has_changes();
         String get_transmission_data();
         void rcv_transmission_data(String data);

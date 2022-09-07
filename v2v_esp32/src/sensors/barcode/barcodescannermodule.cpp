@@ -1,5 +1,5 @@
-#include "barcodescannermodule.h";
-#include "sensors/sensors.h";
+#include "barcodescannermodule.h"
+#include "sensors/sensors.h"
 
 namespace Sensors
 {
