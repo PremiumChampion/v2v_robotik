@@ -15,6 +15,9 @@ namespace Vehicle
         double speed;
     };
 
+    /**
+     * 
+     */
     void calculate_speed(Motor::MotorDirection *motor_direction, double *speed, int new_direction, double new_speed, int phase_delta)
     {
         new_direction += phase_delta;
