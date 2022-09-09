@@ -21,10 +21,10 @@ namespace Vehicle
     {
         return this->currentDirection;
     }
-    void Vehicle::set(float speed, int direction)
+    void Vehicle::set(float speed, int degree)
     {
         this->currentSpeed = speed;
-        this->currentDirection = direction;
+        this->currentDirection = degree;
         calculateMotorValue(this->motorL, 0);
         calculateMotorValue(this->motorR, 90);
     }
