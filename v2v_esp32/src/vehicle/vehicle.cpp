@@ -28,7 +28,7 @@ namespace Vehicle
         calculateMotorValue(this->motorL, 0);
         calculateMotorValue(this->motorR, 90);
     }
-    
+
     // phaseDelta: degrees by which the cos function needs to be moved to archieve the correct encoding for the motor
     // motorL: 0
     // motorR: 90
@@ -55,14 +55,21 @@ namespace Vehicle
             graphedSpeed = -newSpeed;
         }
 
-        if (newDirection >= 90 && newDirection < 180 || newDirection >= 270 && newDirection < 360)
+        // see Rotation_Encoding.pdf
+        // maps newDirection (0°+360°) and newSpeed to a speed -255 to 255 of a motor indicating the speed and direction of the motor
+        if (newDirection >= 90 && newDirection < 180)
         {
-            // see Rotation_Encoding.pdf
-            // maps newDirection (0°+360°) and newSpeed to a speed -255 to 255 of a motor indicating the speed and direction of the motor
-            graphedSpeed = newSpeed * cos(PI / 90 * (newDirection - 90));
+            graphedSpeed = -newSpeed * cos(PI / 90 * (newDirection * DEG_TO_RAD));
         }
-        outSpeed = abs(graphedSpeed);
+        if (newDirection >= 270 && newDirection < 360)
+        {
+            graphedSpeed = newSpeed * cos(PI / 90 * (newDirection * DEG_TO_RAD));
+        }
 
+        // rad = deg x PI / 180
+        // deg = rad x 180 / PI
+
+        outSpeed = abs(graphedSpeed);
 #pragma endregion
 
 #pragma region rotation direction
