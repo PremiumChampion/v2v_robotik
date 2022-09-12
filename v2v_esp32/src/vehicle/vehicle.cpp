@@ -8,7 +8,8 @@ namespace Vehicle
     {
         this->motorL = motorL;
         this->motorR = motorR;
-        this->set(0, STOP);
+        this->currentSpeed = 0;
+        this->currentDirection = 90;
     }
     Vehicle::~Vehicle()
     {
@@ -76,20 +77,20 @@ namespace Vehicle
 
         // motor should move forwards
         if (graphedSpeed > 0)
-            outDirection = Actors::FORWARD;
+            outDirection = Actors::MotorDirection::FORWARD;
 
         // Motor should move backwards
         if (graphedSpeed < 0)
-            outDirection = Actors::BACKWARD;
+            outDirection = Actors::MotorDirection::BACKWARD;
 
         // Motor should stop --> independent on what we set the motor will stop;
         if (graphedSpeed == 0)
-            outDirection = Actors::FORWARD;
+            outDirection = Actors::MotorDirection::FORWARD;
 #pragma endregion
         // output value
         motor->set(outSpeed, outDirection);
     }
 
-    Vehicle ROVER(&Actors::motorL, &Actors::motorR);
+    Vehicle ROVER = Vehicle(&Actors::motorL, &Actors::motorR);
 
 } // namespace Vehicle

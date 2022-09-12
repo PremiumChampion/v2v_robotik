@@ -1,5 +1,5 @@
 #include "virtualactor.h"
-#include "actors/actors.h"
+#include "actors.h"
 #include <Arduino.h>
 
 namespace Actors

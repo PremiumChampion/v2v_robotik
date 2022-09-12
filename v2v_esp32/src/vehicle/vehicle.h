@@ -1,5 +1,7 @@
 #include "actors/motor/motor.h"
 
+#pragma once
+
 namespace Vehicle
 {
     enum MotorDirection
