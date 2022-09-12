@@ -6,7 +6,7 @@
 
 ## Level A (Arduino-IO)
 
-* [~] Barcode-Sensor
+* [ ] Barcode-Sensor
 
     * [ ] Configuration
     * [ ] Hardware-Positioning
@@ -18,7 +18,7 @@
 
 ## Level B
 
-* [~] [Broker](https://en.wikipedia.org/wiki/Broker_pattern)-Abstraction
+* [ ] [Broker](https://en.wikipedia.org/wiki/Broker_pattern)-Abstraction
 
     * [ ] Full-Sync Capabilities
 
@@ -27,7 +27,7 @@
     * [ ] Create Access-Point
     * [ ] Connect to Access-Point
 
-* [~] Serial Communication Arduino <-> ESP
+* [ ] Serial Communication Arduino <-> ESP
 
     * [x] ESP
     * [ ] Arduino
