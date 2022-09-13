@@ -9,14 +9,25 @@ void setup()
   Serial.begin(9600);
 }
 
+String rcv = "";
+unsigned long last_rcv_time = millis();
+
 void loop()
 {
-  for (int i = 0; i < 100; i++)
+  if (Serial.available())
   {
-    Serial.println("test");
+    while (Serial.available())
+    {
+      rcv += (char)Serial.read();
+    }
+    last_rcv_time = millis();
   }
-  Serial.println();
-  delay(1000);
+
+  if (last_rcv_time + 250 < millis())
+  {
+    Serial.print(rcv);
+    rcv = "";
+  }
 
   // put your main code here, to run repeatedly:
   // Sensors::run();

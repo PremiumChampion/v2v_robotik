@@ -2,6 +2,11 @@
 #include <SoftwareSerial.h>
 #include <HardwareSerial.h>
 
+#define SOFTWARE_SERIAL 0x0
+#define HARDWARE_SERIAL 0x1
+
+#define SERIAL_INTERFACE SOFTWARE_SERIAL
+
 namespace SerialCommunication
 {
     enum SerialMode
@@ -11,16 +16,14 @@ namespace SerialCommunication
         RECIEVING,
     };
 
-    enum SerialImplementation
-    {
-        Software,
-        Hardware
-    };
-
     class Arduino2esp
     {
     private:
-        Stream *serial;
+#if SERIAL_INTERFACE == SOFTWARE_SERIAL
+        SoftwareSerial *serial;
+#elif SERIAL_INTERFACE == HARDWARE_SERIAL
+        HardwareSerial *serial;
+#endif
 
         // buffers serial input until a whole fragment is ready
         String rcvBuffer;
@@ -31,14 +34,17 @@ namespace SerialCommunication
 
         // SoftwareSerial can not recieve and send data at the same time
         SerialMode mode;
-        SerialImplementation implementation;
         // method for sending serial data
         void snd_data();
         // method for recieving serial data
         void rcv_data();
 
     public:
-        Arduino2esp(Stream *serialConnection, SerialImplementation implementation);
+#if SERIAL_INTERFACE == SOFTWARE_SERIAL
+        Arduino2esp(SoftwareSerial *serialConnection);
+#elif SERIAL_INTERFACE == HARDWARE_SERIAL
+        Arduino2esp(HardwareSerial *serialConnection);
+#endif
         ~Arduino2esp();
         void init();
         void run();

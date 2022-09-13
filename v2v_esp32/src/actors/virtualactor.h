@@ -1,4 +1,7 @@
-#include "actors/actors.h";
+#include "actors/actors.h"
+
+#pragma once
+
 namespace Actors
 {
     class HHN_V_Actor

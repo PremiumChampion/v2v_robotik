@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "broker.h"
 
 namespace Broker
@@ -8,7 +9,7 @@ namespace Broker
     {
         this->message_count = message_count;
 
-        this->messages = new T[message_count]{-1};
+        this->messages = new T[message_count];
         this->pushed_message = new bool[message_count]{true};
         this->has_changes = false;
     }
@@ -21,16 +22,16 @@ namespace Broker
     template <class T>
     T Broker<T>::get(int type)
     {
-        return this->messages[vt];
+        return this->messages[type];
     }
 
     template <class T>
     void Broker<T>::set(int type, T value)
     {
-        if (this->messages[vt] != value)
+        if (this->messages[type] != value)
         {
-            this->pushed_message[vt] = 0;
-            this->messages[vt] = value;
+            this->pushed_message[type] = 0;
+            this->messages[type] = value;
             this->has_changes = true;
         }
     }
@@ -38,12 +39,12 @@ namespace Broker
     String Broker<T>::get_transmission_data()
     {
         String out_data = String("");
-        for (int vt = 0; vt < this->message_count; vt++)
+        for (int message = 0; message < this->message_count; message++)
         {
-            if (this->pushed_message[vt] == 0)
+            if (this->pushed_message[message] == 0)
             {
-                out_data += String(vt) + String(VALUE_DELIMITER) + this->serialise(this->messages[vt]) + String(ENTRY_DELIMITER);
-                this->pushed_message[vt] = 1;
+                out_data += String(message) + String(VALUE_DELIMITER) + this->serialise(this->messages[message]) + String(ENTRY_DELIMITER);
+                this->pushed_message[message] = 1;
             }
         }
         this->has_changes = false;
@@ -70,9 +71,7 @@ namespace Broker
             unsigned int value_end_index = message.indexOf(ENTRY_DELIMITER) - 1;
 
             String type = message.substring(type_start_index, type_end_index);
-            String value = this->parse(message.substring(value_start_index, value_end_index));
-
-            this->messages[type.toInt()] = value.toInt();
+            this->messages[type.toInt()] = this->parse(message.substring(value_start_index, value_end_index));
         }
     }
 

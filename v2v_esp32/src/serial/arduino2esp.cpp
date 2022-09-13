@@ -10,11 +10,10 @@ namespace SerialCommunication
     // method for sending serial data
     void Arduino2esp::snd_data()
     {
-        unsigned long startTime = millis();
-        while (startTime + 10 < millis() && this->sndBuffer.length() > 0)
+        if (this->sndBuffer.length() > 0)
         {
-            this->serial->write(this->sndBuffer.charAt(0));
-            this->sndBuffer = sndBuffer.substring(1);
+            this->serial->print(this->sndBuffer);
+            this->sndBuffer = "";
         }
     }
 
@@ -23,18 +22,22 @@ namespace SerialCommunication
     {
         while (this->serial->available())
         {
-            this->rcvBuffer += (char)this->serial->read();
+            char c = this->serial->read();
+            this->rcvBuffer += c;
         }
         this->lastRecieveTime = millis();
     }
 
 #pragma endregion
 #pragma region public
-    Arduino2esp::Arduino2esp(Stream *serialConnection, SerialImplementation implementation)
+#if SERIAL_INTERFACE == SOFTWARE_SERIAL
+    Arduino2esp::Arduino2esp(SoftwareSerial *serialConnection)
+#elif SERIAL_INTERFACE == HARDWARE_SERIAL
+    Arduino2esp::Arduino2esp(HardwareSerial *serialConnection)
+#endif
     {
         // SoftwareSerial connection(this->RX_PIN, this->TX_PIN);
         this->serial = serialConnection;
-        this->implementation = implementation;
         // only do this on software serial
 
         this->rcvBuffer = "";
@@ -49,13 +52,9 @@ namespace SerialCommunication
 
     void Arduino2esp::init()
     {
-        if (this->implementation == Software)
-            ((SoftwareSerial *)this->serial)->begin(9600);
-
-        if (this->implementation == Hardware)
-            ((HardwareSerial *)this->serial)->begin(9600);
+        this->serial->begin(9600);
     }
-    
+
     void Arduino2esp::run()
     {
         switch (this->mode)
@@ -108,7 +107,7 @@ namespace SerialCommunication
     // send serial data
     void Arduino2esp::send(String data)
     {
-        this->rcvBuffer += data + '\n';
+        this->sndBuffer += data + '\n';
     }
 
     bool Arduino2esp::hasData()
@@ -118,7 +117,7 @@ namespace SerialCommunication
 
     SoftwareSerial ArduinoSerial(GPIO_NUM_33, GPIO_NUM_4);
 
-    Arduino2esp ArduinoConnection = Arduino2esp(&ArduinoSerial, Software);
+    Arduino2esp ArduinoConnection = Arduino2esp(&ArduinoSerial);
 
 #pragma endregion
 } // namespace SerialCommunication
