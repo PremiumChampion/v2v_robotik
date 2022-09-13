@@ -34,7 +34,6 @@ namespace Broker
             this->has_changes = true;
         }
     }
-
     template <class T>
     String Broker<T>::get_transmission_data()
     {
@@ -118,4 +117,8 @@ namespace Broker
     {
         return input;
     }
+
+    template class Broker<int>;
+    template class Broker<float>;
+    template class Broker<String>;
 } // namespace Broker
