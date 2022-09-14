@@ -35,7 +35,6 @@ namespace Broker
             this->has_changes = true;
         }
     }
-
     template <class T>
     String Broker<T>::get_transmission_data()
     {

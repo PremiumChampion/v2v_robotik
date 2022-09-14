@@ -31,7 +31,9 @@ namespace Broker
         void set(int type, T value);
         T get(int type);
         bool get_has_changes();
+        //Method, that generates a string to send data to another broker
         String get_transmission_data();
+        //Receive incoming string and updates the message broker
         void rcv_transmission_data(String data);
     };
 
