@@ -14,7 +14,7 @@ namespace Actors
 
     void HHN_MotorSpeed::run()
     {
-        this->currentValue = Actors::ACTOR_MESSAGE_BROKER.get(this->actor);
+        this->currentValue = Actors::MESSAGE_BROKER.get(this->actor);
         analogWrite(this->pin, this->currentValue);
     }
 } // namespace Actors

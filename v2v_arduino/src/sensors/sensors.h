@@ -17,7 +17,7 @@ namespace Sensors
     void run();
 
     // handles communicating changed sensor values
-    extern Broker::Broker MESSAGE_BROKER;
+    extern Broker::Broker<int> MESSAGE_BROKER;
     // pixi cam and its necesarry methods
     extern QR::BarcodeScannerModule QR_CODE_SCANNER;
     extern Line::HHN_Line LINE_SENSOR;

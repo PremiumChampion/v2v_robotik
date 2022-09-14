@@ -17,7 +17,7 @@ namespace Actors
 
     void HHN_MotorDirection::run()
     {
-        this->currentValue = Actors::ACTOR_MESSAGE_BROKER.get(this->actor);
+        this->currentValue = Actors::MESSAGE_BROKER.get(this->actor);
         digitalWrite(this->pin, this->currentValue);
     }
 } // namespace Actors

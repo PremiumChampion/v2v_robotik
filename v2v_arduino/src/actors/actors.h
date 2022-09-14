@@ -14,7 +14,7 @@ namespace Actors
         motor_r_speed,
     };
 
-    extern Broker::Broker ACTOR_MESSAGE_BROKER;
+    extern Broker::Broker<int> MESSAGE_BROKER;
 
     void run();
 } // namespace Actors
