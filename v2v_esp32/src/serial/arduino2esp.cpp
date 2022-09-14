@@ -46,10 +46,6 @@ namespace SerialCommunication
         this->mode = IDLE;
     }
 
-    Arduino2esp::~Arduino2esp()
-    {
-    }
-
     void Arduino2esp::init()
     {
         this->serial->begin(9600);
