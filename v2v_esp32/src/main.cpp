@@ -1,37 +1,29 @@
 #include <Arduino.h>
 // #include "communication/wlan/wlan.h"
 #include "serial/arduino2esp.h"
+#include "serial/arduino_io_transferhandler.h"
 #include "vehicle/vehicle.h"
 #include "actors/actors.h"
 #include "sensors/sensors.h"
 
 void setup()
 {
-  Serial.begin(115200); // for debugging
+  // for debugging
+  Serial.begin(115200);
 
   // put your setup code here, to run once:
   // WLAN::setup();
-  SerialCommunication::ArduinoConnection.init();
+
+  // setup serial connection between arduino and esp.
+  SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
 }
-// for echo demo
-// unsigned long lastSentTime = 0;
 
 void loop()
 {
-#pragma region echo demo
-  // SerialCommunication::ArduinoConnection.run();
+  // sync sensor and actor data between arduino and esp.
+  SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
 
-  // if (SerialCommunication::ArduinoConnection.hasData())
-  // {
-  //   Serial.println(SerialCommunication::ArduinoConnection.recieve());
-  // }
 
-  // if (lastSentTime + 1000 < millis())
-  // {
-  //   SerialCommunication::ArduinoConnection.send("Hello World");
-  //   lastSentTime = millis();
-  // }
-#pragma endregion
   // put your main code here, to run repeatedly:
   // Server.run();
 
