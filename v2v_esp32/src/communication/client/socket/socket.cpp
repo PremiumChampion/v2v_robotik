@@ -14,11 +14,20 @@ namespace HHN_Client
 
     void Socket::send(String data)
     {
+        this->client.println(data);
     }
+
     String Socket::rcv()
     {
-        return "";
+        String data = "";
+        while (this->client.available())
+        {
+            char c = this->client.read();
+            data += c;
+        }
+        return data;
     }
+
     void Socket::run()
     {
     }

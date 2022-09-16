@@ -9,10 +9,10 @@
 void setup()
 {
   // for debugging
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   // put your setup code here, to run once:
-  // WLAN::setup();
+  WLAN::WLAN.setup();
 
   // setup serial connection between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
