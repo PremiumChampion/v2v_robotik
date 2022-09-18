@@ -2,10 +2,18 @@
 #include <WiFi.h>
 #include "socket.h"
 
-HHN_Client::Socket chaserClient;
-HHN_Client::Socket chased_oneClient;
 namespace HHN_Client
 {
+
+    Socket::Socket()
+    {
+        // TODO: set static client
+    }
+
+    void Socket::setClient(WiFiClient client)
+    {
+        this->client = client;
+    }
 
     Socket::Socket(WiFiClient client)
     {

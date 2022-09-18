@@ -3,6 +3,12 @@
 
 //Change to 1 or 0, depending on which esp is being flashed (chaser or chased one)
 #define IS_SERVER
+
+#define CHASER 0
+#define CHASED 1
+
+#define ROLE CHASED
+
 char ssid[] = "ESP32";
 char password[] = "12345678";
 
@@ -25,7 +31,7 @@ namespace WLAN
 
         // entweder AccessPoint oder Connection
 
-        #ifdef IS_SERVER
+        #if ROLE == CHASED
             WiFi.softAP(ssid, password); // Create accesspoint
         #else 
             WiFi.begin(ssid, password); // Connect to the accesspoint on chased-one

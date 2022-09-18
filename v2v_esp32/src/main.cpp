@@ -12,8 +12,6 @@
 
 
 WLAN::HHN_Server server;
-HHN_Client::Socket chaserClient;
-HHN_Client::Socket chased_oneClient;
 void setup()
 {
   // for debugging
@@ -27,11 +25,9 @@ void setup()
 
   // Initialize client on chaser site
   chaserClient = HHN_Client::createConnection();
-
 #else
   // Initialize chased-one client
   chased_oneClient = server.run();
-
 #endif
 
   // setup serial connection between arduino and esp.
