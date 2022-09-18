@@ -1,3 +1,4 @@
+#define IS_SERVER
 namespace WLAN
 {
     void setup();
@@ -5,9 +6,5 @@ namespace WLAN
     extern char ssid[];
     extern char password[];
     
-    // String pass = lsdkjhfslk;
-    // String name = lsdkfhslfjd;
-    // entweder AccessPoint oder Connection
-    // new AccessPoint(pass, name);
-    // new Connection(pass, name);
+
 } // namespace WLAN

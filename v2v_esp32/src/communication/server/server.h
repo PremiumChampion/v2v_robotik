@@ -1,15 +1,15 @@
 #include <WiFi.h>
-
 namespace WLAN
 {
     class HHN_Server
     {
     private:
         WiFiServer server;
-        HHN_Server(/* args */);
 
     public:
-        void run();
+        HHN_Client::Socket run();
+    
+    HHN_Server();
     };
 
     extern HHN_Server server;

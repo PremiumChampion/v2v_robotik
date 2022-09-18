@@ -2,6 +2,8 @@
 #include <WiFi.h>
 #include "socket.h"
 
+HHN_Client::Socket chaserClient;
+HHN_Client::Socket chased_oneClient;
 namespace HHN_Client
 {
 
@@ -31,9 +33,9 @@ namespace HHN_Client
     void Socket::run()
     {
     }
-    Socket Socket::getSocket()
-    {
-        return NULL;
-    }
+    // Socket Socket::getSocket()
+    // {
+    //     return NULL;
+    // }
 
 } // namespace Client

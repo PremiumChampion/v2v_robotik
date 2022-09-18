@@ -12,13 +12,13 @@ namespace WLAN
         Serial.println("Server started!");
     }
 
-    void HHN_Server::run()
+    HHN_Client::Socket :run()
     {
         WiFiClient client = this->server.available(); // Check if a new client connected
 
         if (client)
-        {
-            new HHN_Client::Socket(client);
+        {   Serial.println("New client successfully connected!");
+            return HHN_Client::Socket(client);
         }
     }
 

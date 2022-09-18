@@ -2,8 +2,7 @@
 #include <WiFi.h>
 
 //Change to 1 or 0, depending on which esp is being flashed (chaser or chased one)
-#define IS_ACCESSPOINT 0
-
+#define IS_SERVER
 char ssid[] = "ESP32";
 char password[] = "12345678";
 
@@ -26,9 +25,9 @@ namespace WLAN
 
         // entweder AccessPoint oder Connection
 
-        if (IS_ACCESSPOINT) {
+        #ifdef IS_SERVER
             WiFi.softAP(ssid, password); // Create accesspoint
-        } else {
+        #else 
             WiFi.begin(ssid, password); // Connect to the accesspoint on chased-one
             Serial.println("Connecting to WiFi:");
             while (WiFi.status() != WL_CONNECTED) // Is the WiFi connection successful
@@ -38,6 +37,7 @@ namespace WLAN
             }
             Serial.println("\nWiFi connected!");
             WiFi.setAutoReconnect(true);
-        }
+        
+        #endif
     }
 } // namespace WLAN

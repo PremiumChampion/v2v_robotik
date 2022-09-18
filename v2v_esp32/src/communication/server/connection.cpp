@@ -8,13 +8,13 @@
 WiFiClient client;
 IPAddress server_ip(192, 168, 4, 1);
 int port = 80;
-
+ 
 namespace HHN_Client
 {
-    void createConnection() {
+        Socket createConnection() {
         client.connect(server_ip, port);
         Serial.println("Connected to server");
         
-        new HHN_Client::Socket(client);
+        return Socket(client);
     }
 } // namespace Client
