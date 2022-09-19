@@ -6,12 +6,12 @@ char password[] = "12345678";
 
 namespace WLAN
 {
-    void setup_AP()
+    void setupAP()
     {
         WiFi.softAP(ssid, password); // Create accesspoint
     }
 
-    void setup_Client()
+    void setupClient()
     {
         WiFi.begin(ssid, password); // Connect to the accesspoint
         Serial.println("Connecting to WiFi:");

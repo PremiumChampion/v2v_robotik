@@ -1,5 +1,9 @@
 #include <Arduino.h>
+
+#include "client/socket/socket.h"
+#include "server/connection.h"
 #include "server/server.h"
+#include "wlan/wlan.h"
 
 // Communicaton setup file
 
@@ -8,14 +12,16 @@
 
 #define ROLE CHASED
 
-void setup()
+HHN_Client::Socket chaserClient;
+
+void setupCommunication() // use setup instead setupCommunictaion. Need of a new Namspace because of collision mit setup in the main file.
 {
 
 #if ROLE == CHASED                                 // Chased-one
-    WLAN::setup_Client();                          // Setup connection to the accesspoint
+    WLAN::setupClient();                           // Setup connection to the accesspoint
     chaserClient = HHN_Client::createConnection(); // Initialize client on chaser site
 #else                                              // Chaser
-    WLAN::setup_AP();                      // Create an accesspoint
+    WLAN::setupAP();                       // Create an accesspoint
     WLAN::HHN_Server();                    // Create server instance. TODO: Check correct implementaion.
     server = WLAN::HHN_Server();           // Initialize server instance
 #endif

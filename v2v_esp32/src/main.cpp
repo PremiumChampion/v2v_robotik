@@ -22,8 +22,8 @@ void setup()
 
 void loop()
 {
-  chaserClient.send("Hello server, I'm cooler than you!");
-  Serial.println(chased_oneClient.rcv());
+  // chaserClient.send("Hello server, I'm cooler than you!");
+  // Serial.println(chased_oneClient.rcv());
 
   // sync sensor and actor data between arduino and esp.
   // SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();

@@ -1,7 +1,7 @@
-#define IS_SERVER
 namespace WLAN
 {
-    void setup();
+    void setupAP();
+    void setupClient();
     
     extern char ssid[];
     extern char password[];
