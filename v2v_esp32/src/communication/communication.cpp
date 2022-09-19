@@ -11,17 +11,20 @@
 void setup()
 {
 
-#if ROLE == CHASED        // Chased-one
-    WLAN::setup_Client(); // Setup connection to the accesspoint
-#else                     // Chaser
-    WLAN::setup_AP(); // Create an accesspoint
+#if ROLE == CHASED                                 // Chased-one
+    WLAN::setup_Client();                          // Setup connection to the accesspoint
+    chaserClient = HHN_Client::createConnection(); // Initialize client on chaser site
+#else                                              // Chaser
+    WLAN::setup_AP();                      // Create an accesspoint
+    WLAN::HHN_Server();                    // Create server instance. TODO: Check correct implementaion.
+    server = WLAN::HHN_Server();           // Initialize server instance
 #endif
-
-    // create server
-    // connect to server
 }
 
 void run()
 {
-    WLAN::server.run();
+#if ROLE == CHASED
+#else
+    chased_oneClient = WLAN::server.run(); // Check for new clients. Initialize chased-one client.
+#endif
 }

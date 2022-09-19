@@ -9,25 +9,13 @@
 #include "communication/server/connection.h"
 #include "communication/wlan/wlan.h"
 
-
-
 WLAN::HHN_Server server;
 void setup()
 {
   // for debugging
   Serial.begin(9600);
 
-#ifdef IS_SERVER
-  // Initialize server instance
-  server = WLAN::HHN_Server();
-
-  // Initialize client on chaser site
-  chaserClient = HHN_Client::createConnection();
-#else
-  // Initialize chased-one client
-  chased_oneClient = server.run();
-#endif
-
+  // setup communication between both esps.
   // setup serial connection between arduino and esp.
   // SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
 }
