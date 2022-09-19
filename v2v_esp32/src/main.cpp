@@ -17,8 +17,6 @@ void setup()
   // for debugging
   Serial.begin(9600);
 
-  // Set up WiFi connection for either chaser or chased one
-  WLAN::setup();
 #ifdef IS_SERVER
   // Initialize server instance
   server = WLAN::HHN_Server();

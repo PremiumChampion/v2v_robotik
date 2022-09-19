@@ -1,11 +1,18 @@
 #include <Arduino.h>
 #include "server/server.h"
-void setup(){
+
+// Communicaton setup file
+
+void setup()
+{
+    WLAN::setup();
+
     // setup wifi
     // create server
-    // conneczt to server
+    // connect to server
 }
 
-void run(){
+void run()
+{
     WLAN::server.run();
 }

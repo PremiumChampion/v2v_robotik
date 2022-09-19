@@ -13,13 +13,13 @@ namespace HHN_Client
 {
     Socket createConnection()
     {
-        client.connect(server_ip, port);
-        while (!client.connected())
+        while (!client.connected()) // Try to reconnect if connection isn't possible.
         {
+            client.connect(server_ip, port);
         }
         Serial.println("Connected to server");
-        HHN_Client::Socket smthing = Socket(client);
+        HHN_Client::Socket socket = Socket(client);
 
-        return smthing;
+        return socket;
     }
 } // namespace Client
