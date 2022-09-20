@@ -26,7 +26,8 @@ void setup()
 
 void loop()
 {
-  // chaserClient.send("Hello server, I'm cooler than you!");
+  String received = externalClient.rcv();
+  Serial.println(received);
   // Serial.println(chased_oneClient.rcv());
 
   // sync sensor and actor data between arduino and esp.

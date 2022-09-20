@@ -18,7 +18,7 @@ namespace COM
     WLAN::HHN_Server server;
 #endif
 
-    void setup(HHN_Client::Socket client) // use setup instead setupCommunictaion. Need of a new Namspace because of collision mit setup in the main file.
+    void setup(HHN_Client::Socket& client) // use setup instead setupCommunictaion. Need of a new Namspace because of collision mit setup in the main file.
     {
 
 #if ROLE == CHASED                   // Chased-one
