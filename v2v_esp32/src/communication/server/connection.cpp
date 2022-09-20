@@ -16,10 +16,10 @@ namespace HHN_Client
         while (!client.connected()) // Try to reconnect if connection isn't possible.
         {
             client.connect(server_ip, port);
+            delay(200); // Give the connection establishment time to connect to the server.
         }
         Serial.println("Connected to server");
-        HHN_Client::Socket socket = Socket(client);
 
-        return socket;
+        return Socket(client);
     }
 } // namespace Client

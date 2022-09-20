@@ -12,15 +12,19 @@ namespace WLAN
         Serial.println("Server started!");
     }
 
-    void HHN_Server::run()
+    HHN_Client::Socket HHN_Server::run()
     {
-        WiFiClient client = this->server.available(); // Check if a new client connected
-
-        if (client)
+        do
         {
-            Serial.println("New client successfully connected!");
-            HHN_Client::externalClient.setClient(client);
-        }
+            WiFiClient client = this->server.available(); // Check if a new client connected
+            // Check, if a client is connected to the server
+            if (client)
+            {
+                Serial.println("New client successfully connected!");
+                return HHN_Client::Socket(client);
+                // HHN_Client::externalClient.setClient(client);
+            }
+        } while (1);
     }
 
 } // namespace WLAN

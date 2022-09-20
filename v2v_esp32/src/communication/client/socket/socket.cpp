@@ -20,6 +20,7 @@ namespace HHN_Client
         this->client = client;
         // TODO: set static client
     }
+
     Socket::~Socket() {}
 
     void Socket::send(String data)

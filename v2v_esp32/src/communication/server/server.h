@@ -9,7 +9,7 @@ namespace WLAN
 
     public:
         HHN_Server();
-        void run();
+        HHN_Client::Socket run();
     };
 
     extern HHN_Server server;
