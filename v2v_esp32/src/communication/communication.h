@@ -2,5 +2,5 @@
 
 namespace COM
 {
-    void setup(HHN_Client::Socket client);
+    HHN_Client::Socket* setup();
 }

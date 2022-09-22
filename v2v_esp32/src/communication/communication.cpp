@@ -15,19 +15,18 @@
 namespace COM
 {
 #if ROLE == CHASED
-    WLAN::HHN_Server server;
+    WLAN::setupAP();             // Create an accesspoint
+    WLAN::HHN_Server* server = new WLAN::HHN_Server(); // Initialize server instance
 #endif
 
-    void setup(HHN_Client::Socket& client) // use setup instead setupCommunictaion. Need of a new Namspace because of collision mit setup in the main file.
+    HHN_Client::Socket* setup() // use setup instead setupCommunictaion. Need of a new Namspace because of collision mit setup in the main file.
     {
 
 #if ROLE == CHASED                   // Chased-one
-        WLAN::setupAP();             // Create an accesspoint
-        server = WLAN::HHN_Server(); // Initialize server instance
-        client = server.run();       // Check for new clients. Initialize chased-one client.
+        return (*server).run();       // Check for new clients. Initialize chased-one client.
 #else                                // Chaser
         WLAN::setupClient();                     // Setup connection to the accesspoint
-        client = HHN_Client::createConnection(); // Initialize client on chaser site
+        return HHN_Client::createConnection(); // Initialize client on chaser site
 #endif
     }
 } // namespace COM

@@ -12,7 +12,7 @@ namespace WLAN
         Serial.println("Server started!");
     }
 
-    HHN_Client::Socket HHN_Server::run()
+    HHN_Client::Socket* HHN_Server::run()
     {
         do
         {
@@ -21,8 +21,8 @@ namespace WLAN
             if (client)
             {
                 Serial.println("New client successfully connected!");
-                return HHN_Client::Socket(client);
-                // HHN_Client::externalClient.setClient(client);
+                
+                return new HHN_Client::Socket(client);
             }
         } while (1);
     }

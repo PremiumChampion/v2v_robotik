@@ -11,7 +11,7 @@ int port = 80;
 
 namespace HHN_Client
 {
-    Socket createConnection()
+    Socket* createConnection()
     {
         while (!client.connected()) // Try to reconnect if connection isn't possible.
         {
@@ -20,6 +20,6 @@ namespace HHN_Client
         }
         Serial.println("Connected to server");
 
-        return Socket(client);
+        return new Socket(client);
     }
 } // namespace Client

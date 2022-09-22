@@ -10,14 +10,14 @@
 #include "communication/server/connection.h"
 #include "communication/wlan/wlan.h"
 
-WLAN::HHN_Server server;
-HHN_Client::Socket externalClient;
+HHN_Client::Socket* externalClient;
+// HHN_Client::Socket& refExternalClient =(*externalClient);    //How to safe reference of above pointer to be used for method calls?
 
 void setup()
 {
   // for debugging
   Serial.begin(9600);
-  COM::setup(externalClient);
+  externalClient=COM::setup();
 
   // setup communication between both esps.
   // setup serial connection between arduino and esp.
@@ -26,7 +26,9 @@ void setup()
 
 void loop()
 {
-  String received = externalClient.rcv();
+  // (*externalClient).send("Hello Server");
+  
+  String received = (*externalClient).rcv();
   Serial.println(received);
   // Serial.println(chased_oneClient.rcv());
 
