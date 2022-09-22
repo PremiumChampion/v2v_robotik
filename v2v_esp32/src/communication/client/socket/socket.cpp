@@ -15,11 +15,11 @@ namespace HHN_Client
         this->client = client;
     }
 
-    Socket::Socket(WiFiClient client)
-    {
-        this->client = client;
-        // TODO: set static client
-    }
+    // Socket::Socket(WiFiClient client)
+    // {
+    //     this->client = client;
+    //     // TODO: set static client
+    // }
 
     Socket::~Socket() {}
 
@@ -37,6 +37,16 @@ namespace HHN_Client
             data += c;
         }
         return data;
+    }
+
+    void Socket::connectToIpAndPort(IPAddress ip, int port)
+    {
+        while (!this->client.connected()) // Try to reconnect if connection isn't possible.
+        {
+            this->client.connect(ip, port);
+            delay(200); // Give the connection establishment time to connect to the server.
+        }
+        Serial.println("Connected to server");
     }
 
     void Socket::run()

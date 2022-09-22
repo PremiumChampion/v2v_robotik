@@ -2,5 +2,6 @@
 
 namespace COM
 {
+    extern HHN_Client::Socket externalClient;
     HHN_Client::Socket* setup();
 }

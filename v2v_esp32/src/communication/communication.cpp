@@ -10,19 +10,18 @@
 #define CHASER 0
 #define CHASED 1
 
-#define ROLE CHASED
+#define ROLE CHASER
 
 namespace COM
 {
-#if ROLE == CHASED
-    WLAN::setupAP();             // Create an accesspoint
-    WLAN::HHN_Server* server = new WLAN::HHN_Server(); // Initialize server instance
-#endif
+    HHN_Client::Socket externalClient = HHN_Client::Socket();
 
     HHN_Client::Socket* setup() // use setup instead setupCommunictaion. Need of a new Namspace because of collision mit setup in the main file.
     {
 
 #if ROLE == CHASED                   // Chased-one
+        WLAN::setupAP();             // Create an accesspoint
+        WLAN::HHN_Server* server = new WLAN::HHN_Server(); // Initialize server instance
         return (*server).run();       // Check for new clients. Initialize chased-one client.
 #else                                // Chaser
         WLAN::setupClient();                     // Setup connection to the accesspoint
