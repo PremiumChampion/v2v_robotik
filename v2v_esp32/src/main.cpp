@@ -18,7 +18,7 @@ void setup()
   // for debugging
   Serial.begin(9600);
   delay(2000);
-  Serial.println("main setup");
+  Serial.println("Function: main setup");
   COM::setup();
 
   // setup communication between both esps.
@@ -28,7 +28,8 @@ void setup()
 
 void loop()
 {
-  Serial.println("main loop");
+  delay(1000);
+  Serial.println("Function: main loop");
   externalClient.send("Hello Server");
   // Serial.println("Hello Server");
   

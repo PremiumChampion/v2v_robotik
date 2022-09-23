@@ -10,7 +10,7 @@
 #define CHASER 0
 #define CHASED 1
 
-#define ROLE CHASER
+#define ROLE CHASED
 
 namespace COM
 {
@@ -18,12 +18,12 @@ namespace COM
 
     void setup()
     {
+        Serial.println("Function: setup");
 #if ROLE == CHASED       // Chased-one
         WLAN::setupAP(); // Create an accesspoint
-        WLAN::HHN_Server server;
+        WLAN::HHN_Server server = WLAN::HHN_Server(); //
         server.run(); // Check for new clients. Initialize chased-one client.
 #else                 // Chaser
-        Serial.println("setup");
         WLAN::setupClient();            // Setup WiFi connection to the accesspoint
         HHN_Client::createConnection(); // Initialize client on chaser site
 #endif

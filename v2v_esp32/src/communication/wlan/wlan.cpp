@@ -8,12 +8,13 @@ namespace WLAN
 {
     void setupAP()
     {
+        Serial.println("Function: setupAP");
         WiFi.softAP(ssid, password); // Create accesspoint
     }
 
     void setupClient()
     {
-        Serial.println("setupClient");
+        Serial.println("Function: setupClient");
         WiFi.begin(ssid, password); // Connect to the accesspoint
         Serial.println("Connecting to WiFi:");
         while (WiFi.status() != WL_CONNECTED) // Is the WiFi connection successful
