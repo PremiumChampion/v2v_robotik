@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
+
 #include "socket.h"
 
 namespace HHN_Client
@@ -14,12 +15,6 @@ namespace HHN_Client
     {
         this->client = client;
     }
-
-    // Socket::Socket(WiFiClient client)
-    // {
-    //     this->client = client;
-    //     // TODO: set static client
-    // }
 
     Socket::~Socket() {}
 

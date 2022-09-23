@@ -13,11 +13,12 @@ namespace WLAN
 
     void setupClient()
     {
+        Serial.println("setupClient");
         WiFi.begin(ssid, password); // Connect to the accesspoint
         Serial.println("Connecting to WiFi:");
         while (WiFi.status() != WL_CONNECTED) // Is the WiFi connection successful
         {
-            delay(500); // Waiting for changeing connection state
+            delay(100); // Waiting for changeing connection state
             Serial.println(".");
         }
         Serial.println("\nWiFi connected!");

@@ -1,5 +1,4 @@
 #include <WiFi.h>
-#include "communication/client/socket/socket.h"
 namespace WLAN
 {
     class HHN_Server
@@ -9,7 +8,7 @@ namespace WLAN
 
     public:
         HHN_Server();
-        HHN_Client::Socket* run();
+        void run();
     };
 
     extern HHN_Server server;

@@ -1,9 +1,11 @@
 #include <WiFi.h>
+
 #include "server.h"
 #include "communication/client/socket/socket.h"
 
 namespace WLAN
 {
+    HHN_Client::Socket externalClient;
 
     HHN_Server::HHN_Server()
     {
@@ -12,7 +14,7 @@ namespace WLAN
         Serial.println("Server started!");
     }
 
-    HHN_Client::Socket* HHN_Server::run()
+    void HHN_Server::run()
     {
         do
         {
@@ -21,8 +23,7 @@ namespace WLAN
             if (client)
             {
                 Serial.println("New client successfully connected!");
-                
-                return new HHN_Client::Socket(client);
+                externalClient.setClient(client);
             }
         } while (1);
     }
