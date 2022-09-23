@@ -30,13 +30,12 @@ void loop()
 {
   delay(1000);
   Serial.println("Function: main loop");
-  externalClient.send("Hello Server");
+  // externalClient.send("Hello Server");
   // Serial.println("Hello Server");
   
-  // String received = externalClient.rcv();
-  // Serial.println(received);
-  // Serial.println(".");
-  // Serial.println(chased_oneClient.rcv());
+  String received = externalClient.rcv();
+  Serial.println(received);
+  Serial.println(".");
 
   // sync sensor and actor data between arduino and esp.
   // SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();

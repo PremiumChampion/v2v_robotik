@@ -6,11 +6,10 @@
 namespace WLAN
 {
     HHN_Client::Socket externalClient;
-
     HHN_Server::HHN_Server()
     {
         this->server = WiFiServer(80);
-        server.begin();
+        this->server.begin();
         Serial.println("Server started!");
     }
 

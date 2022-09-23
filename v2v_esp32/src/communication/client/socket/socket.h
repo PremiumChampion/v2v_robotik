@@ -25,4 +25,5 @@ namespace HHN_Client
     };
 
     extern Socket externalClient; // Socket externalClient = Socket();
+    extern WiFiClient client; // Socket externalClient = Socket();
 } // namespace Client
