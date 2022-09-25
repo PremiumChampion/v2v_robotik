@@ -18,12 +18,10 @@ namespace HHN_Client
         ~Socket();
         void send(String data);
         String rcv();
-        void run();
         Socket getSocket();
-        void setClient(WiFiClient client);
+        void setClient(WiFiClient& client);
         void connectToIpAndPort(IPAddress ip, int port);
+        boolean isClientConnected();
     };
 
-    extern Socket externalClient; // Socket externalClient = Socket();
-    extern WiFiClient client; // Socket externalClient = Socket();
 } // namespace Client

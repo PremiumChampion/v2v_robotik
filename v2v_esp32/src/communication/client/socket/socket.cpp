@@ -5,16 +5,14 @@
 
 namespace HHN_Client
 {
-
     Socket::Socket()
     {
         // TODO: set static client
     }
 
-    void Socket::setClient(WiFiClient client)
+    void Socket::setClient(WiFiClient& client)
     {
         this->client = client;
-        Serial.println(client); //
         Serial.println(this->client); //
     }
 
@@ -30,8 +28,6 @@ namespace HHN_Client
         Serial.println("Method: rcv"); //
         String data = "";
         Serial.print("Client: "); //
-        Serial.println(this->client); //
-        Serial.println(this->client.available()); //
         while (this->client.available())
         {
             char c = this->client.read();
@@ -53,12 +49,8 @@ namespace HHN_Client
         Serial.println("Connected to server");
     }
 
-    void Socket::run()
-    {
+    boolean Socket::isClientConnected(){
+        return this->client.connected();
     }
-    // Socket Socket::getSocket()
-    // {
-    //     return NULL;
-    // }
 
 } // namespace Client

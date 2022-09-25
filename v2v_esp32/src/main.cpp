@@ -10,8 +10,6 @@
 #include "communication/server/connection.h"
 #include "communication/wlan/wlan.h"
 
-HHN_Client::Socket externalClient = HHN_Client::Socket();
-
 void setup()
 {
   
@@ -30,11 +28,27 @@ void loop()
 {
   delay(1000);
   Serial.println("Function: main loop");
-  // externalClient.send("Hello Server");
+  Serial.println("Client connection status: ");
+
+  //Client connection ist auch nicht vorhanden
+ ;
+
+  //Keine Server Referenz vom WiFiServer vorhanden (Guru Meditation Error: Core 1 panic'ed (LoadProhibited). Exception was unhandled.)
+ 
+ #if ROLE==CHASED
+  Serial.println(COM::server.getServer().available());
+   String received = COM::externalClient.rcv();
+  Serial.println(received);
+ #endif
+
+  #if ROLE==CHASER
+    Serial.println(COM::externalClient.isClientConnected());
+    Serial.println("---------------");
+    COM::externalClient.send("Hello Server");
+  #endif 
   // Serial.println("Hello Server");
   
-  String received = externalClient.rcv();
-  Serial.println(received);
+ 
   Serial.println(".");
 
   // sync sensor and actor data between arduino and esp.
