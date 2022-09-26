@@ -10,6 +10,8 @@
 #include "communication/server/connection.h"
 #include "communication/wlan/wlan.h"
 
+
+
 void setup()
 {
   
@@ -31,7 +33,7 @@ void loop()
   Serial.println("Client connection status: ");
 
   //Client connection ist auch nicht vorhanden
- ;
+ 
 
   //Keine Server Referenz vom WiFiServer vorhanden (Guru Meditation Error: Core 1 panic'ed (LoadProhibited). Exception was unhandled.)
  
