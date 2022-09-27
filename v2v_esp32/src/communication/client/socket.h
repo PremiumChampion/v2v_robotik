@@ -9,17 +9,22 @@ namespace HHN_Client
     {
     private:
         WiFiClient client;
-        static Socket *currentClient;
-        String rcvData; // kjsdhfksdjhfsd\naskdjhaskjdh
+        // static Socket *currentClient;
+        String rcvBuffer; //
         boolean hasData;
 
     public:
-        Socket(WiFiClient client);
+        Socket();
         ~Socket();
         void send(String data);
-        String rcv();
         void run();
+		String recieve();
         Socket getSocket();
+        void setClient(WiFiClient& client);
+        void connectToIpAndPort(IPAddress ip, int port);
+        boolean isClientConnected();
     };
 
 } // namespace Client
+
+

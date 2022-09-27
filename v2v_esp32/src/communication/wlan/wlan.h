@@ -1,10 +1,12 @@
+
+#pragma once
 namespace WLAN
 {
-    void setup();
+    void setupAP();
+    void setupClient();
     
-    // String pass = lsdkjhfslk;
-    // String name = lsdkfhslfjd;
-    // entweder AccessPoint oder Connection
-    // new AccessPoint(pass, name);
-    // new Connection(pass, name);
+    extern char ssid[];
+    extern char password[];
+    
+
 } // namespace WLAN

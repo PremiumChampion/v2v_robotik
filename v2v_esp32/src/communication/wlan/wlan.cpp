@@ -1,26 +1,28 @@
 #include <Arduino.h>
+#include <WiFi.h>
 
-//Change to 1 or 0, depending on which esp is being flashed (chaser or chased one)
-#define IS_ACCESSPOINT 0
-namespace WLAN 
+char ssid[] = "ESP32";
+char password[] = "12345678";
+
+namespace WLAN
 {
-    //Is called on its own
-    void setup()
+    void setupAP()
     {
-        String pass = "lsdkjhfslk";
-        String name = "lsdkfhslfjd";
+        Serial.println("Function: setupAP");
+        WiFi.softAP(ssid, password); // Create accesspoint
+    }
 
-        //TODO: Implement if clause to check, if current esp is the access point
-        // or just the client
-
-        // if (schoud_be_a_access_point)
-        // {
-        //     WiFi.softAP(name.c_str(), password.c_str());
-        // } else{
-        //     WiFi.begin(this->SSID, this->PASSPHRASE);
-        //     WiFi.setAutoReconnect(true);
-        // }
-
-        // entweder AccessPoint oder Connection
+    void setupClient()
+    {
+        Serial.println("Function: setupClient");
+        WiFi.begin(ssid, password); // Connect to the accesspoint
+        Serial.println("Connecting to WiFi:");
+        while (WiFi.status() != WL_CONNECTED) // Is the WiFi connection successful
+        {
+            delay(100); // Waiting for changeing connection state
+            Serial.println(".");
+        }
+        Serial.println("\nWiFi connected!");
+        WiFi.setAutoReconnect(true);
     }
 } // namespace WLAN

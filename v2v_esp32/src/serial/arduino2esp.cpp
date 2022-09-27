@@ -88,6 +88,7 @@ namespace SerialCommunication
             break;
         }
     }
+
     // recieve serial data strips newlines
     String Arduino2esp::recieve()
     {
