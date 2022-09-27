@@ -35,7 +35,6 @@ void loop()
   //Client connection ist auch nicht vorhanden
  
 
-  //Keine Server Referenz vom WiFiServer vorhanden (Guru Meditation Error: Core 1 panic'ed (LoadProhibited). Exception was unhandled.)
  
  #if ROLE==CHASED
   Serial.println(COM::server.getServer().available());
