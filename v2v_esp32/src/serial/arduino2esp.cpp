@@ -36,7 +36,6 @@ namespace SerialCommunication
     Arduino2esp::Arduino2esp(HardwareSerial *serialConnection)
 #endif
     {
-        // SoftwareSerial connection(this->RX_PIN, this->TX_PIN);
         this->serial = serialConnection;
         // only do this on software serial
 
