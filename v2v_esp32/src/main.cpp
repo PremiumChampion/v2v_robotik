@@ -4,7 +4,7 @@
 // #include "vehicle/vehicle.h"
 // #include "actors/actors.h"
 // #include "sensors/sensors.h"
-#include "communication/client/socket/socket.h"
+#include "communication/client/socket.h"
 #include "communication/communication.h"
 #include "communication/server/server.h"
 #include "communication/server/connection.h"

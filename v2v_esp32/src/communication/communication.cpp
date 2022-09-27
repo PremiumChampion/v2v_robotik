@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#include "client/socket/socket.h"
+#include "client/socket.h"
 #include "server/connection.h"
 #include "server/server.h"
 #include "wlan/wlan.h"

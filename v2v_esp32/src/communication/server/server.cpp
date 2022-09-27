@@ -1,7 +1,7 @@
 #include <WiFi.h>
 
 #include "server.h"
-#include "communication/client/socket/socket.h"
+#include "communication/client/socket.h"
 #include "communication/communication.h"
 namespace WLAN
 {

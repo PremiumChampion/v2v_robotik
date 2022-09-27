@@ -1,5 +1,5 @@
 #include "communication/server/server.h"
-#include "communication/client/socket/socket.h"
+#include "communication/client/socket.h"
 
 #pragma once
 

@@ -7,6 +7,7 @@ namespace HHN_Client
 {
     Socket::Socket()
     {
+        this->rcvBuffer = "";
         // TODO: set static client
     }
 
@@ -20,23 +21,38 @@ namespace HHN_Client
 
     void Socket::send(String data)
     {
-        this->client.println(data);
+        this->client.println(data + "\n");
     }
 
-    String Socket::rcv()
+    void Socket::run()
     {
-        Serial.println("Method: rcv"); //
-        String data = "";
-        Serial.print("Client: "); //
+        // Serial.println("Method: rcv"); //
+        // Serial.print("Client: "); //
         while (this->client.available())
         {
             char c = this->client.read();
-            Serial.print(c); //
-            data += c;
+            // Serial.print(c); //
+            this->rcvBuffer += c; 
         }
-        Serial.println(); //
-        return data;
+        
     }
+
+        // recieve serial data strips newlines
+    String Socket::recieve()
+    {
+        int nextNewlineLindex = this->rcvBuffer.indexOf('\n');
+        if (nextNewlineLindex == -1)
+            return "";
+
+        String output = this->rcvBuffer.substring(0, nextNewlineLindex);
+        this->rcvBuffer = this->rcvBuffer.substring(nextNewlineLindex + 1);
+        return output;
+    }
+    // // send serial data
+    // void Arduino2esp::send(String data)
+    // {
+    //     this->sndBuffer += data + '\n';
+    // }
 
     void Socket::connectToIpAndPort(IPAddress ip, int port)
     {
