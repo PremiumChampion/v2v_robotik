@@ -9,6 +9,7 @@
 #include "communication/server/server.h"
 #include "communication/server/connection.h"
 #include "communication/wlan/wlan.h"
+#include "communication/shared/transfer.h"
 
 
 

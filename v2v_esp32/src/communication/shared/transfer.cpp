@@ -5,7 +5,7 @@
 
 namespace COM
 {   //Uncomment and replace external client with correct pointer and insert the right pointer to the broker
-    // TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&externalClient);
+    TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&COM::externalClient,);
 
     void TransferHandler::run()
     {   

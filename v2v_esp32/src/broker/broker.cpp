@@ -3,6 +3,9 @@
 
 namespace Broker
 {
+    //Delete move broker to right place after everything is implemented correctly
+     Broker<String> broker = Broker<String>(10);
+
 
     template <class T>
     Broker<T>::Broker(const int message_count)
