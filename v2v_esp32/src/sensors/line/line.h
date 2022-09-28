@@ -27,11 +27,10 @@ namespace Sensors
 
     public:
         HHN_V_Line();
-        ~HHN_V_Line();
         void run();
         bool left();
         bool center();
-        bool rigth();
+        bool right();
         LineValue value();
     };
 

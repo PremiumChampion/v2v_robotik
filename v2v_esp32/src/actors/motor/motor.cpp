@@ -11,10 +11,6 @@ namespace Actors
         this->direction = direction;
     }
 
-    HHN_V_Motor::~HHN_V_Motor()
-    {
-    }
-
     void HHN_V_Motor::set(int speed, MotorDirection direction)
     {
         this->direction->set(direction);

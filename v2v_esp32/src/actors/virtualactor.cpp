@@ -9,9 +9,7 @@ namespace Actors
         this->actor = actor;
         this->currentValue = 0;
     }
-    HHN_V_Actor::~HHN_V_Actor()
-    {
-    }
+    
     void HHN_V_Actor::set(int value)
     {
         if (this->currentValue == value)

@@ -5,24 +5,78 @@
 
 namespace Movement
 {
-    LeftMovement::LeftMovement() : BasicMovement() {}
-    void LeftMovement::run() {
+    LeftMovement::LeftMovement() : BasicMovement()
+    {
+        this->state = Starting;
+    }
+    void LeftMovement::run()
+    {
 
-        // if(this->isPaused) 
-        // Vehicle::ROVER.set(0,90);
-        // return
+        if (this->isPaused)
+        {
+            Vehicle::ROVER.set(0, 90);
+            return;
+        }
 
-        // Sensors::LINE_SENSOR.value();
-        // Vehicle::ROVER.set(255,90);
+        if (this->isDone)
+        {
+            return;
+        }
 
-        // Sensors::LINE_SENSOR.left()
-        // Vehicle::ROVER.set(255,80);
+        bool left = Sensors::LINE_SENSOR.left();
+        bool center = Sensors::LINE_SENSOR.center();
+        bool right = Sensors::LINE_SENSOR.right();
 
-        // Sensors::LINE_SENSOR.rigth()
-        // Vehicle::ROVER.set(255,100);
+        switch (this->state)
+        {
+        case Starting:
+            if (left && center && right)
+            {
+                Vehicle::ROVER.set(255, 180);
+            }
+            if (left && center && !right)
+            {
+                Vehicle::ROVER.set(255, 190);
+            }
+            if (!left && center && right)
+            {
+                Vehicle::ROVER.set(255, 170);
+            }
+            if (!left && center && !right)
+            {
+                Vehicle::ROVER.set(255, 180);
+                this->state = HalfWay;
+            }
+            break;
+        case HalfWay:
+            if (!left && center && !right)
+            {
+                Vehicle::ROVER.set(255, 180);
+            }
 
-        // Sensors::LINE_SENSOR auf kreuzung
-        // this->isDone = true;
+            if (left && center && !right)
+            {
+                Vehicle::ROVER.set(255, 190);
+            }
+
+            if (!left && center && right)
+            {
+                Vehicle::ROVER.set(255, 170);
+            }
+
+            if (left && center && right)
+            {
+                this->isDone = true;
+                this->state = Ending;
+                Vehicle::ROVER.set(0, 180);
+            }
+
+            break;
+        case Ending:
+            break;
+        default:
+            break;
+        }
     }
 
 } // namespace Movement

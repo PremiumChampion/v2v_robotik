@@ -20,7 +20,6 @@ namespace Actors
 
     public:
         HHN_V_Motor(HHN_V_MotorSpeed *speed, HHN_V_MotorDirection *direction);
-        ~HHN_V_Motor();
         void set(int speed, MotorDirection direction);
     };
 
