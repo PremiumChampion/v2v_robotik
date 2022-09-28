@@ -4,7 +4,9 @@
 #include "broker/broker.h"
 
 namespace COM
-{
+{   //Uncomment and replace external client with correct pointer and insert the right pointer to the broker
+    // TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&externalClient);
+
     void TransferHandler::run()
     {   
         this->client->run();
@@ -13,12 +15,13 @@ namespace COM
         {
             this->client->send(this->broker->get_transmission_data());
         }
-        if (SerialCommunication::ArduinoConnection.hasData())
+        if (this->client->hasClientData())
         {
-            // this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
+            this->broker->rcv_transmission_data(this->client->receive());
         }
     }
 
+    //What is this for?
     void TransferHandler::init()
     {
         // SerialCommunication::ArduinoConnection.init();
@@ -30,7 +33,6 @@ namespace COM
         this->broker = broker;
     }
 
-    TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&externalClient);
 } // namespace COM
 
 // socket|var1|var2|m1|m2|m3

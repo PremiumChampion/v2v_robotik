@@ -23,6 +23,7 @@ namespace HHN_Client
         void setClient(WiFiClient& client);
         void connectToIpAndPort(IPAddress ip, int port);
         boolean isClientConnected();
+        boolean hasClientData();
     };
 
 } // namespace Client

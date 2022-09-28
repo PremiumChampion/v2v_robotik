@@ -48,11 +48,6 @@ namespace HHN_Client
         this->rcvBuffer = this->rcvBuffer.substring(nextNewlineLindex + 1);
         return output;
     }
-    // // send serial data
-    // void Arduino2esp::send(String data)
-    // {
-    //     this->sndBuffer += data + '\n';
-    // }
 
     void Socket::connectToIpAndPort(IPAddress ip, int port)
     {
@@ -67,6 +62,10 @@ namespace HHN_Client
 
     boolean Socket::isClientConnected(){
         return this->client.connected();
+    }
+
+    boolean Socket::hasClientData(){
+        return this->hasData;
     }
 
 } // namespace Client
