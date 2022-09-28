@@ -9,13 +9,11 @@ namespace Sensors
 
     HHN_V_BarcodeScannerModule BAR_CODE_SCANNER = Sensors::HHN_V_BarcodeScannerModule();
     HHN_V_Line LINE_SENSOR = Sensors::HHN_V_Line();
-    // TODO: add line sensor
 
     void run()
     {
         BAR_CODE_SCANNER.run();
         LINE_SENSOR.run();
-        // TODO: update line sensor
     }
 
 } // namespace Sensors
