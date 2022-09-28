@@ -18,7 +18,7 @@ namespace HHN_Client
         ~Socket();
         void send(String data);
         void run();
-		String recieve();
+		String receive();
         Socket getSocket();
         void setClient(WiFiClient& client);
         void connectToIpAndPort(IPAddress ip, int port);

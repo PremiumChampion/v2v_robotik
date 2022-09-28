@@ -15,7 +15,7 @@ namespace COM
         }
         if (SerialCommunication::ArduinoConnection.hasData())
         {
-            // this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.recieve());
+            // this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
         }
     }
 

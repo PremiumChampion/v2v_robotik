@@ -37,8 +37,8 @@ namespace HHN_Client
         
     }
 
-        // recieve serial data strips newlines
-    String Socket::recieve()
+        // receive serial data strips newlines
+    String Socket::receive()
     {
         int nextNewlineLindex = this->rcvBuffer.indexOf('\n');
         if (nextNewlineLindex == -1)

@@ -25,7 +25,7 @@ namespace SerialCommunication
             char c = this->serial->read();
             this->rcvBuffer += c;
         }
-        this->lastRecieveTime = millis();
+        this->lastReceiveTime = millis();
     }
 
 #pragma endregion
@@ -42,7 +42,7 @@ namespace SerialCommunication
 
         this->rcvBuffer = "";
         this->sndBuffer = "";
-        this->lastRecieveTime = 0;
+        this->lastReceiveTime = 0;
         this->mode = IDLE;
     }
 
@@ -81,7 +81,7 @@ namespace SerialCommunication
 
             unsigned long currentTime = millis();
 
-            if (this->lastRecieveTime + 10 < currentTime)
+            if (this->lastReceiveTime + 10 < currentTime)
                 this->rcv_data();
             else
                 this->mode = IDLE;
@@ -90,8 +90,8 @@ namespace SerialCommunication
         }
     }
 
-    // recieve serial data strips newlines
-    String Arduino2esp::recieve()
+    // receive serial data strips newlines
+    String Arduino2esp::receive()
     {
         int nextNewlineLindex = this->rcvBuffer.indexOf('\n');
         if (nextNewlineLindex == -1)

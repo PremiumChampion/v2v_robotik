@@ -24,7 +24,7 @@ namespace SerialCommunication
         }
         if (SerialCommunication::ArduinoConnection.hasData())
         {
-            this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.recieve());
+            this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
         }
     }
     template <class rcv, class snd>
