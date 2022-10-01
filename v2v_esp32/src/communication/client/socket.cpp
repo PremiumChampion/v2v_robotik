@@ -26,33 +26,28 @@ namespace HHN_Client
 
     void Socket::run()
     {
-        // Serial.println("Method: rcv"); //
-        // Serial.print("Client: "); //
         while (this->client.available())
         {
             char c = this->client.read();
-            // Serial.print(c); //
             this->rcvBuffer += c; 
         }
-        
+
+        //Wo receive reinschreiben und daten an broker übergeben
+        //Hier oder in transfer.cpp
+
     }
 
-        // recieve serial data strips newlines
-    String Socket::recieve()
+        // receive serial data strips newlines
+    String Socket::receive()
     {
-        int nextNewlineLindex = this->rcvBuffer.indexOf('\n');
+        int nextNewlineLindex = this->rcvBuffer.indexOf('\n'); // Check if rcvBuffer has one finished data frame
         if (nextNewlineLindex == -1)
-            return "";
+            return ""; // Return with no data if there is no data or just a incomplete data frame.
 
         String output = this->rcvBuffer.substring(0, nextNewlineLindex);
         this->rcvBuffer = this->rcvBuffer.substring(nextNewlineLindex + 1);
         return output;
     }
-    // // send serial data
-    // void Arduino2esp::send(String data)
-    // {
-    //     this->sndBuffer += data + '\n';
-    // }
 
     void Socket::connectToIpAndPort(IPAddress ip, int port)
     {

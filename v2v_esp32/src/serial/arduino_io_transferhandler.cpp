@@ -7,7 +7,7 @@
 namespace SerialCommunication
 {
     template <class rcv, class snd>
-    Ardunio_IO_TransferHandler<rcv, snd>::Ardunio_IO_TransferHandler(
+    Arduino_IO_TransferHandler<rcv, snd>::Arduino_IO_TransferHandler(
         Broker::Broker<rcv> *rcvBroker,
         Broker::Broker<snd> *sndBroker)
     {
@@ -15,7 +15,7 @@ namespace SerialCommunication
         this->sndBroker = sndBroker;
     }
     template <class rcv, class snd>
-    void Ardunio_IO_TransferHandler<rcv, snd>::run()
+    void Arduino_IO_TransferHandler<rcv, snd>::run()
     {
         SerialCommunication::ArduinoConnection.run();
         if (this->sndBroker->get_has_changes())
@@ -24,14 +24,14 @@ namespace SerialCommunication
         }
         if (SerialCommunication::ArduinoConnection.hasData())
         {
-            this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.recieve());
+            this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
         }
     }
     template <class rcv, class snd>
-    void Ardunio_IO_TransferHandler<rcv, snd>::init()
+    void Arduino_IO_TransferHandler<rcv, snd>::init()
     {
         SerialCommunication::ArduinoConnection.init();
     }
 
-    Ardunio_IO_TransferHandler<int, int> SENSOR_ACTOR_TRANSFER_HANDLER(&Sensors::MESSAGE_BROKER, &Actors::MESSAGE_BROKER);
+    Arduino_IO_TransferHandler<int, int> SENSOR_ACTOR_TRANSFER_HANDLER(&Sensors::MESSAGE_BROKER, &Actors::MESSAGE_BROKER);
 } // namespace SerialCommunication

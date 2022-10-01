@@ -35,6 +35,7 @@ void loop()
   //Client connection ist auch nicht vorhanden
  
 
+  // WIFI_TRANSFER_HANDLER.run(); 
  
  #if ROLE==CHASED
   Serial.println(COM::server.getServer().available());
@@ -48,6 +49,7 @@ void loop()
     COM::externalClient.send("Hello Server");
   #endif 
   // Serial.println("Hello Server");
+  
   
  
   Serial.println(".");

@@ -27,12 +27,12 @@ namespace SerialCommunication
 
 		// buffers serial input until a whole fragment is ready
 		String rcvBuffer;
-		// the time the serial communication recieved some data (millis)
-		unsigned long lastRecieveTime;
+		// the time the serial communication Received some data (millis)
+		unsigned long lastReceiveTime;
 		// buffers serial output until it is ready to be sent
 		String sndBuffer;
 
-		// SoftwareSerial can not recieve and send data at the same time
+		// SoftwareSerial can not receive and send data at the same time
 		SerialMode mode;
 		// method for sending serial data
 		void snd_data();
@@ -47,9 +47,9 @@ namespace SerialCommunication
 #endif
 		void init();
 		void run();
-		// recieve serial data
+		// receive serial data
 		// strips newlines
-		String recieve();
+		String receive();
 		// send serial data
 		void send(String data);
 		bool hasData();

@@ -5,17 +5,27 @@
 
 namespace COM
 {
+    // run method is called periodically
     void TransferHandler::run()
     {   
-        this->client->run();
-        
+        this->client->run(); // What should the client run method do? Or what is the run method doing. 
+ 
+    /*
+        Check, if new data to be sent is available
+        Read from broker buffer and send via wifi
+    */
         if (this->broker->get_has_changes())
         {
             this->client->send(this->broker->get_transmission_data());
         }
+    /*
+        Check, if new data is available in buffer to be read.
+        Read data and send to broker. 
+    */
+
         if (SerialCommunication::ArduinoConnection.hasData())
         {
-            // this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.recieve());
+            // this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
         }
     }
 
