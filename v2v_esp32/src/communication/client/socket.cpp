@@ -65,7 +65,7 @@ namespace HHN_Client
     }
 
     boolean Socket::hasClientData(){
-        return this->hasData;
+        return this->rcvBuffer.indexOf("\n") + 1;
     }
 
 } // namespace Client

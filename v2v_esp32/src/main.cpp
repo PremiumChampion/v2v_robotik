@@ -20,38 +20,32 @@ void setup()
   Serial.begin(9600);
   delay(2000);
   Serial.println("Function: main setup");
-  COM::setup();
-
+  COM::WIFI_TRANSFER_HANDLER.init();
   // setup communication between both esps.
   // setup serial connection between arduino and esp.
   // SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
 }
-
+unsigned long currentTime;
+unsigned int currentNumber;
 void loop()
 {
-  delay(1000);
-  Serial.println("Function: main loop");
-  Serial.println("Client connection status: ");
+
+  if(currentTime+1000<millis()){
+     Serial.println("Function: main loop");
+     Serial.println("Client connection status: ");
+     currentTime = millis();
+    //  currentNumber++;
+    //  COM::broker.set(0,String(currentNumber));
+    Serial.println(COM::broker.get(0));  
+  }
 
   //Client connection ist auch nicht vorhanden
  
 
  
- #if ROLE==CHASED
-  Serial.println(COM::server.getServer().available());
-   String received = COM::externalClient.rcv();
-  Serial.println(received);
- #endif
-
-  #if ROLE==CHASER
-    Serial.println(COM::externalClient.isClientConnected());
-    Serial.println("---------------");
-    COM::externalClient.send("Hello Server");
-  #endif 
-  // Serial.println("Hello Server");
+  COM::WIFI_TRANSFER_HANDLER.run();
   
  
-  Serial.println(".");
 
   // sync sensor and actor data between arduino and esp.
   // SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();

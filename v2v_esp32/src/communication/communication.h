@@ -1,12 +1,13 @@
 #include "communication/server/server.h"
 #include "communication/client/socket.h"
+#include "broker/broker.h"
 
 #pragma once
 
 #define CHASER 0
 #define CHASED 1
 
-#define ROLE CHASER
+#define ROLE CHASED
 namespace COM
 {
     #if ROLE==CHASED
@@ -16,5 +17,6 @@ namespace COM
 
     void setup();
     extern HHN_Client::Socket externalClient; // Socket externalClient = Socket();
+    extern Broker::Broker<String> broker;
 
 }

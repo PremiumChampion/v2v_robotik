@@ -1,4 +1,5 @@
 #include "communication/client/socket.h"
+#include "broker/broker.h"
 #pragma once
 namespace COM
 {

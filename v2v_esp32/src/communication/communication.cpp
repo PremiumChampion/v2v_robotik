@@ -14,6 +14,8 @@ namespace COM
         WLAN::HHN_Server server = WLAN::HHN_Server();
 #endif
         HHN_Client::Socket externalClient = HHN_Client::Socket();
+        // Delete move broker to right place after everything is implemented correctly
+        Broker::Broker<String> broker = Broker::Broker<String>(10);
 
         void setup()
         {
