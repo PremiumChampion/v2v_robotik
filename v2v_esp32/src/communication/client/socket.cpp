@@ -64,4 +64,8 @@ namespace HHN_Client
         return this->client.connected();
     }
 
+    boolean Socket::hasClientData(){
+        return this->rcvBuffer.indexOf("\n") + 1;
+    }
+
 } // namespace Client

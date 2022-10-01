@@ -7,7 +7,7 @@ namespace Broker
     /**
      * @brief aggregates all messages from sensors and is able to communicates those in a serialised way
      * used for exchanging sensor and actor values between esp32 and arduino
-     * if a value is changed with set the new value will be transmitted as soon as posibile
+     * if a value is changed with set the new value will be transmitted as soon as possible
      */
     template <class T>
     class Broker
