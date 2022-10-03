@@ -13,6 +13,8 @@
 
 
 
+unsigned long currentTime;
+unsigned int currentNumber;
 void setup()
 {
   
@@ -25,8 +27,6 @@ void setup()
   // setup serial connection between arduino and esp.
   // SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
 }
-unsigned long currentTime;
-unsigned int currentNumber;
 void loop()
 {
 
