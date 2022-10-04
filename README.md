@@ -6,9 +6,9 @@
 
 ## Level A (Arduino-IO)
 
-* [ ] Barcode-Sensor
+* [x] Barcode-Sensor
 
-    * [ ] Configuration
+    * [x] Configuration
     * [ ] Hardware-Positioning
     * [x] Reading
 
