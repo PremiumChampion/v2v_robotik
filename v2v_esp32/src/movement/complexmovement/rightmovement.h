@@ -4,19 +4,19 @@ namespace Movement
 {
     enum RightMovementState
     {
-        Starting,
-        HalfWay,
-        Ending
+        R_Starting,
+        R_HalfWay,
+        R_Ending
     };
     class RightMovement : public BasicMovement
     {
     private:
-        bool isComplete;
+        // bool isComplete;
         RightMovementState state;
 
     public:
         RightMovement();
-        void run() override;
+        void run();
     };
 
 } // namespace Movement

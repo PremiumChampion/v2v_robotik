@@ -13,10 +13,10 @@ namespace COM
         {
             this->client->send(this->broker->get_transmission_data());
         }
-        if (SerialCommunication::ArduinoConnection.hasData())
-        {
-            // this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
-        }
+        // if (SerialCommunication::ArduinoConnection.hasData())
+        // {
+        //     this->rcvBroker->rcv_transmission_data(SerialCommunication::ArduinoConnection.receive());
+        // }
     }
 
     void TransferHandler::init()
@@ -30,7 +30,7 @@ namespace COM
         this->broker = broker;
     }
 
-    TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&externalClient);
+    // TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&externalClient);
 } // namespace COM
 
 // socket|var1|var2|m1|m2|m3

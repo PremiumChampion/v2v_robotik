@@ -1,4 +1,8 @@
 #include "basicmovement.h"
+#include "movement/complexmovement/leftmovement.h"
+#include "movement/complexmovement/rightmovement.h"
+#include "movement/complexmovement/stopmovement.h"
+#include "movement/complexmovement/straightmovement.h"
 #pragma once
 
 namespace Movement
@@ -14,7 +18,12 @@ namespace Movement
     class MovementService : public Util::Pausable
     {
     private:
-        BasicMovement currentMovement;
+        // BasicMovement currentMovement;
+        LeftMovement currentLeftMovements;
+        RightMovement currentRightMovement;
+        StraightMovement currentStraightMovement;
+        StopMovement currentStopMovement;
+        MovementKind currentMovementKind;
 
     public:
         MovementService(/* args */);
@@ -24,4 +33,6 @@ namespace Movement
         bool waitingForNewDirections();
         void setNewDirections(MovementKind newDirections);
     };
+
+    extern MovementService MOVEMENTS;
 } // namespace Movement

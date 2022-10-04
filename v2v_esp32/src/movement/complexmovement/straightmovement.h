@@ -12,11 +12,11 @@ namespace Movement
     class StraightMovement : public BasicMovement
     {
     private:
-        bool isCompleted;
-        StraightMovementState state;
+        // bool isCompleted;
+        int state;
     public:
         StraightMovement();
-        void run() override;
+        void run();
     };
 
 } // namespace Movement

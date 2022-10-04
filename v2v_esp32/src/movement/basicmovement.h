@@ -4,14 +4,15 @@
 
 namespace Movement
 {
-    class BasicMovement : public Util::Pausable
+    class BasicMovement
     {
     protected:
         bool isDone;
 
     public:
-        virtual void run();
-        virtual bool isComplete();
+        BasicMovement();
+        void run();
+        bool isComplete();
     };
 }
 

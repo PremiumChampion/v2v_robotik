@@ -5,21 +5,22 @@
 #include "actors/actors.h"
 #include "sensors/sensors.h"
 #include "communication/communication.h"
-
+#include "movement/movement.h"
 
 
 void setup()
 {
   
   // for debugging
-  Serial.begin(9600);
+  Serial.begin(115200);
   // delay(2000);
   // Serial.println("Function: main setup");
-  COM::setup();
+  // COM::setup();
 
   // setup communication between both esps.
   // setup serial connection between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
+  Movement::MOVEMENTS.setNewDirections(Movement::Straight);
 }
 
 void loop()
@@ -47,8 +48,9 @@ void loop()
 
 
   // todo: run wifi transferhandler
- 
+  
   Sensors::run();
+  Movement::MOVEMENTS.run();
   // sync sensor and actor data between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
 }

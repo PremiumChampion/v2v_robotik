@@ -5,14 +5,17 @@
 
 namespace Movement
 {
-    StopMovement::StopMovement() : BasicMovement() {}
+    StopMovement::StopMovement() : BasicMovement() {
+        this->isDone = true;
+        // this->isPaused = false;
+    }
     void StopMovement::run()
     {
-        if (this->isPaused)
-        {
-            Vehicle::ROVER.set(0, 90);
-            return;
-        }
+        // if (this->isPaused)
+        // {
+        //     Vehicle::ROVER.set(0, 90);
+        //     return;
+        // }
 
         if (this->isDone)
         {

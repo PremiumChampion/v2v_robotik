@@ -9,23 +9,21 @@ namespace Movement
     {
         this->state = StartCrossing;
         this->isDone = false;
+        // this->isPaused = false;
     }
     void StraightMovement::run()
     {
-        if (this->isPaused)
+
+        if (this->isDone)
         {
             Vehicle::ROVER.set(0, 90);
             return;
         }
 
-        if (this->isDone)
-        {
-            return;
-        }
+        bool left = Sensors::LINE_SENSOR.left() == 1;
+        bool center = Sensors::LINE_SENSOR.center() == 1;
+        bool right = Sensors::LINE_SENSOR.right() == 1;
 
-        bool left = Sensors::LINE_SENSOR.left();
-        bool center = Sensors::LINE_SENSOR.center();
-        bool right = Sensors::LINE_SENSOR.right();
 
         switch (this->state)
         {
@@ -50,16 +48,14 @@ namespace Movement
             if (!left && !center && right)
             {
                 Vehicle::ROVER.set(255, 100);
-                this->state = Continuing;
             }
             if (left && !center && !right)
             {
                 Vehicle::ROVER.set(255, 80);
-                this->state = Continuing;
             }
             if (!left && !right && !left)
             {
-                this->pause();
+                Vehicle::ROVER.set(0, 90);
             }
             break;
         case Continuing:

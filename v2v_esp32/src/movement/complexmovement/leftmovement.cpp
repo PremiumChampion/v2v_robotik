@@ -7,16 +7,17 @@ namespace Movement
 {
     LeftMovement::LeftMovement() : BasicMovement()
     {
-        this->state = Starting;
+        this->state = L_Starting;
+        this->isDone = false;
     }
     void LeftMovement::run()
     {
 
-        if (this->isPaused)
-        {
-            Vehicle::ROVER.set(0, 90);
-            return;
-        }
+        // if (this->isPaused)
+        // {
+        //     Vehicle::ROVER.set(0, 90);
+        //     return;
+        // }
 
         if (this->isDone)
         {
@@ -29,7 +30,7 @@ namespace Movement
 
         switch (this->state)
         {
-        case Starting:
+        case L_Starting:
             if (left && center && right)
             {
                 Vehicle::ROVER.set(255, 180);
@@ -45,10 +46,10 @@ namespace Movement
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 180);
-                this->state = HalfWay;
+                this->state = L_HalfWay;
             }
             break;
-        case HalfWay:
+        case L_HalfWay:
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 180);
@@ -67,12 +68,12 @@ namespace Movement
             if (left && center && right)
             {
                 this->isDone = true;
-                this->state = Ending;
+                this->state = L_Ending;
                 Vehicle::ROVER.set(0, 180);
             }
 
             break;
-        case Ending:
+        case L_Ending:
             break;
         default:
             break;

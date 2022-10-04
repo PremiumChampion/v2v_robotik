@@ -7,15 +7,17 @@ namespace Movement
 {
     RightMovement::RightMovement() : BasicMovement()
     {
-        this->state = Starting;
+        this->state = R_Starting;
+        // this->isPaused = false;
+        this->isDone = false;
     }
     void RightMovement::run()
     {
-        if (this->isPaused)
-        {
-            Vehicle::ROVER.set(0, 90);
-            return;
-        }
+        // if (this->isPaused)
+        // {
+        //     Vehicle::ROVER.set(0, 90);
+        //     return;
+        // }
 
         if (this->isDone)
         {
@@ -28,7 +30,7 @@ namespace Movement
 
         switch (this->state)
         {
-        case Starting:
+        case R_Starting:
             if (left && center && right)
             {
                 Vehicle::ROVER.set(255, 0);
@@ -44,10 +46,10 @@ namespace Movement
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 0);
-                this->state = HalfWay;
+                this->state = R_HalfWay;
             }
             break;
-        case HalfWay:
+        case R_HalfWay:
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 0);
@@ -66,12 +68,12 @@ namespace Movement
             if (left && center && right)
             {
                 this->isDone = true;
-                this->state = Ending;
+                this->state = R_Ending;
                 Vehicle::ROVER.set(0, 0);
             }
 
             break;
-        case Ending:
+        case R_Ending:
             break;
         default:
             break;
