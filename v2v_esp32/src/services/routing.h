@@ -5,7 +5,7 @@ namespace Service{
     private:
     public:
         Routing(/* args */);
-        calculateRoute();
+        int calculateRoute(int target);
         // Chaser: Berechnet den nächsten Punkt zum Chased-one/ Array???
         // Chased-one: Berechnung zufällig?
         // 
