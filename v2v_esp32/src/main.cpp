@@ -19,18 +19,10 @@ void setup()
 {
   
   // for debugging
-<<<<<<< HEAD
-  Serial.begin(115200);
-  // delay(2000);
-  // Serial.println("Function: main setup");
-  // COM::setup();
-
-=======
   Serial.begin(9600);
   delay(2000);
   Serial.println("Function: main setup");
   COM::WIFI_TRANSFER_HANDLER.init();
->>>>>>> 46b52115c534f9b336c2530f7d17022449b2cc14
   // setup communication between both esps.
   // setup serial connection between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
@@ -38,11 +30,6 @@ void setup()
 }
 void loop()
 {
-<<<<<<< HEAD
-//   delay(1000);
-//   Serial.println("Function: main loop");
-//   Serial.println("Client connection status: ");
-=======
 
   if(currentTime+1000<millis()){
      Serial.println("Function: main loop");
@@ -52,14 +39,12 @@ void loop()
     //  COM::broker.set(0,String(currentNumber));
     Serial.println(COM::broker.get(0));  
   }
->>>>>>> 46b52115c534f9b336c2530f7d17022449b2cc14
 
 //   //Client connection ist auch nicht vorhanden
  
 
   // WIFI_TRANSFER_HANDLER.run(); 
  
-<<<<<<< HEAD
 //  #if ROLE==CHASED
 //   Serial.println(COM::server.getServer().available());
 //    String received = COM::externalClient.rcv();
@@ -78,13 +63,11 @@ void loop()
   
   Sensors::run();
   Movement::MOVEMENTS.run();
-=======
   COM::WIFI_TRANSFER_HANDLER.run();
   
   
  
 
->>>>>>> 46b52115c534f9b336c2530f7d17022449b2cc14
   // sync sensor and actor data between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
 }

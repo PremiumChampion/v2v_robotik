@@ -24,6 +24,7 @@ namespace SerialCommunication
         {
             this->last_full_sync_time = millis();
             this->sndBroker->reset_pushed_message_indicator();
+            
         }
         if (this->sndBroker->get_has_changes())
         {
