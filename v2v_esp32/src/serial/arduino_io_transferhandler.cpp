@@ -27,15 +27,11 @@ namespace SerialCommunication
         {
             String data = this->sndBroker->get_transmission_data();
             SerialCommunication::ArduinoConnection.send(data);
-            // Serial.print("snd: ");
-            // Serial.println(data);
         }
         if (SerialCommunication::ArduinoConnection.hasData())
         {
             String data = SerialCommunication::ArduinoConnection.receive();
             this->rcvBroker->rcv_transmission_data(data);
-            // Serial.print("rcv: ");
-            // Serial.println(data);
         }
     }
     template <class rcv, class snd>
