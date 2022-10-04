@@ -1,41 +1,45 @@
 #include "services/positioning.h"
 
-namespace Service{
-    
-    Positioning::Positioning(){
+namespace Service
+{
 
+    Positioning::Positioning()
+    {
     }
 
-    void Positioning::findStartingPos(){
-
-
+    int Positioning::getOwnGridPos()
+    {
     }
 
-    int Positioning::getCurrentGridPos(){
-
-        
-
+    int Positioning::getOtherGridPos()
+    {
     }
 
-    Positioning::Direction Positioning::getCurrentDirection(){
-
-
-
+    int *Positioning::getMovementSteps()
+    {
     }
 
-    void Positioning::setNewGridDirection(Direction newDirection){
-
-
-
+    Positioning::Direction Positioning::getDirection()
+    {
     }
 
-    void Positioning::setNewGridPos(int newPos){
-
-
-
+    void Positioning::findStartingPos()
+    {
     }
 
+    void Positioning::setOwnGridPos(int Pos)
+    {
+    }
 
+    void Positioning::setOtherGridPos(int Pos)
+    {
+    }
 
+    void Positioning::setMovementSteps(Movement array[])
+    {
+    }
 
+    void Positioning::setGridDirection(Direction newDirection)
+    {
+    }
 }

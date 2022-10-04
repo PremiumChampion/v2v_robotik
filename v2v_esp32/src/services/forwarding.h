@@ -1,3 +1,5 @@
+#pragma once
+
 namespace Service{
     class Forwarding
     {
@@ -6,6 +8,7 @@ namespace Service{
     public:
         Forwarding(/* args */);
         ~Forwarding();
+        
         // Berechnet Drehung und Fahrtrichtung
         // Reicht diese Informationen an den Positioning Service weiter
     };
