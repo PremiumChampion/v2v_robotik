@@ -2,14 +2,21 @@
 #pragma once
 namespace Movement
 {
+    enum StraightMovementState
+    {
+        StartCrossing,
+        Continuing,
+        EndCrossing
+    };
+
     class StraightMovement : public BasicMovement
     {
     private:
-        bool isCompleted;
-
+        // bool isCompleted;
+        int state;
     public:
         StraightMovement();
-        void run() override;
+        void run();
     };
 
 } // namespace Movement

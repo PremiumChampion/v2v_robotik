@@ -1,35 +1,39 @@
 #include "routing.h"
+#include "positioning.h"
 
 namespace Service
 {
-    class Routing
-    {
-    private:
-        /* data */
-    public:
-        Routing(/* args */);
-        ~Routing();
-    };
-    
-    Routing::Routing(/* args */)
-    {
-    }
-    
-    Routing::~Routing()
-    {
+    Routing::Routing(){
+
     }
 
-    int calculateRoute(){
-        // get own current position
-        int OwnPosition = getCurrentGridPos();
-        // get other current position 
-        int OtherPosition = getOtherCurrentGridPos();
-        // calculate delta Position
-        int deltaX = OtherPosition % 4 - OwnPosition % 4;
-        int deltaY = OtherPosition / 4 - OwnPosition / 4;
-        int r[] = {deltaX, deltaY};
-         
-        return r;
+    int Routing::calculateRoute(int target){
+        int currentPos = THIS_ROBOT.getCurrentPositionTile();
+
+        int targetX = target % 4;
+        int targetY = target / 4;
+
+        int currentX = currentPos % 4;
+        int currentY = currentPos / 4;
+
+        int deltaX = targetX - currentX;
+        int deltaY = targetY - currentY;
+
+        int nextX = currentX;
+        int nextY = currentY;
+
+        if(deltaX == 0 && deltaY == 0){
+            return currentPos;
+        }
+        
+        if(deltaX <= deltaY || deltaY == 0){
+            nextX = nextX + (deltaX > 0 ? 1 : -1);
+        }else{
+            nextY = nextY + (deltaY > 0 ? 1 : -1);
+        }
+
+        int nextPos = nextY * 16 + nextX;
+
+        return nextPos;
     }
-    
-} // namespace Service
+} // namespace Services

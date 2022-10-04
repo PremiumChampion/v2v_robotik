@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "actors/actors.h"
+
 #pragma once
 
 namespace Actors
@@ -14,6 +15,7 @@ namespace Actors
     public:
         HHN_MotorDirection(int pin, Actor actor);
         ~HHN_MotorDirection();
+        void init();
         void run();
     };
 } // namespace Actors

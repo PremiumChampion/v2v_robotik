@@ -22,7 +22,7 @@ namespace SerialCommunication
     {
         while (this->serial->available())
         {
-            char c = this->serial->read();
+            char c = (char) this->serial->read();
             this->rcvBuffer += c;
         }
         this->lastReceiveTime = millis();
@@ -36,7 +36,6 @@ namespace SerialCommunication
     Arduino2esp::Arduino2esp(HardwareSerial *serialConnection)
 #endif
     {
-        // SoftwareSerial connection(this->RX_PIN, this->TX_PIN);
         this->serial = serialConnection;
         // only do this on software serial
 
@@ -62,7 +61,7 @@ namespace SerialCommunication
                 this->mode = RECIEVING;
                 this->rcv_data();
             }
-            else if (this->serial->availableForWrite() > 0 && this->sndBuffer.length() > 0)
+            else if (this->serial->availableForWrite() && this->sndBuffer.length() > 0)
             {
                 this->mode = SENDING;
                 this->snd_data();
@@ -99,6 +98,7 @@ namespace SerialCommunication
 
         String output = this->rcvBuffer.substring(0, nextNewlineLindex);
         this->rcvBuffer = this->rcvBuffer.substring(nextNewlineLindex + 1);
+
         return output;
     }
     // send serial data

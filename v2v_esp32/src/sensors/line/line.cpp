@@ -17,15 +17,13 @@ namespace Sensors
         this->rightValue = (this->current_value / 1) % 2 == 1;
     }
 
-    HHN_V_Line::~HHN_V_Line() {}
-
     void HHN_V_Line::run()
     {
         this->current_value = (LineValue)Sensors::MESSAGE_BROKER.get(Sensor::LINE);
         this->extract_values();
     }
 
-    bool HHN_V_Line::rigth() { return this->rightValue; }
+    bool HHN_V_Line::right() { return this->rightValue; }
     bool HHN_V_Line::center() { return this->centerValue; }
     bool HHN_V_Line::left() { return this->leftValue; }
     LineValue HHN_V_Line::value() { return this->current_value; }

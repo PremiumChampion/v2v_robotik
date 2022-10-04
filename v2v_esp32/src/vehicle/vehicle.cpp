@@ -71,6 +71,15 @@ namespace Vehicle
         // deg = rad x 180 / PI
 
         outSpeed = abs(graphedSpeed);
+
+        // we only want movable speeds from 30...60 only
+        // non movable speeds are 0
+
+        outSpeed = map(outSpeed, 0, 255,29,50);
+        if(outSpeed < 30){
+            outSpeed = 0;
+        }
+
 #pragma endregion
 
 #pragma region rotation direction
@@ -88,6 +97,10 @@ namespace Vehicle
             outDirection = Actors::MotorDirection::FORWARD;
 #pragma endregion
         // output value
+
+
+
+
         motor->set(outSpeed, outDirection);
     }
 

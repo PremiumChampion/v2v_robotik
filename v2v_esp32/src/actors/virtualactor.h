@@ -12,7 +12,6 @@ namespace Actors
 
     public:
         HHN_V_Actor(Actor actor);
-        ~HHN_V_Actor();
         void set(int value);
     };
 } // namespace Actors

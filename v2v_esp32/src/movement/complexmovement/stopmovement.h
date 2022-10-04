@@ -5,10 +5,10 @@ namespace Movement
     class StopMovement : public BasicMovement
     {
     private:
-        bool isComplete;
+        // bool isComplete;
     public:
         StopMovement();
-        void run() override;
+        void run();
     };
 
 } // namespace Movement

@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #pragma once
 
 namespace Service{
@@ -8,9 +9,7 @@ namespace Service{
     public:
         Forwarding(/* args */);
         ~Forwarding();
-        
-        // Berechnet Drehung und Fahrtrichtung
-        // Reicht diese Informationen an den Positioning Service weiter
+        String calculateNextMovement();
     };
     
   

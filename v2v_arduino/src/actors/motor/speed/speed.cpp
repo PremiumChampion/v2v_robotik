@@ -1,5 +1,6 @@
 #include "speed.h"
 #include "actors/actors.h"
+
 namespace Actors
 {
     HHN_MotorSpeed::HHN_MotorSpeed(int pin, Actor actor)
@@ -10,6 +11,12 @@ namespace Actors
 
     HHN_MotorSpeed::~HHN_MotorSpeed()
     {
+    }
+
+    void HHN_MotorSpeed::init()
+    {
+        pinMode(this->pin, OUTPUT);
+        this->run();
     }
 
     void HHN_MotorSpeed::run()

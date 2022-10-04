@@ -9,8 +9,7 @@ namespace HHN_Client
     {
     private:
         WiFiClient client;
-        // static Socket *currentClient;
-        String rcvBuffer; //
+        String rcvBuffer;
         boolean hasData;
 
     public:

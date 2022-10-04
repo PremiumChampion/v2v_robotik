@@ -35,6 +35,7 @@ namespace Broker
         String get_transmission_data();
         //Receive incoming string and updates the message broker
         void rcv_transmission_data(String data);
+        void reset_pushed_message_indicator();
     };
 
     static const char VALUE_DELIMITER = '|';

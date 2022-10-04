@@ -6,9 +6,9 @@
 
 ## Level A (Arduino-IO)
 
-* [ ] Barcode-Sensor
+* [x] Barcode-Sensor
 
-    * [ ] Configuration
+    * [x] Configuration
     * [ ] Hardware-Positioning
     * [x] Reading
 
@@ -18,68 +18,63 @@
 
 ## Level B
 
-* [ ] [Broker](https://en.wikipedia.org/wiki/Broker_pattern)-Abstraction
+* [x] [Broker](https://en.wikipedia.org/wiki/Broker_pattern)-Abstraction
 
-    * [ ] Full-Sync Capabilities
+    * [x] Full-Sync Capabilities
 
-* [ ] WiFi (Connection related)
+* [x] WiFi (Connection related)
 
-    * [ ] Create Access-Point
-    * [ ] Connect to Access-Point
+    * [x] Create Access-Point
+    * [x] Connect to Access-Point
 
-* [ ] Serial Communication Arduino <-> ESP
+* [x] Serial Communication Arduino <-> ESP
 
     * [x] ESP
-    * [ ] Arduino
+    * [x] Arduino
 
-* [ ] Virtual Sensors
+* [x] Virtual Sensors
 
-    * [ ] Barcode-Sensor
-    * [ ] Line-Sensor
+    * [x] Barcode-Sensor
+    * [x] Line-Sensor
 
-* [ ] Virtual Actors
+* [x] Virtual Actors
 
     * [x] Virtual Motor Speed
     * [x] Virtual Motor Direction
 
 ## Level C
 
-* [ ] Server (maybe listen on multiple ports for additional differentiation)
+* [x] Server (maybe listen on multiple ports for additional differentiation)
 
-    * [ ] Start Server (listen on port xxx)
-    * [ ] Connect to Server (Initiate TCP-Connection)
+    * [x] Start Server (listen on port xxx)
+    * [x] Connect to Server (Initiate TCP-Connection)
 
 * [x] Motor Abstraction (Speed + Direction)
 * [x] Vehicle Abstraction (Motor-L + Motor-R)
 
 ## Level D
 
-* [ ] Socket IO (in combination with server)
+* [x] Socket IO (in combination with server)
 
-    * [ ] RCV Data
-    * [ ] SND Data
+    * [x] RCV Data
+    * [x] SND Data
 
-* [ ] WiFi Broker
+* [x] WiFi Broker
 
     * [ ] Figure out which state needs to be synced
 
-* [ ] WiFi-Transmisstion-Handler (handles reading/publishing state changes syncing those to the ESP´s)
+* [x] WiFi-Transmisstion-Handler (handles reading/publishing state changes syncing those to the ESP´s)
 
 ## Level E (Action-Level)
 
-* [ ] Basic Movement (Sensor + Actor) (asynchronous)
+* [x] Basic Movement (Sensor + Actor) (asynchronous)
 
-    * [ ] Move Straight
-    * [ ] Move Back
-    * [ ] Turn Left
-    * [ ] Turn Right
+    * [x] Move Straight
+    * [x] Move Back
+    * [x] Turn Left
+    * [x] Turn Right
 
-* [ ] Error Correction (asynchronous)
-
-    * [ ] Out of Bounds
-    * [ ] Off the Line
-
-## Level F (Service-Level)
+## Level F (Service-Level) (Work in progress)
 
 * [ ] Positioning-Service
 
