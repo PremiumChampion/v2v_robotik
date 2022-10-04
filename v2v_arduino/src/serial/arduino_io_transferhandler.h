@@ -8,6 +8,7 @@ namespace SerialCommunication
     private:
         Broker::Broker<rcv> *rcvBroker;
         Broker::Broker<snd> *sndBroker;
+        unsigned long last_full_sync_time;
 
     public:
         Ardunio_IO_TransferHandler(

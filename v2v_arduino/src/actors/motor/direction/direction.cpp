@@ -7,12 +7,16 @@ namespace Actors
     {
         this->pin = pin;
         this->actor = actor;
-        pinMode(this->pin, OUTPUT);
-        this->run();
     }
 
     HHN_MotorDirection::~HHN_MotorDirection()
     {
+    }
+
+    void HHN_MotorDirection::init()
+    {
+        pinMode(this->pin, OUTPUT);
+        this->run();
     }
 
     void HHN_MotorDirection::run()

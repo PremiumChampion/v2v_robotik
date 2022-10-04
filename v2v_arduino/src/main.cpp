@@ -6,6 +6,7 @@
 void setup()
 {
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
+  Actors::init();
 }
 
 void loop()

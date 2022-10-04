@@ -10,6 +10,7 @@ namespace SerialCommunication
     // method for sending serial data
     void Arduino2esp::snd_data()
     {
+
         if (this->sndBuffer.length() > 0)
         {
             this->serial->print(this->sndBuffer);
@@ -22,7 +23,7 @@ namespace SerialCommunication
     {
         while (this->serial->available())
         {
-            char c = this->serial->read();
+            char c = (char) this->serial->read();
             this->rcvBuffer += c;
         }
         this->lastRecieveTime = millis();
@@ -59,7 +60,6 @@ namespace SerialCommunication
         switch (this->mode)
         {
         case IDLE:
-
             if (this->serial->available())
             {
                 this->mode = RECIEVING;
@@ -74,7 +74,7 @@ namespace SerialCommunication
             break;
         case SENDING:
 
-            if (this->serial->availableForWrite() > 0 && this->sndBuffer.length() > 0)
+            if (this->serial->availableForWrite() && this->sndBuffer.length() > 0)
                 this->snd_data();
             else
                 this->mode = IDLE;

@@ -13,11 +13,18 @@ namespace SerialCommunication
     {
         this->rcvBroker = rcvBroker;
         this->sndBroker = sndBroker;
+        this->last_full_sync_time = millis();
     }
     template <class rcv, class snd>
     void Ardunio_IO_TransferHandler<rcv, snd>::run()
     {
+
         SerialCommunication::EspConnection.run();
+        if (this->last_full_sync_time + 500 < millis())
+        {
+            this->last_full_sync_time = millis();
+            this->sndBroker->reset_pushed_message_indicator();
+        }
         if (this->sndBroker->get_has_changes())
         {
             SerialCommunication::EspConnection.send(this->sndBroker->get_transmission_data());
@@ -33,5 +40,5 @@ namespace SerialCommunication
         SerialCommunication::EspConnection.init();
     }
 
-    Ardunio_IO_TransferHandler<int, int> SENSOR_ACTOR_TRANSFER_HANDLER(&Sensors::MESSAGE_BROKER, &Actors::MESSAGE_BROKER);
+    Ardunio_IO_TransferHandler<int, int> SENSOR_ACTOR_TRANSFER_HANDLER(&Actors::MESSAGE_BROKER, &Sensors::MESSAGE_BROKER);
 } // namespace SerialCommunication
