@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "services/positioning.h"
 #pragma once
 
 namespace Service{
@@ -9,7 +10,7 @@ namespace Service{
     public:
         Forwarding(/* args */);
         ~Forwarding();
-        String calculateNextMovement();
+        Movement calculateNextMovement(Positioning* posObject, int nextTile);
     };
     
   

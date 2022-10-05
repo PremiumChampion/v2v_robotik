@@ -19,14 +19,10 @@ namespace Service{
     private:
         int OwnGridPos;
         int OtherGridPos;
-        int MovementSteps[3];
         Direction facingDirection;
 
     public:
         Positioning(/* args */);
-        int getOwnGridPos();
-        int getOtherGridPos();
-        int* getMovementSteps();
         Direction getDirection();
         void findStartingPos();
         int getCurrentGridPos();
