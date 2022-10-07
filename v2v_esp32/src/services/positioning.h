@@ -19,20 +19,15 @@ namespace Service
 
     class Positioning
     {
-
     private:
-        int OwnGridPos;
-        int OtherGridPos;
-        Direction facingDirection;
+        int currentPositionTile;
+        Direction direction;
 
     public:
         Positioning(/* args */);
-        Direction getDirection();
-        void findStartingPos();
-        int getCurrentGridPos();
+        void setCurrentDirection(Direction direction);
+        void setCurrentPositionTile(int currentPositionTile);
         Direction getCurrentDirection();
-        void setNewGridPos(int newPos);
-        void setNewGridDirection(Direction newDirection);
         int getCurrentPositionTile();
         Direction getCurrentPositionDirection();
         // Interne Methoden die die neue Position bestimmen aus den Informationen des Forwarding Services.
@@ -46,5 +41,4 @@ namespace Service
 
     extern Positioning THIS_ROBOT;
     extern Positioning OTHER_ROBOT;
-
 }

@@ -2,44 +2,30 @@
 
 namespace Service
 {
-
-    Positioning::Positioning()
-    {
+    Positioning::Positioning(){
+        // Set robot starting position to 0 facing NORTH
+        this->direction = Direction::NORTH;
+        this->currentPositionTile = 0;
     }
 
-    int Positioning::getOwnGridPos()
+    void Positioning::setCurrentDirection(Direction direction)
     {
+        this->direction = direction;
     }
 
-    int Positioning::getOtherGridPos()
+    void Positioning::setCurrentPositionTile(int currentPositionTile)
     {
+        this->currentPositionTile = currentPositionTile;
     }
 
-    int *Positioning::getMovementSteps()
+    Direction Positioning::getCurrentDirection()
     {
+        return this->direction;
     }
 
-    Positioning::Direction Positioning::getDirection()
+    int Positioning::getCurrentPositionTile()
     {
+        return this->currentPositionTile;
     }
 
-    void Positioning::findStartingPos()
-    {
-    }
-
-    void Positioning::setOwnGridPos(int Pos)
-    {
-    }
-
-    void Positioning::setOtherGridPos(int Pos)
-    {
-    }
-
-    void Positioning::setMovementSteps(Movement array[])
-    {
-    }
-
-    void Positioning::setGridDirection(Direction newDirection)
-    {
-    }
 }
