@@ -3,43 +3,24 @@
 namespace Service
 {
 
-    Positioning::Positioning()
+    void Positioning::setCurrentDirection(Direction direction)
     {
+        this->direction = direction;
     }
 
-    int Positioning::getOwnGridPos()
+    void Positioning::setCurrentPositionTile(int currentPositionTile)
     {
+        this->currentPositionTile = currentPositionTile;
     }
 
-    int Positioning::getOtherGridPos()
+    Direction Positioning::getCurrentDirection()
     {
+        return this->direction;
     }
 
-    int *Positioning::getMovementSteps()
+    int Positioning::getCurrentPositionTile()
     {
+        return this->currentPositionTile;
     }
 
-    Positioning::Direction Positioning::getDirection()
-    {
-    }
-
-    void Positioning::findStartingPos()
-    {
-    }
-
-    void Positioning::setOwnGridPos(int Pos)
-    {
-    }
-
-    void Positioning::setOtherGridPos(int Pos)
-    {
-    }
-
-    void Positioning::setMovementSteps(Movement array[])
-    {
-    }
-
-    void Positioning::setGridDirection(Direction newDirection)
-    {
-    }
 }
