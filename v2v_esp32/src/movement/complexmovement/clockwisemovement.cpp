@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "rightmovement.h"
+#include "clockwisemovement.h"
 #include "sensors/sensors.h"
 #include "vehicle/vehicle.h"
 
@@ -7,7 +7,7 @@ namespace Movement
 {
     ClockWiseMovement::ClockWiseMovement() : BasicMovement()
     {
-        this->state = R_Starting;
+        this->state = C_Starting;
         // this->isPaused = false;
         this->isDone = false;
     }
@@ -30,7 +30,7 @@ namespace Movement
 
         switch (this->state)
         {
-        case R_Starting:
+        case C_Starting:
             if (left && center && right)
             {
                 Vehicle::ROVER.set(255, 0);
@@ -46,10 +46,10 @@ namespace Movement
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 0);
-                this->state = R_HalfWay;
+                this->state = C_HalfWay;
             }
             break;
-        case R_HalfWay:
+        case C_HalfWay:
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 0);
@@ -68,12 +68,12 @@ namespace Movement
             if (left && center && right)
             {
                 this->isDone = true;
-                this->state = R_Ending;
+                this->state = C_Ending;
                 Vehicle::ROVER.set(0, 0);
             }
 
             break;
-        case R_Ending:
+        case C_Ending:
             break;
         default:
             break;
