@@ -1,19 +1,14 @@
 #pragma once
 
-namespace Service{
-    class Routing
+namespace Service
+{
+    namespace Routing
     {
-    
-    private:
-    public:
-        Routing(/* args */);
-        int calculateRoute(int target);
-        // Chaser: Berechnet den nächsten Punkt zum Chased-one/ Array???
-        // Chased-one: Berechnung zufällig?
-        // 
+        int calculateRoute(int from, int target);
 
-    };
-    
-   
-    
+    } // namespace Routing
+
+    // Chaser: Berechnet den nächsten Punkt zum Chased-one/ Array???
+    // Chased-one: Berechnung zufällig?
+
 }

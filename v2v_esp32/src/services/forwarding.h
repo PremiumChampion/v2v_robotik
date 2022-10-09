@@ -1,18 +1,14 @@
 #include <Arduino.h>
 #include "services/positioning.h"
+#include "movement/movement.h"
+
 #pragma once
 
-namespace Service{
-    class Forwarding
+namespace Service
+{
+    namespace Forwarding
     {
-    private:
-        /* data */
-    public:
-        Forwarding(/* args */);
-        ~Forwarding();
-        Movement calculateNextMovement(Positioning* posObject, int nextTile);
-    };
-    
-  
+        Movement::MovementKind calculateNextMovement(Positioning *posObject, int nextTile);
+    }
 
 }

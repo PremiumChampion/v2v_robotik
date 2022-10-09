@@ -96,5 +96,10 @@ namespace Movement
         }
     }
 
+    MovementKind MovementService::getCurrentMovementKind()
+    {
+        return this->currentMovementKind;
+    }
+
     MovementService MOVEMENTS = MovementService();
 } // namespace Movement

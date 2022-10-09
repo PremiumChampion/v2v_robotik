@@ -3,12 +3,9 @@
 
 namespace Service
 {
-    Routing::Routing(){
-
-    }
-
-    int Routing::calculateRoute(int target){
-        int currentPos = THIS_ROBOT.getCurrentPositionTile();
+    int Routing::calculateRoute(int from, int target)
+    {
+        int currentPos = from;
 
         int targetX = target % 4;
         int targetY = target / 4;
@@ -22,13 +19,17 @@ namespace Service
         int nextX = currentX;
         int nextY = currentY;
 
-        if(deltaX == 0 && deltaY == 0){
+        if (deltaX == 0 && deltaY == 0)
+        {
             return currentPos;
         }
-        
-        if(deltaX <= deltaY || deltaY == 0){
+
+        if (deltaX <= deltaY || deltaY == 0)
+        {
             nextX = nextX + (deltaX > 0 ? 1 : -1);
-        }else{
+        }
+        else
+        {
             nextY = nextY + (deltaY > 0 ? 1 : -1);
         }
 

@@ -4,21 +4,19 @@
 
 namespace Service
 {
-    class TurningTable
+    class TurningEntry
     {
     private:
         Direction clockwise;
         Direction counterclockwise;
+        int positiondelta;
 
     public:
-        TurningEntry(Direction clockwise, Direction counterclockwise);
+        TurningEntry(Direction clockwise, Direction counterclockwise, int positiondelta);
         Direction getClockwise();
-        Direction getCounterclockwise();
+        Direction getCounterClockwise();
+        int calculateNewPosition(int currentposition);
     };
 
-    
-    TurningTable NORTH = TurningTable(EAST, WEST);
-    TurningTable EAST = TurningTable(SOUTH, NORTH);
-    TurningTable SOUTH = TurningTable(WEST, EAST);
-    TurningTable WEST = TurningTable(NORTH, SOUTH);
+    TurningEntry getForDirection(Direction direction);
 } // namespace Service

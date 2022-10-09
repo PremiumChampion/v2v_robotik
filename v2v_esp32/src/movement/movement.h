@@ -32,6 +32,7 @@ namespace Movement
         void run();
         bool waitingForNewDirections();
         void setNewDirections(MovementKind newDirections);
+        MovementKind getCurrentMovementKind();
     };
 
     extern MovementService MOVEMENTS;

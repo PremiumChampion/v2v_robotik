@@ -1,10 +1,9 @@
 #include "forwarding.h"
+#include "movement/movement.h"
 
 namespace Service
 {
-    Forwarding::Forwarding() {}
-
-    Movement calculateNextMovement(int nextTile)
+    Movement::MovementKind Forwarding::calculateNextMovement(int nextTile)
     {
         // Calculate from current tile pos current x and y
         // Calculate, if movement is either in x-axis or y-axis
@@ -21,75 +20,90 @@ namespace Service
 
         if (deltaX == 0 && deltaY == 0)
         {
-            return; 
+            return Movement::MovementKind::Stop;
         }
-        //Calculate movement if movement is in positive x-axis direction
-        if(deltaX == 1){
-            
-            if(currentDirection == Direction::EAST){
-                return Movement::FORWARD;
-            }
-            else if(currentDirection == Direction::NORTH){
-                return Movement::CLOCKWISE;
-            }
-            else if(currentDirection == Direction::SOUTH){
-                return Movement::COUNTERCLOCKWISE;
-            }
-            else{
-                return Movement::CLOCKWISE;
-            }
-        }
-        //Calculate movement in negative x-axis direction
-        else if(deltaX == -1){
-            if(currentDirection == Direction::WEST){
-                return Movement::FORWARD;
-            }
-            else if(currentDirection == Direction::NORTH){
-                return Movement::COUNTERCLOCKWISE;
-            }
-            else if(currentDirection == Direction::SOUTH){
-                return Movement::CLOCKWISE;
-            }
-            else{
-                return Movement::COUNTERCLOCKWISE;
+        // Calculate movement if movement is in positive x-axis direction
+        if (deltaX == 1)
+        {
+
+            if (currentDirection == Direction::EAST)
+            {
+                return Movement::MovementKind::Straight;
             }
 
+            if (currentDirection == Direction::NORTH)
+            {
+                return Movement::MovementKind::Clockwise;
+            }
+
+            if (currentDirection == Direction::SOUTH)
+            {
+                return Movement::MovementKind::Counterclockwise;
+            }
+
+            return Movement::MovementKind::Clockwise;
         }
-        //Calculate movement in positive y-axis direction
-        if(deltaY == 1){
-            
-            if(currentDirection == Direction::NORTH){
-                return Movement::FORWARD;
+        // Calculate movement in negative x-axis direction
+        if (deltaX == -1)
+        {
+            if (currentDirection == Direction::WEST)
+            {
+                return Movement::MovementKind::Straight;
             }
-            else if(currentDirection == Direction::EAST){
-                return Movement::CLOCKWISE;
+
+            if (currentDirection == Direction::NORTH)
+            {
+                return Movement::MovementKind::Counterclockwise;
             }
-            else if(currentDirection == Direction::WEST){
-                return Movement::COUNTERCLOCKWISE;
+
+            if (currentDirection == Direction::SOUTH)
+            {
+                return Movement::MovementKind::Clockwise;
             }
-            else{
-                return Movement::CLOCKWISE;
-            }
+
+            return Movement::MovementKind::Counterclockwise;
         }
-        //Calculate movement in negative y-axis direction
-        else if(deltaY == -1){
-            if(currentDirection == Direction::SOUTH){
-                return Movement::FORWARD;
-            }
-            else if(currentDirection == Direction::WEST){
-                return Movement::COUNTERCLOCKWISE;
-            }
-            else if(currentDirection == Direction::EAST){
-                return Movement::CLOCKWISE;
-            }
-            else{
-                return Movement::COUNTERCLOCKWISE;
+        // Calculate movement in positive y-axis direction
+        if (deltaY == 1)
+        {
+            if (currentDirection == Direction::NORTH)
+            {
+                return Movement::MovementKind::Straight;
             }
 
+            if (currentDirection == Direction::EAST)
+            {
+                return Movement::MovementKind::Clockwise;
+            }
 
+            if (currentDirection == Direction::WEST)
+            {
+                return Movement::MovementKind::Counterclockwise;
+            }
 
+            return Movement::MovementKind::Clockwise;
         }
+        // Calculate movement in negative y-axis direction
+        if (deltaY == -1)
+        {
+            if (currentDirection == Direction::SOUTH)
+            {
+                return Movement::MovementKind::Straight;
+            }
 
+            if (currentDirection == Direction::WEST)
+            {
+                return Movement::MovementKind::Counterclockwise;
+            }
+
+            if (currentDirection == Direction::EAST)
+            {
+                return Movement::MovementKind::Clockwise;
+            }
+
+            return Movement::MovementKind::Counterclockwise;
+        }
+        return Movement::MovementKind::Stop;
     }
 
 } // namespace Service
