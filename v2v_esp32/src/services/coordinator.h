@@ -3,12 +3,8 @@
 
 namespace Service
 {
-    class Coordinator
+    namespace Coordinator
     {
-    private:
-        /* data */
-    public:
-        Coordinator(/* args */);
         void run();
     };
 } // namespace Service
