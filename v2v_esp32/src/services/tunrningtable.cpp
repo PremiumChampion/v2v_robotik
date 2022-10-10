@@ -8,12 +8,12 @@ namespace Service
     TurningEntry _SOUTH(WEST, EAST, +4);
     TurningEntry _WEST(NORTH, SOUTH, -1);
 
-    TurningEntry getForDirection(Direction direction)
+    TurningEntry getTurningEntryForCompassDirection(Direction direction)
     {
         switch (direction)
         {
         case Direction::WEST:
-            return _NORTH;
+            return _WEST;
         case Direction::NORTH:
             return _NORTH;
         case Direction::EAST:

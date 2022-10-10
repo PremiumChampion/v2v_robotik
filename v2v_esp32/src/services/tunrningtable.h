@@ -18,5 +18,5 @@ namespace Service
         int calculateNewPosition(int currentposition);
     };
 
-    TurningEntry getForDirection(Direction direction);
+    TurningEntry getTurningEntryForCompassDirection(Direction direction);
 } // namespace Service

@@ -62,6 +62,7 @@
 * [x] WiFi Broker
 
     * [ ] Figure out which state needs to be synced
+    * [ ] Sync positioning services
 
 * [x] WiFi-Transmisstion-Handler (handles reading/publishing state changes syncing those to the ESP´s)
 
@@ -76,25 +77,22 @@
 
 ## Level F (Service-Level) (Work in progress)
 
-* [ ] Positioning-Service
+* [x] Positioning-Service
 
-    * [ ] Find starting postition (0-15)
-    * [ ] Find starting direction (east/south/west/north)
+    * [ ] Find starting postition (0-15) --> fixe starting points
+    * [ ] Find starting direction (east/south/west/north) --> fixe starting direction
+    * [x] Keep track of current position (0-15)
+    * [x] Keep track of current direction (east/south/west/north)
 
-        * [ ] !Entscheidung!: initial immer norden oder dynamische berechnung?
+* [x] Forwarding-Service
 
-    * [ ] Keep track of current position (0-15)
-    * [ ] Keep track of current direction (east/south/west/north)
+    * [x] Choose next Basic-Movement
+    * [x] Move from pos/direction to adjacent post/direction
 
-* [ ] Forwarding-Service
-
-    * [ ] Choose next Basic-Movement
-    * [ ] Move from pos/direction to adjacent post/direction
-
-* [ ] Routing-Service
+* [x] Routing-Service
     
-    * [ ] Find route from x to y
-    * [ ] Find forwarding points
+    * [x] Find route from x to y
+    * [x] Find forwarding points
 
 * [ ] Decide prisoner/police
 
