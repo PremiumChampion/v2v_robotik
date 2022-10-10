@@ -14,6 +14,19 @@ namespace Service
         {
             currentTarget = nextTarget;
         }
+        int getCurrentTarget()
+        {
+            return currentTarget;
+        }
+        bool stopBeforeTarget = false;
+        void setStopBeforeTarget(bool nextStopBeforeTarget)
+        {
+            stopBeforeTarget = nextStopBeforeTarget;
+        }
+        bool getStopBeforeTarget()
+        {
+            return stopBeforeTarget;
+        }
 
         void run()
         {
@@ -60,16 +73,46 @@ namespace Service
             }
 #pragma endregion
 
-#pragma region calculate next tile
-            int nextTile = Routing::calculateRoute(currentPosition, targetPosition);
-#pragma endregion
+            // #pragma region calculate next tile
+            //             int nextTile = Routing::calculateRoute(currentPosition, targetPosition);
+            // #pragma endregion
 
-#pragma region calculate next movement
-            Movement::MovementKind next_movement = Forwarding::calculateNextMovement(&THIS_ROBOT, nextTile);
-#pragma endregion
+            // #pragma region calculate next movement
+            //             Movement::MovementKind next_movement = Forwarding::calculateNextMovement(&THIS_ROBOT, nextTile);
+            // #pragma endregion
+            int nextTile = 0;
+            Movement::MovementKind next_movement = Movement::Stop;
+
+            calculateRoute(&nextTile, &next_movement);
+
+            // if nextTile gleich currenttarget and next movement straight --> game won
+            if (nextTile == targetPosition && next_movement == Movement::Straight && stopBeforeTarget)
+            {
+                return;
+            }
 
 #pragma region set new directions
             Movement::MOVEMENTS.setNewDirections(next_movement);
+#pragma endregion
+        }
+
+        void calculateRoute(int *nextTile, Movement::MovementKind *next_movement)
+        {
+
+#pragma region variable section
+            Direction currentDirection = THIS_ROBOT.getCurrentDirection();
+            int currentPosition = THIS_ROBOT.getCurrentPositionTile();
+            // todo: we need to set the target position from the outside
+            // int targetPosition = OTHER_ROBOT.getCurrentPositionTile();
+            int targetPosition = currentTarget;
+#pragma endregion
+
+#pragma region calculate next tile
+            *nextTile = Routing::calculateRoute(currentPosition, targetPosition);
+#pragma endregion
+
+#pragma region calculate next movement
+            *next_movement = Forwarding::calculateNextMovement(&THIS_ROBOT, *nextTile);
 #pragma endregion
         }
     } // namespace Coordinator

@@ -5,7 +5,12 @@ namespace Service
 {
     namespace Coordinator
     {
-        void setCurrentTarget(int currentTarget);
         void run();
+        void calculateRoute(int *nextTile, Movement::MovementKind *nextMovement);
+        
+        void setStopBeforeTarget(bool nextStopBeforeTarget);
+        bool getStopBeforeTarget();
+        void setCurrentTarget(int currentTarget);
+        int getCurrentTarget();
     };
 } // namespace Service
