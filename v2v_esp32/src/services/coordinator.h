@@ -5,6 +5,7 @@ namespace Service
 {
     namespace Coordinator
     {
+        void setCurrentTarget(int currentTarget);
         void run();
     };
 } // namespace Service
