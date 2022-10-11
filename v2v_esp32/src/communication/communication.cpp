@@ -13,9 +13,11 @@ namespace COM
 #if ROLE == CHASED
         WLAN::HHN_Server server = WLAN::HHN_Server();
 #endif
+
         HHN_Client::Socket externalClient = HHN_Client::Socket();
         // Delete move broker to right place after everything is implemented correctly
-        Broker::Broker<String> broker = Broker::Broker<String>(10);
+        Broker::Broker<int> RCV_BROKER(SYSTEM_INFORMATION_TYPE_COUNT);
+        Broker::Broker<int> SND_BROKER(SYSTEM_INFORMATION_TYPE_COUNT);
 
         void setup()
         {

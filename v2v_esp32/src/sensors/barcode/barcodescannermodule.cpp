@@ -1,5 +1,6 @@
 #include "barcodescannermodule.h"
 #include "sensors/sensors.h"
+#include "communication/communication.h"
 
 namespace Sensors
 {
@@ -12,6 +13,7 @@ namespace Sensors
     void HHN_V_BarcodeScannerModule::run()
     {
         this->current_code_value = Sensors::MESSAGE_BROKER.get(Sensor::QR_CODE);
+        COM::SND_BROKER.set(COM::POSITION, String(this->current_code_value, BIN)); // Send current position to other robot
     }
 
     int HHN_V_BarcodeScannerModule::getCurrentCodeValue()

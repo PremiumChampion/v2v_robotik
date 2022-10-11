@@ -5,6 +5,7 @@
 #include "actors/actors.h"
 #include "sensors/sensors.h"
 #include "services/coordinator.h"
+#include "services/positionsyncservice.h"
 #include "communication/communication.h"
 #include "movement/movement.h"
 #include "game/loop.h"
@@ -45,6 +46,7 @@ void loop()
   COM::WIFI_TRANSFER_HANDLER.run();
     
   Service::Coordinator::run();
+  Service::PositionSync::run();
   Game::run();
 
   // sync sensor and actor data between arduino and esp.
