@@ -5,20 +5,20 @@
 
 namespace COM
 { // Uncomment and replace external client with correct pointer and insert the right pointer to the broker
-    TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&COM::externalClient, &COM::RCV_BROKER, &COM::SND_BROKER);
+    TransferHandler WIFI_TRANSFER_HANDLER = TransferHandler(&COM::externalClient, &COM::broker);
 
     void TransferHandler::run()
     {
         this->client->run();
 
-        if (this->snd_broker->get_has_changes())
+        if (this->broker->get_has_changes())
         {
-            this->client->send(this->snd_broker->get_transmission_data());
+            this->client->send(this->broker->get_transmission_data());
         }
 
         if (this->client->hasClientData())
         {
-            this->rcv_broker->rcv_transmission_data(this->client->receive());
+            this->broker->rcv_transmission_data(this->client->receive());
         }
     }
 
@@ -28,11 +28,10 @@ namespace COM
         COM::setup();
     }
 
-    TransferHandler::TransferHandler(HHN_Client::Socket *socket, Broker::Broker<String> *rcv_broker, Broker::Broker<String> *snd_broker)
+    TransferHandler::TransferHandler(HHN_Client::Socket *socket, Broker::Broker<String> *broker)
     {
         this->client = socket;
-        this->rcv_broker = rcv_broker;
-        this->snd_broker = snd_broker;
+        this->broker = broker;
     }
 
 } // namespace COM

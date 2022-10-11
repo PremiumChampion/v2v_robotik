@@ -16,8 +16,7 @@ namespace COM
 
         HHN_Client::Socket externalClient = HHN_Client::Socket();
         // Delete move broker to right place after everything is implemented correctly
-        Broker::Broker<int> RCV_BROKER(SYSTEM_INFORMATION_TYPE_COUNT);
-        Broker::Broker<int> SND_BROKER(SYSTEM_INFORMATION_TYPE_COUNT);
+        Broker::Broker<int> broker(SYSTEM_INFORMATION_TYPE_COUNT);
 
         void setup()
         {

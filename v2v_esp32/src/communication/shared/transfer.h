@@ -8,11 +8,10 @@ namespace COM
     {
     private:
         HHN_Client::Socket* client;
-        Broker::Broker<String>* rcv_broker;
-        Broker::Broker<String>* snd_broker;
+        Broker::Broker<String>* broker;
 
     public:
-        TransferHandler(HHN_Client::Socket* socket, Broker::Broker<String>* rcv_broker, Broker::Broker<String>* snd_broker);
+        TransferHandler(HHN_Client::Socket* socket, Broker::Broker<String>* rcv_broker);
         void run();
         void init();
     };
