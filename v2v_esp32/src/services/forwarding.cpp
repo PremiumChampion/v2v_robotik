@@ -58,7 +58,7 @@ namespace Service
         Movement::MovementKind::Straight,          // South
         Movement::MovementKind::Counterclockwise); // West
 
-    Movement::MovementKind Forwarding::calculateNextMovement(int nextTile)
+    Movement::MovementKind Forwarding::calculateNextMovement(Positioning *posObject, int nextTile)
     {
         // Calculate from current tile pos current x and y
         // Calculate, if movement is either in x-axis or y-axis

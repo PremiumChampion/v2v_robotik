@@ -16,7 +16,7 @@ namespace COM
 
         HHN_Client::Socket externalClient = HHN_Client::Socket();
         // Delete move broker to right place after everything is implemented correctly
-        Broker::Broker<int> broker(SYSTEM_INFORMATION_TYPE_COUNT);
+        Broker::Broker<String> broker(WIFI_MESSAGE_SIZE);
 
         void setup()
         {

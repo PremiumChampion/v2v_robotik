@@ -29,5 +29,5 @@ namespace COM
     void setup();
 
     extern HHN_Client::Socket externalClient; // Socket externalClient = Socket();
-     Broker::Broker<String> broker = Broker::Broker<String>(WIFI_MESSAGE_SIZE);
+    extern Broker::Broker<String> broker;
 }

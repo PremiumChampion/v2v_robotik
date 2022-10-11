@@ -28,6 +28,6 @@ namespace Service
         return this->currentPositionTile;
     }
 
-    Positioning THIS_ROBOT();
-    Positioning OTHER_ROBOT();
+    Positioning THIS_ROBOT = Positioning();
+    Positioning OTHER_ROBOT = Positioning();
 }
