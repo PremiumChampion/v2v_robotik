@@ -5,12 +5,10 @@ namespace Game
         void init()
         {
 #pragma region wait for criminal ready
+    //Über WiFi Broker auf Nachricht warten
+        //Platzhalter im messages array für ready Nachricht definieren
 #pragma endregion
 
-#pragma region generate random position
-#pragma endregion
-#pragma region move to random position
-#pragma endregion
 
 #pragma region start game
 #pragma endregion
