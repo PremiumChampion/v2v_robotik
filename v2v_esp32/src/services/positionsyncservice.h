@@ -2,6 +2,8 @@
 
 namespace Service
 {
-    void run();
-    
+    namespace PositionSync
+    {
+        void run();
+    }
 } // namespace Service
