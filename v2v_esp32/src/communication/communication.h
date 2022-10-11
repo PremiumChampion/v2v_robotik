@@ -14,6 +14,17 @@ namespace COM
         extern WLAN::HHN_Server server;
     #endif
 
+    static int WIFI_MESSAGE_SIZE = 7;
+    
+    enum WIFI_MESSAGE{
+        POLICE_POSITION,
+        CRIMINAL_POSITION,
+        SYNCPLAY,
+        POLICE_INIT,
+        CRIMINAL_INIT,
+        CURRENT_CHASER_POSITON,
+        CURRENT_CHASED_POSITION,
+    };
 
     void setup();
     extern HHN_Client::Socket externalClient; // Socket externalClient = Socket();

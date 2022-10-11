@@ -1,14 +1,17 @@
+#include "services/coordinator.h"
+#include "movement/movement.h"
+#include "services/positioning.h"
 namespace Game
 {
     namespace Police
     {
+        // MUST NOT BLOCK THE FLOW
         void init()
         {
 #pragma region wait for criminal ready
-    //Über WiFi Broker auf Nachricht warten
-        //Platzhalter im messages array für ready Nachricht definieren
+            //Über WiFi Broker auf Nachricht warten
+            // Platzhalter im messages array für ready Nachricht definieren
 #pragma endregion
-
 
 #pragma region start game
 #pragma endregion
@@ -16,29 +19,33 @@ namespace Game
         void run()
         {
 #pragma region check for win condition
-            // int nextTile = 0;
-            // Movement::MovementKind next_movement = Movement::Stop;
+            int nextTile = 0;
+            int criminalPosition = Service::OTHER_ROBOT.getCurrentPositionTile();
+            Movement::MovementKind next_movement = Movement::Stop;
 
-            // calculateRoute(&nextTile, &next_movement);
+            Service::Coordinator::calculateRoute(&nextTile, &next_movement);
             // if nextTile gleich currenttarget and next movement straight --> game won
-            // if (nextTile == targetPosition && next_movement == Movement::Straight && stopBeforeTarget)
+            bool police_has_won = nextTile == criminalPosition && next_movement == Movement::Straight;
 #pragma endregion
 
 #pragma region if won
-
+            if (police_has_won)
+            {
 #pragma region switch role
 #pragma endregion
 #pragma region set reinitgame flag
 #pragma endregion
-
+            }
 #pragma endregion
 
 #pragma region not won
-
+            if (!police_has_won)
+            {
 #pragma region navigate to OTHER_ROBOT
-// setCurrentTarget(OTHER_ROBOT.getPositionTile());
+                Service::Coordinator::setStopBeforeTarget(true);
+                Service::Coordinator::setCurrentTarget(criminalPosition);
 #pragma endregion
-
+            }
 #pragma endregion
         }
     } // namespace Police

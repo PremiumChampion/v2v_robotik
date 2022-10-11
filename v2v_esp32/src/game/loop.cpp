@@ -6,6 +6,27 @@
 namespace Game
 {
     int currentRole = ROLE;
+
+    void setCurrentRole(int newRole)
+    {
+        currentRole = newRole;
+    }
+    int getCurrentRole()
+    {
+        return currentRole;
+    }
+
+    GameState currentGameState = INITIALISING;
+
+    void setGameState(GameState newGameState)
+    {
+        currentGameState = newGameState;
+    }
+    GameState getGameState()
+    {
+        return currentGameState;
+    }
+
     void init()
     {
 #pragma region wait for sync
@@ -37,18 +58,23 @@ namespace Game
     }
     void run()
     {
-
+        if (currentGameState == INITIALISING)
+        {
+            
+        }
+        if (currentGameState == RUNNING)
+        {
 #pragma region should i run or chase the other one
-        if (currentRole == CHASED)
-        {
-            Criminal::run();
-        }
-        if (currentRole == CHASER)
-        {
-            Police::run();
-        }
+            if (currentRole == CHASED)
+            {
+                Criminal::run();
+            }
+            if (currentRole == CHASER)
+            {
+                Police::run();
+            }
 #pragma endregion
-
+        }
     }
 
 } // namespace Game
