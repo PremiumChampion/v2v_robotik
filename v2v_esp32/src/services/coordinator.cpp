@@ -1,7 +1,7 @@
 #include "movement/movement.h"
 #include "coordinator.h"
 #include "positioning.h"
-#include "tunrningtable.h"
+#include "turningtable.h"
 #include "routing.h"
 #include "forwarding.h"
 
@@ -10,6 +10,7 @@ namespace Service
     namespace Coordinator
     {
         int currentTarget = 0; // target coordinate 0-15
+        bool stopBeforeTarget = false;
         void setCurrentTarget(int nextTarget)
         {
             currentTarget = nextTarget;
@@ -18,7 +19,6 @@ namespace Service
         {
             return currentTarget;
         }
-        bool stopBeforeTarget = false;
         void setStopBeforeTarget(bool nextStopBeforeTarget)
         {
             stopBeforeTarget = nextStopBeforeTarget;
