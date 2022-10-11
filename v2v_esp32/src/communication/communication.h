@@ -14,9 +14,9 @@ namespace COM
 
     enum SystemInformation
     {
-        position,
-        ready,
-        won,
+        POSITION,
+        READY,
+        WON,
     };
 
 #if ROLE == CHASED

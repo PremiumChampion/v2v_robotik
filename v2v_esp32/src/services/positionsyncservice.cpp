@@ -12,7 +12,7 @@ namespace Service
             int thisRobotPositionTile = Sensors::BAR_CODE_SCANNER.getCurrentCodeValue();
             THIS_ROBOT.setCurrentPositionTile(thisRobotPositionTile); // update position of this robot
 
-            int otherRobotPositionTile = COM::RCV_BROKER.get(COM::position).toInt();
+            int otherRobotPositionTile = COM::RCV_BROKER.get(COM::POSITION).toInt();
             OTHER_ROBOT.setCurrentPositionTile(otherRobotPositionTile); // update position of other robot
         }
     }
