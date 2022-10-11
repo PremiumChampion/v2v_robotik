@@ -14,4 +14,9 @@ namespace Sensors
         this->current_code_value = Sensors::MESSAGE_BROKER.get(Sensor::QR_CODE);
     }
 
+    int HHN_V_BarcodeScannerModule::getCurrentCodeValue()
+    {
+        return this->current_code_value;
+    }
+
 } // namespace Sensors

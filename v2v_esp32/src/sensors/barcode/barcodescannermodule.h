@@ -13,6 +13,7 @@ namespace Sensors
         HHN_V_BarcodeScannerModule();
         ~HHN_V_BarcodeScannerModule();
         void run();
+        int getCurrentCodeValue();
     };
 
 } // namespace Sensors
