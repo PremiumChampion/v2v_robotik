@@ -60,7 +60,7 @@ namespace Game
     {
         if (currentGameState == INITIALISING)
         {
-            
+            init();
         }
         if (currentGameState == RUNNING)
         {
