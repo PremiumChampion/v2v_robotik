@@ -21,8 +21,10 @@ namespace COM
         // Syncplay - Need more variables to have a handshake between criminal and police.
         SYNCPLAY,
         // Police in the initialisation phase
+        // Contains "Done", if the police is done with his initial moving
         POLICE_INIT,
         // Criminal in the initialisation phase
+        // Contains "Done", if the police is done with his initial moving
         CRIMINAL_INIT,
         // Rename to robot1. Static position slot for first robot, due to context swich may not be syncronos.
         CURRENT_CHASER_POSITON,

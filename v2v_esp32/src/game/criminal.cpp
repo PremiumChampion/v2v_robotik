@@ -8,7 +8,8 @@ namespace Game
     namespace Criminal
     {
         INIT_STATE state = GENERATING_POSITION;
-        // MUST NOT BLOCK THE FLOW
+        // function, that is called several times, until the whole initialization of the criminal is done
+        //MUST NOT BLOCK THE FLOW
         void init()
         {
             
@@ -42,12 +43,12 @@ namespace Game
                 Movement::MovementKind next_movement = Movement::Stop;
 
                 Service::Coordinator::calculateRoute(&nextTile, &next_movement);
-                // if nextTile gleich currenttarget and next movement straight --> game won
                 bool criminal_has_reached_starting_position = nextTile == targetTile && next_movement == Movement::Stop;
 
                 if (criminal_has_reached_starting_position)
-                {
-                    COM::broker.set(COM::CRIMINAL_INIT, String());
+                {   
+                    //Set message in broker, that criminal is done moving
+                    COM::broker.set(COM::CRIMINAL_INIT, String("Done"));
                     state = WAITING_FOR_POLICE_MOVEMENT;
                 }
             }
@@ -58,10 +59,20 @@ namespace Game
 #pragma region wait for police ready
             // Warte auf Signal, wenn der Barcode gelesen wurde, dass man an der Startposition angekommen ist
             // Arduino Broker
+            if(state==WAITING_FOR_POLICE_MOVEMENT){
+                if(COM::broker.get(COM::POLICE_INIT) == "Done"){
+                    state = WAITING_FOR_GAMESTART;
+                }
+            }
 #pragma endregion
 
 #pragma region start game
+
             // Start game -> setze ein FLag auf true
+            if(state==WAITING_FOR_GAMESTART){
+
+            }
+
 #pragma endregion
         }
 
