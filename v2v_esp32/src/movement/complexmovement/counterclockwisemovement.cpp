@@ -37,11 +37,11 @@ namespace Movement
             }
             if (left && center && !right)
             {
-                Vehicle::ROVER.set(255, 190);
+                Vehicle::ROVER.set(255, 180 + TURN_DELTA);
             }
             if (!left && center && right)
             {
-                Vehicle::ROVER.set(255, 170);
+                Vehicle::ROVER.set(255, 180 - TURN_DELTA);
             }
             if (!left && center && !right)
             {
@@ -57,12 +57,12 @@ namespace Movement
 
             if (left && center && !right)
             {
-                Vehicle::ROVER.set(255, 190);
+                Vehicle::ROVER.set(255, 180 + TURN_DELTA);
             }
 
             if (!left && center && right)
             {
-                Vehicle::ROVER.set(255, 170);
+                Vehicle::ROVER.set(255, 180 - TURN_DELTA);
             }
 
             if (left && center && right)

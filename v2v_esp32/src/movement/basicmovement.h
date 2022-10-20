@@ -1,5 +1,7 @@
 #include "util/pausable.h"
 
+#define TURN_DELTA 20
+
 #pragma once
 
 namespace Movement

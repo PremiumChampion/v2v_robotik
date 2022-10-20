@@ -8,17 +8,10 @@ namespace Movement
     ClockWiseMovement::ClockWiseMovement() : BasicMovement()
     {
         this->state = C_Starting;
-        // this->isPaused = false;
         this->isDone = false;
     }
     void ClockWiseMovement::run()
     {
-        // if (this->isPaused)
-        // {
-        //     Vehicle::ROVER.set(0, 90);
-        //     return;
-        // }
-
         if (this->isDone)
         {
             return;
@@ -37,11 +30,11 @@ namespace Movement
             }
             if (left && center && !right)
             {
-                Vehicle::ROVER.set(255, 350);
+                Vehicle::ROVER.set(255, 360 - TURN_DELTA);
             }
             if (!left && center && !right)
             {
-                Vehicle::ROVER.set(255, 10);
+                Vehicle::ROVER.set(255, 0 + TURN_DELTA);
             }
             if (!left && center && !right)
             {
@@ -57,12 +50,12 @@ namespace Movement
 
             if (left && center && !right)
             {
-                Vehicle::ROVER.set(255, 350);
+                Vehicle::ROVER.set(255, 360 - TURN_DELTA);
             }
 
             if (!left && center && right)
             {
-                Vehicle::ROVER.set(255, 10);
+                Vehicle::ROVER.set(255, 0 + TURN_DELTA);
             }
 
             if (left && center && right)
