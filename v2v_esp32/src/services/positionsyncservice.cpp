@@ -10,9 +10,15 @@ namespace Service
         void run()
         {
             int thisRobotPositionTile = Sensors::BAR_CODE_SCANNER.getCurrentCodeValue();
-            THIS_ROBOT.setCurrentPositionTile(thisRobotPositionTile); // update position of this robot
+
             
-            // TODO: update position of other robot
+            // TODO: update position in broker
+            COM::broker.set(COM::getThisPositionIndex(), String(thisRobotPositionTile));
+            COM::broker.get(COM::getOtherPositionIndex());
+
+            // update positions
+            THIS_ROBOT.setCurrentPositionTile(thisRobotPositionTile); 
+            OTHER_ROBOT.setCurrentPositionTile(COM::broker.get(COM::getOtherPositionIndex()).toInt());
         }
     }
 } // namespace Service

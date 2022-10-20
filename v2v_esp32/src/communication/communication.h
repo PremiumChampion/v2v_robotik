@@ -32,6 +32,12 @@ namespace COM
         CURRENT_CHASED_POSITION,
     };
 
+    enum SYNCSTATE{
+        CONNECTION,
+        ACKNOWLAGE,
+        ESTABLISHED,
+    };
+
     WIFI_MESSAGE getThisPositionIndex()
     {
 #if ROLE == CHASED

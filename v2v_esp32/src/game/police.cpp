@@ -6,6 +6,8 @@
 #include "police.h"
 #include "communication/communication.h"
 #include "criminal.h"
+#include "game/loop.h"
+
 namespace Game
 {
     namespace Police
@@ -72,8 +74,13 @@ namespace Game
 
 
 #pragma region start game
-            if(state==WAITING_FOR_GAMESTART){
-                
+if (state == WAITING_FOR_GAMESTART)
+            {
+                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ACKNOWLAGE)
+                {
+                    COM::broker.set(COM::SYNCPLAY, String(COM::ESTABLISHED));
+                    setGameState(RUNNING);
+                }
             }
 
 #pragma endregion
@@ -93,9 +100,13 @@ namespace Game
 #pragma region if won
             if (police_has_won)
             {
-#pragma region switch role
+#pragma region reset borker init vars
 #pragma endregion
-#pragma region set reinitgame flag
+
+#pragma region switch role (optional)
+#pragma endregion
+
+#pragma region reinit
 #pragma endregion
             }
 #pragma endregion

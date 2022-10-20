@@ -3,16 +3,17 @@
 #include "communication/communication.h"
 #include "services/positioning.h"
 #include "services/coordinator.h"
+#include "game/loop.h"
 namespace Game
 {
     namespace Criminal
     {
         INIT_STATE state = GENERATING_POSITION;
         // function, that is called several times, until the whole initialization of the criminal is done
-        //MUST NOT BLOCK THE FLOW
+        // MUST NOT BLOCK THE FLOW
         void init()
         {
-            
+
 #pragma region generate random position
             if (state == GENERATING_POSITION)
             {
@@ -46,8 +47,8 @@ namespace Game
                 bool criminal_has_reached_starting_position = nextTile == targetTile && next_movement == Movement::Stop;
 
                 if (criminal_has_reached_starting_position)
-                {   
-                    //Set message in broker, that criminal is done moving
+                {
+                    // Set message in broker, that criminal is done moving
                     COM::broker.set(COM::CRIMINAL_INIT, String("Done"));
                     state = WAITING_FOR_POLICE_MOVEMENT;
                 }
@@ -59,8 +60,10 @@ namespace Game
 #pragma region wait for police ready
             // Warte auf Signal, wenn der Barcode gelesen wurde, dass man an der Startposition angekommen ist
             // Arduino Broker
-            if(state==WAITING_FOR_POLICE_MOVEMENT){
-                if(COM::broker.get(COM::POLICE_INIT) == "Done"){
+            if (state == WAITING_FOR_POLICE_MOVEMENT)
+            {
+                if (COM::broker.get(COM::POLICE_INIT).equals("Done"))
+                {
                     state = WAITING_FOR_GAMESTART;
                 }
             }
@@ -69,8 +72,18 @@ namespace Game
 #pragma region start game
 
             // Start game -> setze ein FLag auf true
-            if(state==WAITING_FOR_GAMESTART){
+            if (state == WAITING_FOR_GAMESTART)
+            {
+                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::CONNECTION)
+                {
+                    COM::broker.set(COM::SYNCPLAY, String(COM::ACKNOWLAGE));
+                }
 
+                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ESTABLISHED)
+                {
+                    // state = next logical state
+                    setGameState(RUNNING);
+                }
             }
 
 #pragma endregion
@@ -87,10 +100,13 @@ namespace Game
 #pragma endregion
 
 #pragma region if lost
-
-#pragma region switch role
+#pragma region wait for reinit flag
 #pragma endregion
-#pragma region set reinitgame flag
+
+#pragma region switch role (optional)
+#pragma endregion
+
+#pragma region reinit
 #pragma endregion
 
 #pragma endregion
