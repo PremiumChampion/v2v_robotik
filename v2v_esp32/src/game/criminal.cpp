@@ -76,7 +76,7 @@ namespace Game
             {
                 if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::CONNECTION)
                 {
-                    COM::broker.set(COM::SYNCPLAY, String(COM::ACKNOWLAGE));
+                    COM::broker.set(COM::SYNCPLAY, String(COM::ACKNOWLEDGE));
                 }
 
                 if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ESTABLISHED)
@@ -91,12 +91,11 @@ namespace Game
 
         void run()
         {
-#pragma region check for loss condition
 
 #pragma region wait for police to tell you that you lost
             // Signal kommt von Police -> darauf hören
+            if (COM::broker.get(COM::POLICE_WON).toInt()){
             // WiFi Broker
-#pragma endregion
 #pragma endregion
 
 #pragma region if lost
@@ -104,18 +103,22 @@ namespace Game
 #pragma endregion
 
 #pragma region switch role (optional)
+                Game::setCurrentRole(CHASER);
+
 #pragma endregion
 
 #pragma region reinit
+                setGameState(INITIALISING);
 #pragma endregion
 
+            }
 #pragma endregion
 
+            if (!COM::broker.get(COM::POLICE_WON).toInt()){
 #pragma region game ongoing
 
 #pragma region wait
-#pragma endregion
-
+            }
 #pragma endregion
         }
     } // namespace Criminal

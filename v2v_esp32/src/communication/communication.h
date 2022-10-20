@@ -10,7 +10,7 @@
 #define ROLE CHASED
 namespace COM
 {
-    static int WIFI_MESSAGE_SIZE = 7;
+    static int WIFI_MESSAGE_SIZE = 8;
 
     enum WIFI_MESSAGE
     {
@@ -30,11 +30,12 @@ namespace COM
         CURRENT_CHASER_POSITON,
         // Rename to robot2. Static position slot for second robot, due to context swich may not be syncronos.
         CURRENT_CHASED_POSITION,
+        POLICE_WON,
     };
 
     enum SYNCSTATE{
         CONNECTION,
-        ACKNOWLAGE,
+        ACKNOWLEDGE,
         ESTABLISHED,
     };
 

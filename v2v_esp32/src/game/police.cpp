@@ -76,7 +76,7 @@ namespace Game
 #pragma region start game
 if (state == WAITING_FOR_GAMESTART)
             {
-                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ACKNOWLAGE)
+                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ACKNOWLEDGE)
                 {
                     COM::broker.set(COM::SYNCPLAY, String(COM::ESTABLISHED));
                     setGameState(RUNNING);
@@ -100,13 +100,31 @@ if (state == WAITING_FOR_GAMESTART)
 #pragma region if won
             if (police_has_won)
             {
-#pragma region reset borker init vars
+#pragma region reset broker init vars
+                // COM::broker.set(COM::POLICE_POSITION, String());
+                // COM::broker.set(COM::CRIMINAL_POSITION, String());
+                COM::broker.set(COM::SYNCPLAY, String(COM::CONNECTION));
+                COM::broker.set(COM::POLICE_INIT, String(0));
+                COM::broker.set(COM::CRIMINAL_INIT, String(0));
+                // COM::broker.set(COM::CURRENT_CHASER_POSITON, String());
+                // COM::broker.set(COM::CURRENT_CHASED_POSITION, String());
+                COM::broker.set(COM::POLICE_WON, String(0));
 #pragma endregion
 
+                // Send Police has won flag
+                COM::broker.set(COM::POLICE_WON, String(1));
+
 #pragma region switch role (optional)
+
+                Game::setCurrentRole(CHASED);
+                // Switch own role in loop.cpp with set currentRole
+                // Send switch role over the wifi broker to criminal
+                // Criminal sets his own role according to the taken role from police
+                // Check?
 #pragma endregion
 
 #pragma region reinit
+                setGameState(INITIALISING);
 #pragma endregion
             }
 #pragma endregion
