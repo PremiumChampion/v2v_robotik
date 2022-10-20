@@ -1,6 +1,9 @@
 #include "actors/motor/motor.h"
 #include "vehicle.h"
 
+#define MIN_MOVEMENT_SPEED 30
+#define MAX_MOVEMENT_SPEED 50
+
 namespace Vehicle
 {
 
@@ -72,11 +75,12 @@ namespace Vehicle
 
         outSpeed = abs(graphedSpeed);
 
-        // we only want movable speeds from 30...60 only
-        // non movable speeds are 0
+        // we only want movable speeds from MIN_MOVEMENT_SPEED...MAX_MOVEMENT_SPEED only
+        // non movable speeds below MIN_MOVEMENT_SPEED are maped to 0
 
-        outSpeed = map(outSpeed, 0, 255,29,50);
-        if(outSpeed < 30){
+        outSpeed = map(outSpeed, 0, 255, MIN_MOVEMENT_SPEED - 1, MAX_MOVEMENT_SPEED);
+        if (outSpeed < 30)
+        {
             outSpeed = 0;
         }
 
@@ -97,9 +101,6 @@ namespace Vehicle
             outDirection = Actors::MotorDirection::FORWARD;
 #pragma endregion
         // output value
-
-
-
 
         motor->set(outSpeed, outDirection);
     }
