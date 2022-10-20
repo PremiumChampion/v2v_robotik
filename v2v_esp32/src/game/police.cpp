@@ -42,6 +42,7 @@ namespace Game
 
                 COM::broker.set(COM::POLICE_POSITION, String(nextTile));
                 Service::Coordinator::setCurrentTarget(nextTile);
+                Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
                 state = WAITING_FOR_POLICE_MOVEMENT;
             }
@@ -134,6 +135,7 @@ if (state == WAITING_FOR_GAMESTART)
             {
 #pragma region navigate to OTHER_ROBOT
                 Service::Coordinator::setStopBeforeTarget(true);
+                Service::Coordinator::setRunWithCollisionAvoidance(false);
                 Service::Coordinator::setCurrentTarget(criminalPosition);
 #pragma endregion
             }

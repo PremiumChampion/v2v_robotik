@@ -28,6 +28,16 @@ namespace Service
             return stopBeforeTarget;
         }
 
+        bool runWithCollisionAvoidance = true;
+        void setRunWithCollisionAvoidance(bool collisionAvoidanceEnabled)
+        {
+            runWithCollisionAvoidance = collisionAvoidanceEnabled;
+        }
+        bool getRunWithCollisionAvoidance()
+        {
+            return runWithCollisionAvoidance;
+        }
+
         void run()
         {
 #pragma region check if new directions are needed
@@ -102,13 +112,23 @@ namespace Service
 #pragma region variable section
             Direction currentDirection = THIS_ROBOT.getCurrentDirection();
             int currentPosition = THIS_ROBOT.getCurrentPositionTile();
+            int blockedPosition = OTHER_ROBOT.getCurrentPositionTile();
             // todo: we need to set the target position from the outside
             // int targetPosition = OTHER_ROBOT.getCurrentPositionTile();
             int targetPosition = currentTarget;
 #pragma endregion
 
 #pragma region calculate next tile
-            *nextTile = Routing::calculateRoute(currentPosition, targetPosition);
+            if (runWithCollisionAvoidance)
+            {
+                // enables the robot to drive around a specified position
+                *nextTile = Routing::calculateRouteWithCollisionAvoidance(currentPosition, targetPosition, blockedPosition);
+            }
+            if (!runWithCollisionAvoidance)
+            {
+                // enables the robot to drive straight to the other robot
+                *nextTile = Routing::calculateRoute(currentPosition, targetPosition);
+            }
 #pragma endregion
 
 #pragma region calculate next movement

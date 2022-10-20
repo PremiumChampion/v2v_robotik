@@ -4,11 +4,7 @@ namespace Service
 {
     namespace Routing
     {
+        int calculateRouteWithCollisionAvoidance(int from, int target, int blocked);
         int calculateRoute(int from, int target);
-
     } // namespace Routing
-
-    // Chaser: Berechnet den nächsten Punkt zum Chased-one/ Array???
-    // Chased-one: Berechnung zufällig?
-
 }

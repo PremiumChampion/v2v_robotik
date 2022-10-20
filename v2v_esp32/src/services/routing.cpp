@@ -1,9 +1,49 @@
+#include <Arduino.h>
 #include "routing.h"
 #include "positioning.h"
 
 namespace Service
 {
-    int calculateWithCollisionCheck(int from, int target, int blocked)
+    int getRelativeRegion(int deltaX, int deltaY);
+    int getRelativeRegion(int deltaX, int deltaY)
+    {
+        int region = 0;
+        if (deltaX < 0 && deltaY < 0)
+        {
+            region = 0;
+        }
+        if (deltaX == 0 && deltaY < 0)
+        {
+            region = 1;
+        }
+        if (deltaX > 0 && deltaY < 0)
+        {
+            region = 2;
+        }
+        if (deltaX > 0 && deltaY == 0)
+        {
+            region = 3;
+        }
+        if (deltaX > 0 && deltaY > 0)
+        {
+            region = 4;
+        }
+        if (deltaX == 0 && deltaY > 0)
+        {
+            region = 5;
+        }
+        if (deltaX < 0 && deltaY > 0)
+        {
+            region = 6;
+        }
+        if (deltaX < 0 && deltaY == 0)
+        {
+            region = 7;
+        }
+        return region;
+    }
+
+    int Routing::calculateRouteWithCollisionAvoidance(int from, int target, int blocked)
     {
         if (target == blocked)
         {
@@ -19,57 +59,178 @@ namespace Service
         int blockedX = blocked % 4;
         int blockedY = blocked / 4;
 
-        int deltaX = targetX - fromX;
-        int deltaY = targetY - fromY;
+        int deltaTargetX = targetX - fromX;
+        int deltaTargetY = targetY - fromY;
+
+        int deltaBlockedX = blockedX - fromX;
+        int deltaBlockedY = blockedY - fromY;
 
         int nextX = fromX;
         int nextY = fromY;
 
-        if (deltaX <= deltaY || deltaY == 0)
+        int moveX = 0;
+        if (deltaTargetX > 0)
         {
-            nextX = nextX + (deltaX > 0 ? 1 : -1);
+            moveX = 1;
         }
-        else
+        if (deltaTargetX < 0)
         {
-            nextY = nextY + (deltaY > 0 ? 1 : -1);
+            moveX = -1;
         }
 
-        if (nextX == blockedX && nextY == blockedY)
+        int moveY = 0;
+        if (deltaTargetY > 0)
         {
-            nextX = fromX;
-            nextY = fromY;
+            moveY = 1;
+        }
+        if (deltaTargetY < 0)
+        {
+            moveY = -1;
+        }
 
-            if (deltaX > deltaY)
+        int absDeltaX = abs(deltaTargetX);
+        if (absDeltaX == 1 && deltaTargetY == 0)
+        {
+            // move x -> target one step ahead
+            nextX = nextX + deltaTargetX;
+            return nextY * 4 + nextX;
+        }
+
+        int absDeltaY = abs(deltaTargetY);
+        if (absDeltaY == 1 && deltaTargetX == 0)
+        {
+            // move y -> target one step around
+            nextY = nextY + deltaTargetY;
+            return nextY * 4 + nextX;
+        }
+
+        int blockedRegion = getRelativeRegion(deltaBlockedX, deltaBlockedY);
+        int targetRegion = getRelativeRegion(deltaTargetX, deltaTargetY);
+
+        bool regionConflict = false;
+
+        if (targetRegion == 0 && (blockedRegion == 0 || blockedRegion == 1 || blockedRegion == 7))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 1 && (blockedRegion == 1))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 2 && (blockedRegion == 1 || blockedRegion == 2 || blockedRegion == 3))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 3 && (blockedRegion == 3))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 4 && (blockedRegion == 3 || blockedRegion == 4 || blockedRegion == 5))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 5 && (blockedRegion == 5))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 6 && (blockedRegion == 5 || blockedRegion == 6 || blockedRegion == 7))
+        {
+            regionConflict = true;
+        }
+        if (targetRegion == 7 && (blockedRegion == 7))
+        {
+            regionConflict = true;
+        }
+
+        if (regionConflict)
+        {
+
+            int absDeltaBlockedX = abs(deltaBlockedX);
+            int absDeltaBlockedY = abs(deltaBlockedY);
+
+            if (absDeltaBlockedX == 1 && absDeltaBlockedY == 1)
             {
-                nextX = nextX + (deltaX > 0 ? 1 : -1);
+                // on cross point -> if deltay == 0 move in direction deltay t
+                // on cross point -> if deltax == 0 move in direction deltax t
+
+                if (absDeltaX > absDeltaY)
+                {
+                    nextX = nextX + moveX;
+                }
+                else
+                {
+                    nextY = nextY + moveY;
+                }
+
+                return nextY * 4 + nextX;
+            }
+            else if (absDeltaBlockedX == 1 && absDeltaBlockedY == 0)
+            {
+                // blocked on x achse -> move on y where no border
+
+                bool borderTop = fromY == 0;
+                bool borderBottom = fromY == 3;
+
+                if (borderTop)
+                {
+                    nextY = fromY + (moveY == 0 ? +1 : moveY);
+                }
+                else if (borderBottom)
+                {
+                    nextY = fromY + (moveY == 0 ? -1 : moveY);
+                }
+                else
+                {
+                    nextY = fromY + (moveY == 0 ? -1 : moveY);
+                }
+
+                return nextY * 4 + nextX;
+            }
+            else if (absDeltaBlockedX == 0 && absDeltaBlockedY == 1)
+            {
+                // blocked on y achse -> move on x where no border
+
+                bool borderLeft = fromX == 0;
+                bool borderRight = fromX == 3;
+
+                if (borderLeft)
+                {
+                    nextX = fromX + (moveX == 0 ? +1 : moveX);
+                }
+                else if (borderRight)
+                {
+                    nextX = fromX + (moveX == 0 ? -1 : moveX);
+                }
+                else
+                {
+                    nextX = fromX + (moveX == 0 ? -1 : moveX);
+                }
+                return nextY * 4 + nextX;
+            }
+        }
+
+        // minimise one delta coordinate and then minimise the other
+        if (deltaTargetX != 0 && deltaTargetY != 0)
+        {
+            if (absDeltaX <= absDeltaY)
+            {
+                nextX = nextX + moveX;
             }
             else
             {
-                nextY = nextY + (deltaY > 0 ? 1 : -1);
+                nextY = nextY + moveY;
             }
-
-            // edge cases
-            if (nextX == 5)
-            {
-                nextX = 3;
-            }
-            if (nextY == 5)
-            {
-                nextY = 3;
-            }
-            if (nextX == -1)
-            {
-                nextX = 1;
-            }
-            if (nextY == -1)
-            {
-                nextY = 1;
-            }
+            return nextY * 4 + nextX;
         }
 
-        int nextPos = nextY * 4 + nextX;
+        if (deltaTargetX == 0)
+        {
+            nextY = nextY + moveY;
+            return nextY * 4 + nextX;
+        }
 
-        return nextPos;
+        nextX = nextX + moveX;
+        return nextY * 4 + nextX;
     }
 
     int Routing::calculateRoute(int from, int target)

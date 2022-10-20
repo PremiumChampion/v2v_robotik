@@ -27,6 +27,7 @@ namespace Game
 
                 COM::broker.set(COM::CRIMINAL_POSITION, String(nextTile));
                 Service::Coordinator::setCurrentTarget(nextTile);
+                Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
                 state = WAITING_FOR_CRIMINAL_MOVEMENT;
             }
@@ -50,6 +51,7 @@ namespace Game
                 {
                     // Set message in broker, that criminal is done moving
                     COM::broker.set(COM::CRIMINAL_INIT, String("Done"));
+                    Service::Coordinator::setRunWithCollisionAvoidance(false);
                     state = WAITING_FOR_POLICE_MOVEMENT;
                 }
             }
