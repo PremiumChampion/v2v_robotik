@@ -5,10 +5,12 @@
 
 #if ROLE == CHASER
 #define THIS_START_POSITION 15
+#define OTHER_START_POSITION 12
 #endif
 
 #if ROLE == CHASED
 #define THIS_START_POSITION 12
+#define OTHER_START_POSITION 15
 #endif
 
 namespace Service
@@ -19,7 +21,6 @@ namespace Service
         void run()
         {
             int thisRobotPositionTile = Sensors::BAR_CODE_SCANNER.getCurrentCodeValue();
-
             
             // TODO: update position in broker
             COM::broker.set(COM::getThisPositionIndex(), String(thisRobotPositionTile));
@@ -32,6 +33,12 @@ namespace Service
 
         void init(){
             COM::broker.set(COM::getThisPositionIndex(), String(THIS_START_POSITION));
+            
+            THIS_ROBOT.setCurrentPositionTile(THIS_START_POSITION);
+            THIS_ROBOT.setCurrentDirection(NORTH);
+
+            OTHER_ROBOT.setCurrentPositionTile(OTHER_START_POSITION);
+            OTHER_ROBOT.setCurrentDirection(NORTH);
         }
     }
 } // namespace Service
