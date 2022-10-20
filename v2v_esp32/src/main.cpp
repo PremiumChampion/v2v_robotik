@@ -31,8 +31,6 @@ void setup()
   // setup serial connection between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
   Movement::MOVEMENTS.setNewDirections(Movement::Straight);
-
-  Game::init();
 }
 void loop()
 {
