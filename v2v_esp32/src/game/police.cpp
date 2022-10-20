@@ -2,7 +2,7 @@
 
 #include "services/coordinator.h"
 #include "movement/movement.h"
-#include "services/positioning.h"
+#include "services/data/positioning.h"
 #include "police.h"
 #include "communication/communication.h"
 #include "criminal.h"
@@ -86,6 +86,7 @@ if (state == WAITING_FOR_GAMESTART)
 
 #pragma endregion
         }
+        
         void run()
         {
 #pragma region check for win condition

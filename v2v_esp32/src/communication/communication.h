@@ -39,27 +39,9 @@ namespace COM
         ESTABLISHED,
     };
 
-    WIFI_MESSAGE getThisPositionIndex()
-    {
-#if ROLE == CHASED
-        return CURRENT_CHASED_POSITION;
-#endif
+    WIFI_MESSAGE getThisPositionIndex();
 
-#if ROLE == CHASER
-        return CURRENT_CHASER_POSITON;
-#endif
-    }
-
-    WIFI_MESSAGE getOtherPositionIndex()
-    {
-#if ROLE == CHASED
-        return CURRENT_CHASER_POSITON;
-#endif
-
-#if ROLE == CHASER
-        return CURRENT_CHASED_POSITION;
-#endif
-    }
+    WIFI_MESSAGE getOtherPositionIndex();
 
 #if ROLE == CHASED
     extern WLAN::HHN_Server server;

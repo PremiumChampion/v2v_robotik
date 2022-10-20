@@ -1,5 +1,5 @@
 #include "positionsyncservice.h"
-#include "positioning.h"
+#include "services/data/positioning.h"
 #include "sensors/sensors.h"
 #include "communication/communication.h"
 

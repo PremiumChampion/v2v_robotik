@@ -1,9 +1,10 @@
 #include "movement/movement.h"
 #include "coordinator.h"
-#include "positioning.h"
-#include "turningtable.h"
-#include "routing.h"
-#include "forwarding.h"
+#include "services/data/positioning.h"
+#include "services/data/turningtable.h"
+#include "services/data/routing.h"
+#include "services/data/forwarding.h"
+#include "communication/communication.h"
 
 namespace Service
 {
@@ -78,7 +79,8 @@ namespace Service
             if (Movement::MOVEMENTS.getCurrentMovementKind() == Movement::MovementKind::Straight)
             {
                 int newPosition = getTurningEntryForCompassDirection(currentDirection).calculateNewPosition(currentPosition);
-                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); // comment when working with barcode scanner!!!
+                COM::broker.set(COM::getThisPositionIndex(), String(newPosition)); //! comment when working with barcode scanner!!!
+                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); //! comment when working with barcode scanner!!!
                 currentPosition = newPosition;
             }
 #pragma endregion

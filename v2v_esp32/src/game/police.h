@@ -4,7 +4,8 @@ namespace Game
     namespace Police
     {
 
-        enum INIT_STATE{
+        enum INIT_STATE
+        {
             WAITING_FOR_CRIMINAL_READY,
             GENERATING_POSITION,
             WAITING_FOR_POLICE_MOVEMENT,
@@ -13,12 +14,8 @@ namespace Game
         };
 
         void init();
-        void run()
-        {
-#pragma check for win condition
+        void run();
 
-#pragma endregion
-        }
     } // namespace Police
 
 } // namespace Game
