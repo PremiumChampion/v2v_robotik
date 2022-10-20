@@ -30,6 +30,8 @@ void setup()
   // setup communication between both esps.
   // setup serial connection between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
+  Service::PositionSync::init();
+
   Movement::MOVEMENTS.setNewDirections(Movement::Straight);
 }
 void loop()
