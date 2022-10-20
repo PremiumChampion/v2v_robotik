@@ -5,43 +5,6 @@
 namespace Service
 {
     int getRelativeRegion(int deltaX, int deltaY);
-    int getRelativeRegion(int deltaX, int deltaY)
-    {
-        int region = 0;
-        if (deltaX < 0 && deltaY < 0)
-        {
-            region = 0;
-        }
-        if (deltaX == 0 && deltaY < 0)
-        {
-            region = 1;
-        }
-        if (deltaX > 0 && deltaY < 0)
-        {
-            region = 2;
-        }
-        if (deltaX > 0 && deltaY == 0)
-        {
-            region = 3;
-        }
-        if (deltaX > 0 && deltaY > 0)
-        {
-            region = 4;
-        }
-        if (deltaX == 0 && deltaY > 0)
-        {
-            region = 5;
-        }
-        if (deltaX < 0 && deltaY > 0)
-        {
-            region = 6;
-        }
-        if (deltaX < 0 && deltaY == 0)
-        {
-            region = 7;
-        }
-        return region;
-    }
 
     int Routing::calculateRouteWithCollisionAvoidance(int from, int target, int blocked)
     {
@@ -231,6 +194,44 @@ namespace Service
 
         nextX = nextX + moveX;
         return nextY * 4 + nextX;
+    }
+
+    int getRelativeRegion(int deltaX, int deltaY)
+    {
+        int region = 0;
+        if (deltaX < 0 && deltaY < 0)
+        {
+            region = 0;
+        }
+        if (deltaX == 0 && deltaY < 0)
+        {
+            region = 1;
+        }
+        if (deltaX > 0 && deltaY < 0)
+        {
+            region = 2;
+        }
+        if (deltaX > 0 && deltaY == 0)
+        {
+            region = 3;
+        }
+        if (deltaX > 0 && deltaY > 0)
+        {
+            region = 4;
+        }
+        if (deltaX == 0 && deltaY > 0)
+        {
+            region = 5;
+        }
+        if (deltaX < 0 && deltaY > 0)
+        {
+            region = 6;
+        }
+        if (deltaX < 0 && deltaY == 0)
+        {
+            region = 7;
+        }
+        return region;
     }
 
     int Routing::calculateRoute(int from, int target)
