@@ -30,4 +30,27 @@ namespace COM
                 HHN_Client::createConnection(); // Initialize client on chaser site
 #endif
         }
+
+#if ROLE == CHASED
+        WIFI_MESSAGE getThisPositionIndex()
+        {
+                return CURRENT_CHASED_POSITION;
+        }
+        WIFI_MESSAGE getOtherPositionIndex()
+        {
+                return CURRENT_CHASER_POSITON;
+        }
+#endif
+
+#if ROLE == CHASER
+        WIFI_MESSAGE getThisPositionIndex()
+        {
+                return CURRENT_CHASER_POSITON;
+        }
+        WIFI_MESSAGE getOtherPositionIndex()
+        {
+                return CURRENT_CHASED_POSITION;
+        }
+#endif
+
 } // namespace COM

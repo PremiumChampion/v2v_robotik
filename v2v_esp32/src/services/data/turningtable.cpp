@@ -23,6 +23,7 @@ namespace Service
         default:
             return _NORTH;
         }
+        return _NORTH;
     }
 
     TurningEntry::TurningEntry(Service::Direction clockwise, Service::Direction counterclockwise, int positiondelta)
@@ -30,6 +31,16 @@ namespace Service
         this->clockwise = clockwise;
         this->counterclockwise = counterclockwise;
         this->positiondelta = positiondelta;
+    }
+
+    Service::Direction Service::TurningEntry::getClockwise()
+    {
+        return this->clockwise;
+    }
+
+    Service::Direction Service::TurningEntry::getCounterClockwise()
+    {
+        return this->counterclockwise;
     }
 
     int TurningEntry::calculateNewPosition(int currentPosition)
