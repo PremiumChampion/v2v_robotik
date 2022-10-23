@@ -18,7 +18,7 @@ namespace COM
         POLICE_POSITION,
         // future criminal po
         CRIMINAL_POSITION,
-        // Syncplay - Need more variables to have a handshake between criminal and police.
+        // Syncplay - enum SYNCSTATE
         SYNCPLAY,
         // Police in the initialisation phase
         // Contains "Done", if the police is done with his initial moving

@@ -91,33 +91,32 @@ namespace Game
 
         void run()
         {
-
 #pragma region wait for police to tell you that you lost
             // Signal kommt von Police -> darauf hören
             if (COM::broker.get(COM::POLICE_WON).toInt()){
-            // WiFi Broker
 #pragma endregion
 
-#pragma region if lost
-#pragma region wait for reinit flag
-#pragma endregion
+// #pragma region if lost
+// #pragma region wait for reinit flag // Duplicate of region reninit?
+
+// #pragma endregion
 
 #pragma region switch role (optional)
                 Game::setCurrentRole(CHASER);
-
 #pragma endregion
 
 #pragma region reinit
                 setGameState(INITIALISING);
 #pragma endregion
-
             }
 #pragma endregion
 
-            if (!COM::broker.get(COM::POLICE_WON).toInt()){
+
 #pragma region game ongoing
+            if (!COM::broker.get(COM::POLICE_WON).toInt()){
 
 #pragma region wait
+
             }
 #pragma endregion
         }
