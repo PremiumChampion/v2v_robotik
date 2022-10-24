@@ -2,7 +2,7 @@
 
 #include "services/coordinator.h"
 #include "movement/movement.h"
-#include "services/positioning.h"
+#include "services/data/positioning.h"
 #include "police.h"
 #include "communication/communication.h"
 #include "criminal.h"
@@ -44,7 +44,7 @@ namespace Game
 
                 COM::broker.set(COM::POLICE_POSITION, String(nextTile));
                 Service::Coordinator::setCurrentTarget(nextTile);
-                Service::Coordinator::
+                Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
                 state = WAITING_FOR_POLICE_MOVEMENT;
             }
@@ -87,6 +87,7 @@ namespace Game
 
 #pragma endregion
         }
+        
         void run()
         {
 #pragma region check for win condition
@@ -137,6 +138,7 @@ namespace Game
             {
 #pragma region navigate to OTHER_ROBOT
                 Service::Coordinator::setStopBeforeTarget(true);
+                Service::Coordinator::setRunWithCollisionAvoidance(false);
                 Service::Coordinator::setCurrentTarget(criminalPosition);
 #pragma endregion
             }

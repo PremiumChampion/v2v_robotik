@@ -1,9 +1,10 @@
 #include "movement/movement.h"
 #include "coordinator.h"
-#include "positioning.h"
-#include "turningtable.h"
-#include "routing.h"
-#include "forwarding.h"
+#include "services/data/positioning.h"
+#include "services/data/turningtable.h"
+#include "services/data/routing.h"
+#include "services/data/forwarding.h"
+#include "communication/communication.h"
 
 namespace Service
 {
@@ -26,6 +27,16 @@ namespace Service
         bool getStopBeforeTarget()
         {
             return stopBeforeTarget;
+        }
+
+        bool runWithCollisionAvoidance = true;
+        void setRunWithCollisionAvoidance(bool collisionAvoidanceEnabled)
+        {
+            runWithCollisionAvoidance = collisionAvoidanceEnabled;
+        }
+        bool getRunWithCollisionAvoidance()
+        {
+            return runWithCollisionAvoidance;
         }
 
         void run()
@@ -68,7 +79,8 @@ namespace Service
             if (Movement::MOVEMENTS.getCurrentMovementKind() == Movement::MovementKind::Straight)
             {
                 int newPosition = getTurningEntryForCompassDirection(currentDirection).calculateNewPosition(currentPosition);
-                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); // comment out when working with barcode scanner!!!
+                COM::broker.set(COM::getThisPositionIndex(), String(newPosition)); //! comment when working with barcode scanner!!!
+                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); //! comment when working with barcode scanner!!!
                 currentPosition = newPosition;
             }
 #pragma endregion
@@ -95,13 +107,23 @@ namespace Service
 #pragma region variable section
             Direction currentDirection = THIS_ROBOT.getCurrentDirection();
             int currentPosition = THIS_ROBOT.getCurrentPositionTile();
+            int blockedPosition = OTHER_ROBOT.getCurrentPositionTile();
             // todo: we need to set the target position from the outside
             // int targetPosition = OTHER_ROBOT.getCurrentPositionTile();
             int targetPosition = currentTarget;
 #pragma endregion
 
 #pragma region calculate next tile
-            *nextTile = Routing::calculateRoute(currentPosition, targetPosition);
+            if (runWithCollisionAvoidance)
+            {
+                // enables the robot to drive around a specified position
+                *nextTile = Routing::calculateRouteWithCollisionAvoidance(currentPosition, targetPosition, blockedPosition);
+            }
+            if (!runWithCollisionAvoidance)
+            {
+                // enables the robot to drive straight to the other robot
+                *nextTile = Routing::calculateRoute(currentPosition, targetPosition);
+            }
 #pragma endregion
 
 #pragma region calculate next movement

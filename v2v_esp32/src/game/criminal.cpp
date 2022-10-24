@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "criminal.h"
 #include "communication/communication.h"
-#include "services/positioning.h"
+#include "services/data/positioning.h"
 #include "services/coordinator.h"
 #include "game/loop.h"
 namespace Game
@@ -27,6 +27,7 @@ namespace Game
 
                 COM::broker.set(COM::CRIMINAL_POSITION, String(nextTile));
                 Service::Coordinator::setCurrentTarget(nextTile);
+                Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
                 state = WAITING_FOR_CRIMINAL_MOVEMENT;
             }
@@ -50,6 +51,7 @@ namespace Game
                 {
                     // Set message in broker, that criminal is done moving
                     COM::broker.set(COM::CRIMINAL_INIT, String("Done"));
+                    Service::Coordinator::setRunWithCollisionAvoidance(false);
                     state = WAITING_FOR_POLICE_MOVEMENT;
                 }
             }
@@ -105,7 +107,6 @@ namespace Game
                 state = GENERATING_POSITION;
                 setGameState(INITIALISING);
 #pragma endregion
-
             }
 #pragma endregion
 
@@ -115,8 +116,8 @@ namespace Game
 #pragma region wait
 #pragma endregion
 
-            }
 #pragma endregion
+            }
         }
     } // namespace Criminal
 

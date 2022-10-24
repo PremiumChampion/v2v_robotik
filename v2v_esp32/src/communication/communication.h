@@ -18,7 +18,7 @@ namespace COM
         POLICE_POSITION,
         // future criminal po
         CRIMINAL_POSITION,
-        // Syncplay - Need more variables to have a handshake between criminal and police.
+        // Syncplay - enum SYNCSTATE
         SYNCPLAY,
         // Police in the initialisation phase
         // Contains "Done", if the police is done with his initial moving
@@ -39,27 +39,9 @@ namespace COM
         ESTABLISHED,
     };
 
-    WIFI_MESSAGE getThisPositionIndex()
-    {
-#if ROLE == CHASED
-        return CURRENT_CHASED_POSITION;
-#endif
+    WIFI_MESSAGE getThisPositionIndex();
 
-#if ROLE == CHASER
-        return CURRENT_CHASER_POSITON;
-#endif
-    }
-
-    WIFI_MESSAGE getOtherPositionIndex()
-    {
-#if ROLE == CHASED
-        return CURRENT_CHASER_POSITON;
-#endif
-
-#if ROLE == CHASER
-        return CURRENT_CHASED_POSITION;
-#endif
-    }
+    WIFI_MESSAGE getOtherPositionIndex();
 
 #if ROLE == CHASED
     extern WLAN::HHN_Server server;

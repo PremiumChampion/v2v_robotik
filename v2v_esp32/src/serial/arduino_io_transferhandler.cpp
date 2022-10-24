@@ -17,11 +17,13 @@ namespace SerialCommunication
     template <class rcv, class snd>
     void Arduino_IO_TransferHandler<rcv, snd>::run()
     {
+        // resync after 500ms
         if (this->last_full_sync_time + 500 < millis())
         {
             this->last_full_sync_time = millis();
             this->sndBroker->reset_pushed_message_indicator();
         }
+        
         SerialCommunication::ArduinoConnection.run();
         if (this->sndBroker->get_has_changes())
         {
