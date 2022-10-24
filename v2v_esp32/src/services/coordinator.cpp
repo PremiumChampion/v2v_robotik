@@ -68,18 +68,11 @@ namespace Service
             if (Movement::MOVEMENTS.getCurrentMovementKind() == Movement::MovementKind::Straight)
             {
                 int newPosition = getTurningEntryForCompassDirection(currentDirection).calculateNewPosition(currentPosition);
-                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); // comment when working with barcode scanner!!!
+                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); // comment out when working with barcode scanner!!!
                 currentPosition = newPosition;
             }
 #pragma endregion
 
-            // #pragma region calculate next tile
-            //             int nextTile = Routing::calculateRoute(currentPosition, targetPosition);
-            // #pragma endregion
-
-            // #pragma region calculate next movement
-            //             Movement::MovementKind next_movement = Forwarding::calculateNextMovement(&THIS_ROBOT, nextTile);
-            // #pragma endregion
             int nextTile = 0;
             Movement::MovementKind next_movement = Movement::Stop;
 

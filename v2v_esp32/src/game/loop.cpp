@@ -6,7 +6,7 @@
 namespace Game
 {
     int currentRole = ROLE;
-
+    
     void setCurrentRole(int newRole)
     {
         currentRole = newRole;

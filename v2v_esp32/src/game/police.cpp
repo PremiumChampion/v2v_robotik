@@ -11,7 +11,7 @@
 namespace Game
 {
     namespace Police
-    {    
+    {
         INIT_STATE state = WAITING_FOR_CRIMINAL_READY;
         // function, that is called several times, until the whole initialization of the police is done
         // MUST NOT BLOCK THE FLOW
@@ -21,10 +21,12 @@ namespace Game
             //Über WiFi Broker auf Nachricht warten
             // Platzhalter im messages array für ready Nachricht definieren
 
-            if(state == WAITING_FOR_CRIMINAL_READY){
-                //Check, if the criminal is done with his movement initialization
-                if(COM::broker.get(COM::CRIMINAL_INIT) == "Done"){
-                state = GENERATING_POSITION;
+            if (state == WAITING_FOR_CRIMINAL_READY)
+            {
+                // Check, if the criminal is done with his movement initialization
+                if (COM::broker.get(COM::CRIMINAL_INIT) == "Done")
+                {
+                    state = GENERATING_POSITION;
                 }
             }
 #pragma endregion
@@ -42,6 +44,7 @@ namespace Game
 
                 COM::broker.set(COM::POLICE_POSITION, String(nextTile));
                 Service::Coordinator::setCurrentTarget(nextTile);
+                Service::Coordinator::
                 Service::Coordinator::setStopBeforeTarget(false);
                 state = WAITING_FOR_POLICE_MOVEMENT;
             }
@@ -72,9 +75,8 @@ namespace Game
             // Wahrscheinlich im coordinator die Methode
 #pragma endregion
 
-
 #pragma region start game
-if (state == WAITING_FOR_GAMESTART)
+            if (state == WAITING_FOR_GAMESTART)
             {
                 if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ACKNOWLEDGE)
                 {
@@ -114,7 +116,7 @@ if (state == WAITING_FOR_GAMESTART)
                 // Send Police has won flag
                 COM::broker.set(COM::POLICE_WON, String(1));
 
-#pragma region switch role (optional)
+#pragma region switch role(optional)
 
                 Game::setCurrentRole(CHASED);
                 // Switch own role in loop.cpp with set currentRole
@@ -124,6 +126,7 @@ if (state == WAITING_FOR_GAMESTART)
 #pragma endregion
 
 #pragma region reinit
+                state = WAITING_FOR_CRIMINAL_READY;
                 setGameState(INITIALISING);
 #pragma endregion
             }

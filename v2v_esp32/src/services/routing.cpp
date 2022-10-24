@@ -3,7 +3,7 @@
 
 namespace Service
 {
-    int calculateWithCollisionCheck(int from, int target, int blocked)
+    int Routing::calculateWithCollisionCheck(int from, int target, int blocked)
     {
         if (target == blocked)
         {

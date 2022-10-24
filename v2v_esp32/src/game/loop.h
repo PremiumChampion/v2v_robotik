@@ -5,7 +5,7 @@ namespace Game
         INITIALISING,
         RUNNING,
     };
-    
+    // CHASED or CHASER !
     void setCurrentRole(int newRole);
     int getCurrentRole();
     void setGameState(GameState newGameState);
