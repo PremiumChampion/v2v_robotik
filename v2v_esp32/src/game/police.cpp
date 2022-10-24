@@ -12,7 +12,8 @@ namespace Game
 {
     namespace Police
     {
-        INIT_STATE state = WAITING_FOR_CRIMINAL_READY;
+        INIT_STATE DEFAULT_STATE = WAITING_FOR_CRIMINAL_READY;
+        INIT_STATE state = DEFAULT_STATE;
         // function, that is called several times, until the whole initialization of the police is done
         // MUST NOT BLOCK THE FLOW
         void init()
@@ -81,6 +82,7 @@ namespace Game
                 if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ACKNOWLEDGE)
                 {
                     COM::broker.set(COM::SYNCPLAY, String(COM::ESTABLISHED));
+                    state = DEFAULT_STATE;
                     setGameState(RUNNING);
                 }
             }
@@ -127,7 +129,6 @@ namespace Game
 #pragma endregion
 
 #pragma region reinit
-                state = WAITING_FOR_CRIMINAL_READY;
                 setGameState(INITIALISING);
 #pragma endregion
             }

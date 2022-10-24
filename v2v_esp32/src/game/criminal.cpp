@@ -8,7 +8,8 @@ namespace Game
 {
     namespace Criminal
     {
-        INIT_STATE state = GENERATING_POSITION;
+        INIT_STATE DEFAULT_STATE = GENERATING_POSITION;
+        INIT_STATE state = DEFAULT_STATE;
         // function, that is called several times, until the whole initialization of the criminal is done
         // MUST NOT BLOCK THE FLOW
         void init()
@@ -84,6 +85,7 @@ namespace Game
                 if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ESTABLISHED)
                 {
                     // state = next logical state
+                    state = DEFAULT_STATE;
                     setGameState(RUNNING);
                 }
             }
@@ -104,7 +106,6 @@ namespace Game
 #pragma endregion
 
 #pragma region reinit
-                state = GENERATING_POSITION;
                 setGameState(INITIALISING);
 #pragma endregion
             }
@@ -114,6 +115,7 @@ namespace Game
             if (!COM::broker.get(COM::POLICE_WON).toInt()){
                 // criminal stays still when beeing chased
 #pragma region wait
+                // do nothing
 #pragma endregion
 
 #pragma endregion

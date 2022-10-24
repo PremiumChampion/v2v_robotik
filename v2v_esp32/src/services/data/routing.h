@@ -4,7 +4,7 @@ namespace Service
 {
     namespace Routing
     {
+        int calculateRouteWithCollisionAvoidance(int from, int target, int blocked);
         int calculateRoute(int from, int target);
-        int calculateWithCollisionCheck(int from, int target, int blocked);
     } // namespace Routing
 }

@@ -6,7 +6,7 @@ namespace Service
 {
     int getRelativeRegion(int deltaX, int deltaY);
 
-    int Routing::calculateWithCollisionCheck(int from, int target, int blocked)
+    int Routing::calculateRouteWithCollisionAvoidance(int from, int target, int blocked)
     {
         // dont move if the target tile is equal to the blocked tile
         if (target == blocked)

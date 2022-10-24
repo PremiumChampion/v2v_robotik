@@ -2,7 +2,7 @@
 
 ## Important Requirements
 
-* [ ] [__Cooperative multitasking__](https://en.wikipedia.org/wiki/Cooperative_multitasking)
+* [x] [__Cooperative multitasking__](https://en.wikipedia.org/wiki/Cooperative_multitasking)
 
 ## Level A (Arduino-IO)
 
@@ -79,10 +79,11 @@
 
 * [x] Positioning-Service
 
-    * [ ] Find starting postition (0-15) --> fixe starting points
-    * [ ] Find starting direction (east/south/west/north) --> fixe starting direction
+    * [x] Find starting postition (0-15) --> fixe starting points
+    * [x] Find starting direction (east/south/west/north) --> fixe starting direction
     * [x] Keep track of current position (0-15)
     * [x] Keep track of current direction (east/south/west/north)
+    * [ ] sync positions
 
 * [x] Forwarding-Service
 
@@ -94,10 +95,31 @@
     * [x] Find route from x to y
     * [x] Find forwarding points
 
-* [ ] Decide prisoner/police
+* [x] Decide prisoner/police --> initial police/criminal set in code
 
 ## Level G (Game-Level)
 
-* [ ] Move to prisoner
-* [ ] Move away from police
-* [ ] Winner Logic
+* [x] Police move to prisoner
+* [ ] Move away from police (deprecated)
+* [x] Winner Logic
+* [x] Criminal init
+  * [x] generate random position
+  * [x] move to random position
+  * [x] wait for police ready
+  * [x] start game
+* [x] Police init
+  * [x] wait for criminal ready
+  * [x] generate random starting position
+  * [x] move to random position
+  * [x] start game
+* [x] Police run
+  * [x] check for win condition
+  * [x] if won reset broker init vars
+  * [x] if won switch role(optional)
+  * [x] if won reinit
+  * [x] if not won navigate to OTHER_ROBOT
+* [x] Criminal run
+  * [x] wait for police to tell you that you lost
+  * [x] if lost switch role (optional)
+  * [x] if lost reinit
+  * [x] if not lost wait
