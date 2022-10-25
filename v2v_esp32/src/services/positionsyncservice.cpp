@@ -20,20 +20,22 @@ namespace Service
 
         void run()
         {
+#if WORKING_WITH_QR_SENSOR
             int thisRobotPositionTile = Sensors::BAR_CODE_SCANNER.getCurrentCodeValue();
-            
+
             // TODO: update position in broker
             COM::broker.set(COM::getThisPositionIndex(), String(thisRobotPositionTile));
-            COM::broker.get(COM::getOtherPositionIndex());
 
             // update positions
-            THIS_ROBOT.setCurrentPositionTile(thisRobotPositionTile); 
+            THIS_ROBOT.setCurrentPositionTile(thisRobotPositionTile); // comment out when not working w qr code scanner
+#endif
             OTHER_ROBOT.setCurrentPositionTile(COM::broker.get(COM::getOtherPositionIndex()).toInt()); // uncomment when working with relative positioning
         }
 
-        void init(){
+        void init()
+        {
             COM::broker.set(COM::getThisPositionIndex(), String(THIS_START_POSITION));
-            
+
             THIS_ROBOT.setCurrentPositionTile(THIS_START_POSITION);
             THIS_ROBOT.setCurrentDirection(NORTH);
 

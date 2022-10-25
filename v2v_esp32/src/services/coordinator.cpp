@@ -79,8 +79,10 @@ namespace Service
             if (Movement::MOVEMENTS.getCurrentMovementKind() == Movement::MovementKind::Straight)
             {
                 int newPosition = getTurningEntryForCompassDirection(currentDirection).calculateNewPosition(currentPosition);
+#if !WORKING_WITH_QR_SENSOR
                 COM::broker.set(COM::getThisPositionIndex(), String(newPosition)); //! comment when working with barcode scanner!!!
-                Service::THIS_ROBOT.setCurrentPositionTile(newPosition); //! comment when working with barcode scanner!!!
+                Service::THIS_ROBOT.setCurrentPositionTile(newPosition);           //! comment when working with barcode scanner!!!
+#endif
                 currentPosition = newPosition;
             }
 #pragma endregion

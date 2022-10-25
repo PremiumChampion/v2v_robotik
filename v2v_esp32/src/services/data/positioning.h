@@ -1,5 +1,7 @@
 #pragma once
 
+#define WORKING_WITH_QR_SENSOR true;
+
 namespace Service
 {
     enum Direction
