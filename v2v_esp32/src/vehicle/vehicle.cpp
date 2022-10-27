@@ -36,7 +36,7 @@ namespace Vehicle
     // phaseDelta: degrees by which the cos function needs to be moved to archieve the correct encoding for the motor
     // motorL: 0
     // motorR: 90
-    void Vehicle::calculateMotorValue(Actors::HHN_V_Motor *motor, int phaseDelta)
+    void Vehicle::calculateMotorValue(Actors::HHN_V_Motor *motor, bool rightMotor)
     {
 
         int newDirection = this->currentDirection;
@@ -47,27 +47,69 @@ namespace Vehicle
 
 #pragma region rotation speed
         // adjust graph for dirrerent motors
-        newDirection += phaseDelta;
-        newDirection = newDirection % 360;
+        newDirection = abs(newDirection) % 360;
+        if (!rightMotor)
+        {
+            if (newDirection >= 0 && newDirection <= 90)
+            {
+                graphedSpeed = 255;
+            }
+            else if (newDirection > 90 && newDirection <= 180)
+            {
 
-        if (newDirection >= 0 && newDirection < 90)
-        {
-            graphedSpeed = newSpeed;
-        }
-        if (newDirection >= 180 && newDirection < 270)
-        {
-            graphedSpeed = -newSpeed;
-        }
+                double dx = 180 - 90;
+                double dy = -255 - 255;
 
-        // see Rotation_Encoding.pdf
-        // maps newDirection (0°+360°) and newSpeed to a speed -255 to 255 of a motor indicating the speed and direction of the motor
-        if (newDirection >= 90 && newDirection < 180)
-        {
-            graphedSpeed = -newSpeed * cos(PI / 90 * (newDirection * DEG_TO_RAD));
+                double dNewDirection = newDirection - 90;
+                double steigung = dy / dx;
+
+                graphedSpeed = 255 + steigung * dNewDirection;
+            }
+            else if (newDirection > 180 && newDirection <= 270)
+            {
+                graphedSpeed = -255;
+            }
+            else if (newDirection > 270 && newDirection <= 360)
+            {
+                double dx = 360 - 270;
+                double dy = 255 - (-255);
+
+                double dNewDirection = newDirection - 270;
+                double steigung = dy / dx;
+
+                graphedSpeed = -255 + steigung * dNewDirection;
+            }
         }
-        if (newDirection >= 270 && newDirection < 360)
+        if (rightMotor)
         {
-            graphedSpeed = newSpeed * cos(PI / 90 * (newDirection * DEG_TO_RAD));
+            if (newDirection >= 0 && newDirection <= 90)
+            {
+                double dx = 90 - 0;
+                double dy = 255 - (-255);
+
+                double dNewDirection = newDirection - 0;
+                double steigung = dy / dx;
+
+                graphedSpeed = -255 + steigung * dNewDirection;
+            }
+            else if (newDirection > 90 && newDirection <= 180)
+            {
+                graphedSpeed = 255;
+            }
+            else if (newDirection > 180 && newDirection <= 270)
+            {
+                double dx = 270 - 180;
+                double dy = -255 - 255;
+
+                double dNewDirection = newDirection - 180;
+                double steigung = dy / dx;
+
+                graphedSpeed = 255 + steigung * dNewDirection;
+            }
+            else if (newDirection > 270 && newDirection <= 360)
+            {
+                graphedSpeed = -255;
+            }
         }
 
         // rad = deg x PI / 180

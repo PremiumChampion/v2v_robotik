@@ -22,7 +22,7 @@ void setup()
 {
   
   // for debugging
-  Serial.begin(9600);
+  Serial.begin(115200);
   delay(2000);
   Serial.println("Function: main setup");
   COM::WIFI_TRANSFER_HANDLER.init();

@@ -13,16 +13,19 @@ namespace COM
 
         if (this->broker->get_has_changes())
         {
-            this->client->send(this->broker->get_transmission_data());
+            String transmissionData = this->broker->get_transmission_data();
+            Serial.println("WIFI-SEND:" + transmissionData);
+            this->client->send(transmissionData);
         }
 
         if (this->client->hasClientData())
         {
-            this->broker->rcv_transmission_data(this->client->receive());
+            String rcvData = this->client->receive();
+            Serial.println("WIFI-RCV:" + rcvData);
+            this->broker->rcv_transmission_data(rcvData);
         }
     }
 
-    
     void TransferHandler::init()
     {
         COM::setup();
