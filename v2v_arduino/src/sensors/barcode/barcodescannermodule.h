@@ -25,6 +25,7 @@ namespace QR
         BarcodeScannerModule(SoftwareSerial *serialScannerConnection);
         ~BarcodeScannerModule();
         void run();
+        void init();
         void getValue();
     };
 } // namespace QR

@@ -19,6 +19,11 @@ namespace Sensors
     class HHN_V_Line
     {
     private:
+        int nextLevelingIndex;
+        int levelingArraySize;
+        bool *leftLevelingValues;
+        bool *centerLevelingValues;
+        bool *rightLevelingValues;
         LineValue current_value;
         bool leftValue;
         bool centerValue;

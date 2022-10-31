@@ -29,6 +29,7 @@ namespace Line
         HHN_Line(int pinLeft, int pinCenter, int pinRight);
         ~HHN_Line();
         void run();
+        void init();
     };
 
 } // namespace Sensors

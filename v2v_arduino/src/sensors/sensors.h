@@ -15,6 +15,7 @@ namespace Sensors
     };
 
     void run();
+    void init();
 
     // handles communicating changed sensor values
     extern Broker::Broker<int> MESSAGE_BROKER;

@@ -1,6 +1,6 @@
 #pragma once
 
-#define WORKING_WITH_QR_SENSOR true
+#define WORKING_WITH_QR_SENSOR false
 
 namespace Service
 {

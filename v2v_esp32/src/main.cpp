@@ -14,38 +14,37 @@
 #include "communication/wlan/wlan.h"
 #include "communication/shared/transfer.h"
 
-
-
-unsigned long currentTime;
-unsigned int currentNumber;
 void setup()
 {
-  
+  pinMode(2, OUTPUT); // BUILTIN LED
+  digitalWrite(2, LOW);
   // for debugging
   Serial.begin(115200);
-  delay(2000);
-  Serial.println("Function: main setup");
-  COM::WIFI_TRANSFER_HANDLER.init();
+  Serial.println("Function: setup");
 
-  // setup communication between both esps.
-  // setup serial connection between arduino and esp.
-  SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
   Service::PositionSync::init();
 
-  Movement::MOVEMENTS.setNewDirections(Movement::Straight);
+  // setup serial connection between arduino and esp.
+  SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
+
+  // setup communication between both esps.
+  // COM::WIFI_TRANSFER_HANDLER.init();
+  Serial.println("Function: setup:end");
+  Movement::MOVEMENTS.setNewDirections(Movement::MovementKind::Clockwise);
+
 }
 void loop()
 {
 
   // todo: run wifi transferhandler
-  
+
   Movement::MOVEMENTS.run();
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
   Sensors::run();
 
   COM::WIFI_TRANSFER_HANDLER.run();
-    
-  Service::Coordinator::run();
+
+  // Service::Coordinator::run();
   Service::PositionSync::run();
   Game::run();
 

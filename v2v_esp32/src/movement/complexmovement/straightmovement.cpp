@@ -13,17 +13,18 @@ namespace Movement
     }
     void StraightMovement::run()
     {
+        Vehicle::ROVER.setMaxMovementSpeed(MAX_STRAIGHT_MOVEMENT_SPEED);
 
         if (this->isDone)
         {
             Vehicle::ROVER.set(0, 90);
             return;
         }
+        digitalWrite(2, LOW); // BUILTIN LED
 
         bool left = Sensors::LINE_SENSOR.left() == 1;
         bool center = Sensors::LINE_SENSOR.center() == 1;
         bool right = Sensors::LINE_SENSOR.right() == 1;
-
 
         switch (this->state)
         {
@@ -55,6 +56,7 @@ namespace Movement
             }
             if (!left && !right && !left)
             {
+                digitalWrite(2, HIGH); // BUILTIN LED
                 Vehicle::ROVER.set(0, 90);
             }
             break;
@@ -70,6 +72,11 @@ namespace Movement
             if (!left && center && !right)
             {
                 Vehicle::ROVER.set(255, 90);
+            }
+            if (!left && !right && !center)
+            {
+                digitalWrite(2, HIGH); // BUILTIN LED
+                Vehicle::ROVER.set(0, 90);
             }
             if (left && center && right)
             {

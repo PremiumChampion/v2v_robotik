@@ -13,5 +13,9 @@ namespace Sensors
         QR_CODE_SCANNER.run();
         LINE_SENSOR.run();
     }
+    void init(){
+        QR_CODE_SCANNER.init();
+        LINE_SENSOR.init();
+    }
 
 } // namespace Sensors

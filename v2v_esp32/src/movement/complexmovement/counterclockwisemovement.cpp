@@ -9,15 +9,10 @@ namespace Movement
     {
         this->state = CC_Starting;
         this->isDone = false;
+        this->backwardsStartTime = 0;
     }
     void CounterClockWiseMovement::run()
     {
-
-        // if (this->isPaused)
-        // {
-        //     Vehicle::ROVER.set(0, 90);
-        //     return;
-        // }
 
         if (this->isDone)
         {
@@ -37,15 +32,22 @@ namespace Movement
             }
             if (left && center && !right)
             {
-                Vehicle::ROVER.set(255, 180 + TURN_DELTA);
+                Vehicle::ROVER.set(255, 0 - TURN_DELTA);
             }
             if (!left && center && right)
             {
-                Vehicle::ROVER.set(255, 180 - TURN_DELTA);
+                Vehicle::ROVER.set(255, 180 + TURN_DELTA);
             }
             if (!left && center && !right)
             {
-                Vehicle::ROVER.set(255, 180);
+                Vehicle::ROVER.set(255, 180); // do this for at least 200ms ignoring sensor input
+                this->state = CC_HalfWay_Pause;
+                this->centerStartTime = millis();
+            }
+            break;
+        case CC_HalfWay_Pause:
+            if (this->centerStartTime + 200 < millis())
+            {
                 this->state = CC_HalfWay;
             }
             break;
@@ -63,6 +65,33 @@ namespace Movement
             if (!left && center && right)
             {
                 Vehicle::ROVER.set(255, 180 - TURN_DELTA);
+            }
+
+            if (left && !center && right && this->backwardsStartTime == 0)
+            {
+                this->backwardsStartTime = millis();
+            }
+
+            if (!(left && !center && right))
+            {
+                this->backwardsStartTime = 0;
+            }
+
+            if (backwardsStartTime != 0)
+            {
+                if (backwardsStartTime + 100 < millis())
+                {
+                    Vehicle::ROVER.set(255, 270); // drive backwards for 0.1s
+                }
+                else if (backwardsStartTime + 250 < millis())
+                {
+                    Vehicle::ROVER.set(255, 90); // drive forwards until cross met
+                }
+                else
+                {
+                    digitalWrite(2, HIGH); // BUILTIN LED
+                    Vehicle::ROVER.set(0, 270);
+                }
             }
 
             if (left && center && right)

@@ -1,6 +1,6 @@
 #include "util/pausable.h"
 
-#define TURN_DELTA 20
+#define TURN_DELTA 40
 
 #pragma once
 

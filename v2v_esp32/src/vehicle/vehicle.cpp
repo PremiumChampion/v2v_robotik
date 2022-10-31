@@ -1,11 +1,13 @@
 #include "actors/motor/motor.h"
 #include "vehicle.h"
 
-#define MIN_MOVEMENT_SPEED 30
-#define MAX_MOVEMENT_SPEED 50
+
 
 namespace Vehicle
 {
+    double mapDouble(double x, double in_min, double in_max, double out_min, double out_max){
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
 
     Vehicle::Vehicle(Actors::HHN_V_Motor *motorL, Actors::HHN_V_Motor *motorR)
     {
@@ -13,7 +15,10 @@ namespace Vehicle
         this->motorR = motorR;
         this->currentSpeed = 0;
         this->currentDirection = 90;
+        this->maxMovmementSpeed = MAX_STRAIGHT_MOVEMENT_SPEED;
     }
+
+
     Vehicle::~Vehicle()
     {
     }
@@ -29,8 +34,8 @@ namespace Vehicle
     {
         this->currentSpeed = speed;
         this->currentDirection = degree;
-        calculateMotorValue(this->motorL, 0);
-        calculateMotorValue(this->motorR, 90);
+        calculateMotorValue(this->motorL, false);
+        calculateMotorValue(this->motorR, true);
     }
 
     // phaseDelta: degrees by which the cos function needs to be moved to archieve the correct encoding for the motor
@@ -112,15 +117,14 @@ namespace Vehicle
             }
         }
 
-        // rad = deg x PI / 180
-        // deg = rad x 180 / PI
+        graphedSpeed = mapDouble(newSpeed, 0, 255, 0, 1) * graphedSpeed * (-1);
 
         outSpeed = abs(graphedSpeed);
 
         // we only want movable speeds from MIN_MOVEMENT_SPEED...MAX_MOVEMENT_SPEED only
         // non movable speeds below MIN_MOVEMENT_SPEED are maped to 0
 
-        outSpeed = map(outSpeed, 0, 255, MIN_MOVEMENT_SPEED - 1, MAX_MOVEMENT_SPEED);
+        outSpeed = map(outSpeed, 0, 255, MIN_MOVEMENT_SPEED - 1, this->maxMovmementSpeed);
         if (outSpeed < 30)
         {
             outSpeed = 0;
@@ -145,6 +149,10 @@ namespace Vehicle
         // output value
 
         motor->set(outSpeed, outDirection);
+    }
+
+    void Vehicle::setMaxMovementSpeed(int newMovementSpeed){
+        this->maxMovmementSpeed = newMovementSpeed;
     }
 
     Vehicle ROVER = Vehicle(&Actors::motorL, &Actors::motorR);

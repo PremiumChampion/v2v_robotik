@@ -12,12 +12,6 @@ namespace QR
     this->scannerSerial = serialScannerConnection;
     this->i = 0;
     this->j = 0;
-    this->lastReadingTime = millis();
-
-    this->scannerSerial->begin(9600);
-    this->Common_Setting();
-    this->Set_Interface();
-    this->Scan_Interval_Setting(0);
     // this->Scan_Command();
   }
 
@@ -27,6 +21,16 @@ namespace QR
 
   void BarcodeScannerModule::getValue()
   {
+  }
+
+  void BarcodeScannerModule::init()
+  {
+    this->lastReadingTime = millis();
+
+    this->scannerSerial->begin(9600);
+    this->Common_Setting();
+    this->Set_Interface();
+    this->Scan_Interval_Setting(0);
   }
 
   // static unsigned char Command[9];
@@ -46,7 +50,7 @@ namespace QR
     this->Command[3] = 0x01;
     this->Command[4] = (Addr_Functions >> 8) & 0xFF;
     this->Command[5] = (Addr_Functions << 8) & 0xFF;
-    this->Command[6] = LED_Indicator_En + Buz_Indicator_En + Focus_Com + Light_Com + Continous_Mode;
+    this->Command[6] = LED_Indicator_En + Buz_Indicator_En + Focus_Com + Light_Keep + Continous_Mode;
     // Serial.println(Command[6], HEX);
     this->Command[7] = 0xAB;
     this->Command[8] = 0xCD;

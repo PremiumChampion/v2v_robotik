@@ -47,7 +47,7 @@ namespace Movement
 
     bool MovementService::waitingForNewDirections()
     {
-        bool isComplete = true;
+        bool isComplete = false;
         switch (this->currentMovementKind)
         {
         case Straight:
@@ -73,7 +73,8 @@ namespace Movement
     {
         if (this->waitingForNewDirections())
         {
-            Serial.println("Setting new directions");
+            Serial.print("Setting new directions:");
+            Serial.println(newDirections);
             this->currentMovementKind = newDirections;
             switch (newDirections)
             {

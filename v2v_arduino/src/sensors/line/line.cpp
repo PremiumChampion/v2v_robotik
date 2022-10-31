@@ -10,9 +10,6 @@ namespace Line
         this->pinCenter = pinCenter;
         this->pinLeft = pinLeft;
         this->pinRight = pinRight;
-        pinMode(this->pinCenter, INPUT);
-        pinMode(this->pinLeft, INPUT);
-        pinMode(this->pinRight, INPUT);
     }
     HHN_Line::~HHN_Line()
     {
@@ -22,6 +19,12 @@ namespace Line
     {
         int pinValue = analogRead(pin);
         return pinValue > 100 && pinValue < 600;
+    }
+
+    void HHN_Line::init(){
+        pinMode(this->pinCenter, INPUT);
+        pinMode(this->pinLeft, INPUT);
+        pinMode(this->pinRight, INPUT);
     }
 
     void HHN_Line::run()

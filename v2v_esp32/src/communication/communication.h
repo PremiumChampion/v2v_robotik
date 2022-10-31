@@ -7,7 +7,7 @@
 #define CHASER 0
 #define CHASED 1
 
-#define ROLE CHASED
+#define ROLE CHASER
 namespace COM
 {
     static int WIFI_MESSAGE_SIZE = 8;
@@ -40,7 +40,6 @@ namespace COM
     };
 
     WIFI_MESSAGE getThisPositionIndex();
-
     WIFI_MESSAGE getOtherPositionIndex();
 
 #if ROLE == CHASED
