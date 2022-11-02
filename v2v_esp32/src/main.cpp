@@ -20,7 +20,9 @@ void setup()
   digitalWrite(2, LOW);
   // for debugging
   Serial.begin(115200);
+  delay(1000);
   Serial.println("Function: setup");
+
 
   Service::PositionSync::init();
 
@@ -30,7 +32,7 @@ void setup()
   // setup communication between both esps.
   // COM::WIFI_TRANSFER_HANDLER.init();
   Serial.println("Function: setup:end");
-  Movement::MOVEMENTS.setNewDirections(Movement::MovementKind::Clockwise);
+  Movement::MOVEMENTS.setNewDirections(Movement::MovementKind::Counterclockwise);
 
 }
 void loop()

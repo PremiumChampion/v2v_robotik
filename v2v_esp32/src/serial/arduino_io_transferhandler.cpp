@@ -28,13 +28,13 @@ namespace SerialCommunication
         if (this->sndBroker->get_has_changes())
         {
             String data = this->sndBroker->get_transmission_data();
-            Serial.println("SERIAL-SEND:"+data);
+            // Serial.println("SERIAL-SEND:"+data);
             SerialCommunication::ArduinoConnection.send(data);
         }
         if (SerialCommunication::ArduinoConnection.hasData())
         {
             String data = SerialCommunication::ArduinoConnection.receive();
-            // Serial.println("SERIAL-RCV:"+data);
+            Serial.println("SERIAL-RCV:"+data);
             this->rcvBroker->rcv_transmission_data(data);
         }
     }

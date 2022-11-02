@@ -52,6 +52,7 @@ namespace Vehicle
 
 #pragma region rotation speed
         // adjust graph for dirrerent motors
+        newDirection += 360;
         newDirection = abs(newDirection) % 360;
         if (!rightMotor)
         {

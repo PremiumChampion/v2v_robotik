@@ -2,20 +2,14 @@
 #pragma once
 namespace Movement
 {
-    enum ClockWiseMovementState
-    {
-        C_Starting,
-        C_HalfWay,
-        C_HalfWay_Pause,
-        C_Ending
-    };
+
     class ClockWiseMovement : public BasicMovement
     {
     private:
-        // bool isComplete;
-        ClockWiseMovementState state;
-        unsigned long centerStartTime;
-        unsigned long backwardsStartTime;
+        int turningTime;
+        int turningSpeed;
+        int backupTime;
+        unsigned long startTime;
     public:
         ClockWiseMovement();
         void run();
