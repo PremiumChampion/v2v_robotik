@@ -3,17 +3,17 @@
 
 namespace Sensors
 {
-    // Binray encoded L-C-R
+    // Binray encoded R-C-L
     enum LineValue
     {
-        None = 0,
-        R = 1,
-        C = 2,
-        RC = 3,
-        L = 4,
-        RL = 5,
-        LC = 6,
-        ALL = 7
+        None = 0, // 000
+        L = 1,    // 001
+        C = 2,    // 010
+        LC = 3,   // 011
+        R = 4,    // 100
+        RL = 5,   // 101
+        RC = 6,   // 110
+        ALL = 7   // 111
     };
 
     class HHN_V_Line

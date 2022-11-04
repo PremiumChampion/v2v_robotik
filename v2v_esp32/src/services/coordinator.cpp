@@ -10,7 +10,8 @@ namespace Service
 {
     namespace Coordinator
     {
-        int currentTarget = 0; // target coordinate 0-15
+        // target coordinate 0-15
+        int currentTarget = 0; 
         bool stopBeforeTarget = false;
         void setCurrentTarget(int nextTarget)
         {
@@ -41,6 +42,7 @@ namespace Service
 
         void run()
         {
+            
 #pragma region check if new directions are needed
             if (!Movement::MOVEMENTS.waitingForNewDirections())
             {

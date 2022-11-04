@@ -11,6 +11,7 @@ namespace Movement
     MovementService::MovementService(/* args */)
     {
         this->currentMovementKind = MovementKind::Stop;
+        this->currentStopMovement = StopMovement();
     }
 
     void MovementService::pause()

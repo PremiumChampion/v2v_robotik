@@ -20,7 +20,11 @@ namespace COM
 
         void setup()
         {
-                Serial.println("Function: setup");
+                COM::broker.set(SYNCPLAY,String(SYNCSTATE::CONNECTION));
+                COM::broker.set(POLICE_INIT,"");
+                COM::broker.set(CRIMINAL_INIT,"");
+                COM::broker.set(POLICE_WON, String(0));
+                Serial.println(COM::broker.get_transmission_data());
 #if ROLE == CHASED               // Chased-one
                 WLAN::setupAP(); // Create an accesspoint
                 server.init();

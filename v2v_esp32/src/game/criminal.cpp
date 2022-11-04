@@ -14,7 +14,7 @@ namespace Game
         // MUST NOT BLOCK THE FLOW
         void init()
         {
-
+            // Serial.println("STATE:" + String(state));
 #pragma region generate random position
             if (state == GENERATING_POSITION)
             {
@@ -30,6 +30,14 @@ namespace Game
                 Service::Coordinator::setCurrentTarget(nextTile);
                 Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
+                // Serial.println("Pos:" + String(nextTile));
+                // int generatedNextTile = 0;
+                // Movement::MovementKind next_movement = Movement::Stop;
+
+                // Service::Coordinator::setRunWithCollisionAvoidance(true);
+
+                // Service::Coordinator::calculateRoute(&generatedNextTile, &next_movement);
+                // Serial.println("generatedNextTile = " + String(generatedNextTile) + " next_movement = " + String(next_movement));
                 state = WAITING_FOR_CRIMINAL_MOVEMENT;
             }
 
@@ -46,13 +54,13 @@ namespace Game
                 Movement::MovementKind next_movement = Movement::Stop;
 
                 Service::Coordinator::calculateRoute(&nextTile, &next_movement);
+                
                 bool criminal_has_reached_starting_position = nextTile == targetTile && next_movement == Movement::Stop;
 
                 if (criminal_has_reached_starting_position)
                 {
                     // Set message in broker, that criminal is done moving
                     COM::broker.set(COM::CRIMINAL_INIT, String("Done"));
-                    Service::Coordinator::setRunWithCollisionAvoidance(false);
                     state = WAITING_FOR_POLICE_MOVEMENT;
                 }
             }
@@ -86,6 +94,7 @@ namespace Game
                 {
                     // state = next logical state
                     state = DEFAULT_STATE;
+                    Service::Coordinator::setRunWithCollisionAvoidance(false);
                     setGameState(RUNNING);
                 }
             }
@@ -98,10 +107,11 @@ namespace Game
 #pragma region lost
 #pragma region wait for police to tell you that you lost
             // Signal kommt von Police -> darauf hören
-            if (COM::broker.get(COM::POLICE_WON).toInt()){
+            if (COM::broker.get(COM::POLICE_WON).toInt())
+            {
 #pragma endregion
 
-#pragma region switch role (optional)
+#pragma region switch role(optional)
                 Game::setCurrentRole(CHASER);
 #pragma endregion
 
@@ -112,7 +122,8 @@ namespace Game
 #pragma endregion
 
 #pragma region not lost
-            if (!COM::broker.get(COM::POLICE_WON).toInt()){
+            if (!COM::broker.get(COM::POLICE_WON).toInt())
+            {
                 // criminal stays still when beeing chased
 #pragma region wait
                 // do nothing

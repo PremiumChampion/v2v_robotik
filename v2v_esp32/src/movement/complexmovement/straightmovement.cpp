@@ -7,9 +7,10 @@ namespace Movement
 {
     StraightMovement::StraightMovement() : BasicMovement()
     {
-        this->state = StartCrossing;
+        this->state = Start;
         this->isDone = false;
-        // this->isPaused = false;
+        this->backupStartTime = 0;
+        this->backupTime_ms = 100;
     }
     void StraightMovement::run()
     {
@@ -20,75 +21,126 @@ namespace Movement
             Vehicle::ROVER.set(0, 90);
             return;
         }
-        digitalWrite(2, LOW); // BUILTIN LED
-
-        bool left = Sensors::LINE_SENSOR.left() == 1;
-        bool center = Sensors::LINE_SENSOR.center() == 1;
-        bool right = Sensors::LINE_SENSOR.right() == 1;
 
         switch (this->state)
         {
-        case StartCrossing:
-            if (left && right && center)
-            {
-                Vehicle::ROVER.set(255, 90);
-            }
-            if (left && center && !right)
-            {
-                Vehicle::ROVER.set(255, 90 - TURN_DELTA);
-            }
-            if (!left && center && right)
-            {
-                Vehicle::ROVER.set(255, 90 + TURN_DELTA);
-            }
-            if (!left && center && !right)
-            {
-                this->state = Continuing;
-                Vehicle::ROVER.set(255, 90);
-            }
-            if (!left && !center && right)
-            {
-                Vehicle::ROVER.set(255, 90 + TURN_DELTA);
-            }
-            if (left && !center && !right)
-            {
-                Vehicle::ROVER.set(255, 90 - TURN_DELTA);
-            }
-            if (!left && !right && !left)
-            {
-                digitalWrite(2, HIGH); // BUILTIN LED
-                Vehicle::ROVER.set(0, 90);
-            }
+        case Start:
+            this->startSegment();
             break;
-        case Continuing:
-            if (left && center && !right)
-            {
-                Vehicle::ROVER.set(255, 90 - TURN_DELTA);
-            }
-            if (!left && center && right)
-            {
-                Vehicle::ROVER.set(255, 90 + TURN_DELTA);
-            }
-            if (!left && center && !right)
-            {
-                Vehicle::ROVER.set(255, 90);
-            }
-            if (!left && !right && !center)
-            {
-                digitalWrite(2, HIGH); // BUILTIN LED
-                Vehicle::ROVER.set(0, 90);
-            }
-            if (left && center && right)
-            {
-                this->isDone = true;
-                this->state = EndCrossing;
-                Vehicle::ROVER.set(0, 90);
-            }
+        case FirstNarrowSegment:
+        case SecondNarrowSegment:
+            this->narrowSegment();
             break;
-        case EndCrossing:
+        case WideSegment:
+            this->wideSegment();
+            break;
+        case BackwardsSegment:
+            this->backwardsSegment();
             break;
         default:
             break;
+        }
+    }
+
+    void StraightMovement::startSegment()
+    {
+        bool left = Sensors::LINE_SENSOR.left();
+        bool center = Sensors::LINE_SENSOR.center();
+        bool right = Sensors::LINE_SENSOR.right();
+        if (left && right && center)
+        {
+            Vehicle::ROVER.set(255, 90);
+        }
+
+        if (!(left && right && center))
+        {
+            Serial.println("FirstNarrowSegment");
+            this->state = FirstNarrowSegment;
+        }
+    }
+    void StraightMovement::narrowSegment()
+    {
+        bool left = Sensors::LINE_SENSOR.left();
+        bool center = Sensors::LINE_SENSOR.center();
+        bool right = Sensors::LINE_SENSOR.right();
+
+        if (left && !center && !right)
+        {
+            Vehicle::ROVER.set(255, 90 - TURN_DELTA);
+        }
+        if (left && center && !right)
+        {
+            Vehicle::ROVER.set(255, 90 - (int)(TURN_DELTA / 1.5));
+        }
+
+        if (!left && !center && right)
+        {
+            Vehicle::ROVER.set(255, 90 + TURN_DELTA);
+        }
+        if (!left && center && right)
+        {
+            Vehicle::ROVER.set(255, 90 + (int)(TURN_DELTA / 1.5));
+        }
+
+        if (left && center && right)
+        {
+            Serial.println(this->state == FirstNarrowSegment ? "WideSegment" : "BackwardsSegment");
+
+            this->state = this->state == FirstNarrowSegment ? WideSegment : BackwardsSegment;
+        }
+    }
+    void StraightMovement::wideSegment()
+    {
+        bool left = Sensors::LINE_SENSOR.left();
+        bool center = Sensors::LINE_SENSOR.center();
+        bool right = Sensors::LINE_SENSOR.right();
+
+        if (left && center && !right)
+        {
+            Vehicle::ROVER.set(255, 90 - (int)(TURN_DELTA / 1.5));
+        }
+
+        if (!left && !center && right)
+        {
+            Vehicle::ROVER.set(255, 90 + (int)TURN_DELTA);
+        }
+        if (!left && center && right)
+        {
+            Vehicle::ROVER.set(255, 90 + (int)(TURN_DELTA / 1.5));
+        }
+
+        if (left && !center && !right)
+        {
+            Vehicle::ROVER.set(255, 90 - TURN_DELTA);
+        }
+
+        if (!left && center && !right)
+        {
+            Serial.println("SecondNarrowSegment");
+
+            this->state = SecondNarrowSegment;
+        }
+    }
+    void StraightMovement::backwardsSegment()
+    {
+        bool left = Sensors::LINE_SENSOR.left();
+        bool center = Sensors::LINE_SENSOR.center();
+        bool right = Sensors::LINE_SENSOR.right();
+
+        if (this->backupStartTime == 0)
+        {
+            this->backupStartTime = millis();
+        }
+
+        if (this->backupStartTime + this->backupTime_ms > millis())
+        {
+            Vehicle::ROVER.set(255, 270);
+        }
+        else
+        {
+            Vehicle::ROVER.set(255, 0);
+            Serial.println("DONE");
+            this->isDone = true;
         }
     }
 } // namespace Movement

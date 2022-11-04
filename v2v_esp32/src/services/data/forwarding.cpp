@@ -33,30 +33,30 @@ namespace Service
         return Movement::MovementKind::Stop;
     }
 
-    // movement map in positive x-achsis direction
+    // nach rechts fahren
     Forwarding::ForwardingTable PositiveDeltaX(
         Movement::MovementKind::Clockwise,        // North
         Movement::MovementKind::Straight,         // East
         Movement::MovementKind::Counterclockwise, // South
         Movement::MovementKind::Clockwise);       // West
-    // movement map in negative x-achsis direction
+    // nach links fahren
     Forwarding::ForwardingTable NegativeDeltaX(
         Movement::MovementKind::Counterclockwise, // North
-        Movement::MovementKind::Counterclockwise, // East
+        Movement::MovementKind::Clockwise,        // East
         Movement::MovementKind::Clockwise,        // South
         Movement::MovementKind::Straight);        // West
-    //  movement map in positive y-axis direction
+    //  nach unten fahren
     Forwarding::ForwardingTable PositiveDeltaY(
-        Movement::MovementKind::Straight,          // North
-        Movement::MovementKind::Clockwise,         // East
-        Movement::MovementKind::Clockwise,         // South
-        Movement::MovementKind::Counterclockwise); // West
-    //  movement map in negative y-axis direction
-    Forwarding::ForwardingTable NegativeDeltaY(
-        Movement::MovementKind::Counterclockwise,  // North
+        Movement::MovementKind::Clockwise,         // North
         Movement::MovementKind::Clockwise,         // East
         Movement::MovementKind::Straight,          // South
         Movement::MovementKind::Counterclockwise); // West
+    //  nach oben fahren
+    Forwarding::ForwardingTable NegativeDeltaY(
+        Movement::MovementKind::Straight,         // North
+        Movement::MovementKind::Counterclockwise, // East
+        Movement::MovementKind::Clockwise,        // South
+        Movement::MovementKind::Clockwise);       // West
 
     Movement::MovementKind Forwarding::calculateNextMovement(Positioning *posObject, int nextTile)
     {
@@ -64,14 +64,15 @@ namespace Service
         // Calculate, if movement is either in x-axis or y-axis
         // direction(also either positive or negative direction)
         // Calculate, in which direction robot needs to turn, in relevance to its current facing direction
-        int currentTile = THIS_ROBOT.getCurrentPositionTile();
-        Direction currentDirection = THIS_ROBOT.getCurrentDirection();
-        int nextTileX = nextTile % 4;
-        int nextTileY = nextTile / 4;
-        int currentX = currentTile % 4;
-        int currentY = currentTile / 4;
-        int deltaX = nextTileX - currentX;
-        int deltaY = nextTileY - currentY;
+        int currentTile = posObject->getCurrentPositionTile();         // 12
+        Direction currentDirection = posObject->getCurrentDirection(); // NORTH
+        // nextTile == 8
+        int nextTileX = nextTile % 4;      // 0
+        int nextTileY = nextTile / 4;      // 2
+        int currentX = currentTile % 4;    // 0
+        int currentY = currentTile / 4;    // 3
+        int deltaX = nextTileX - currentX; // 0
+        int deltaY = nextTileY - currentY; // -1
 
         // if (deltaX == 0 && deltaY == 0)
         // {

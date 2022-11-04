@@ -6,7 +6,7 @@
 namespace Game
 {
     int currentRole = ROLE;
-    
+
     void setCurrentRole(int newRole)
     {
         currentRole = newRole;
@@ -27,44 +27,25 @@ namespace Game
         return currentGameState;
     }
 
-    void init()
-    {
-#pragma region wait for sync
-#pragma endregion
-
-#pragma region whoami police or criminal
-        if (currentRole == CHASED)
-        {
-#pragma region wait for police to position
-#pragma endregion
-#pragma region position self
-            Criminal::init();
-#pragma endregion
-#pragma region tell police to catch
-#pragma endregion
-        }
-        if (currentRole == CHASER)
-        {
-#pragma region position self
-            Police::init();
-#pragma endregion
-#pragma region wait for criminal to position
-#pragma endregion
-#pragma wait for catch signal
-#pragma endregion
-        }
-
-#pragma endregion
-    }
     void run()
     {
         if (currentGameState == INITIALISING)
         {
-            init();
+#pragma region whoami police or criminal
+            if (currentRole == CHASED)
+            {
+                Criminal::init();
+            }
+            if (currentRole == CHASER)
+            {
+                Police::init();
+            }
+#pragma endregion
         }
+
         if (currentGameState == RUNNING)
         {
-#pragma region should i run or chase the other one
+#pragma region whoami police or criminal
             if (currentRole == CHASED)
             {
                 Criminal::run();

@@ -16,12 +16,12 @@ namespace Movement
         //     Vehicle::ROVER.set(0, 90);
         //     return;
         // }
+        this->isDone = true;
+        Vehicle::ROVER.set(0, 90);
 
         if (this->isDone)
         {
             return;
         }
-        
-        Vehicle::ROVER.set(0, 90);
     }
 } // namespace Movement

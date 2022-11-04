@@ -1,7 +1,7 @@
 #include "actors/motor/motor.h"
 
 #define MIN_MOVEMENT_SPEED 30
-#define MAX_STRAIGHT_MOVEMENT_SPEED 50
+#define MAX_STRAIGHT_MOVEMENT_SPEED 60
 #define MAX_TURNING_MOVEMENT_SPEED 90
 
 #pragma once

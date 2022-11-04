@@ -18,6 +18,7 @@ namespace Game
         // MUST NOT BLOCK THE FLOW
         void init()
         {
+
 #pragma region wait for criminal ready
             //Über WiFi Broker auf Nachricht warten
             // Platzhalter im messages array für ready Nachricht definieren
