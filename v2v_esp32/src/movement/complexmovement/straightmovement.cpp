@@ -86,7 +86,7 @@ namespace Movement
         bool center = Sensors::LINE_SENSOR.center();
         bool right = Sensors::LINE_SENSOR.right();
 
-        int turnDelta = this->state == FirstNarrowSegment ? TURN_DELTA : TURN_DELTA / 2;
+        int turnDelta =  TURN_DELTA / 2;
 
         if (left && !center && !right)
         {

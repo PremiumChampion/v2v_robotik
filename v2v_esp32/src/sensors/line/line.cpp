@@ -7,7 +7,7 @@ namespace Sensors
     HHN_V_Line::HHN_V_Line()
     {
         this->nextLevelingIndex = 0;
-        this->levelingArraySize = 3;
+        this->levelingArraySize = 61;
         this->leftLevelingValues = new bool[this->levelingArraySize];
         this->centerLevelingValues = new bool[this->levelingArraySize];
         this->rightLevelingValues = new bool[this->levelingArraySize];
