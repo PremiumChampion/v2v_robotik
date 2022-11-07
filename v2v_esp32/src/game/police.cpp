@@ -110,8 +110,8 @@ namespace Game
                 // COM::broker.set(COM::POLICE_POSITION, String());
                 // COM::broker.set(COM::CRIMINAL_POSITION, String());
                 COM::broker.set(COM::SYNCPLAY, String(COM::CONNECTION));
-                COM::broker.set(COM::POLICE_INIT, String(0));
-                COM::broker.set(COM::CRIMINAL_INIT, String(0));
+                COM::broker.set(COM::POLICE_INIT, String());
+                COM::broker.set(COM::CRIMINAL_INIT, String());
                 // COM::broker.set(COM::CURRENT_CHASER_POSITON, String());
                 // COM::broker.set(COM::CURRENT_CHASED_POSITION, String());
                 COM::broker.set(COM::POLICE_WON, String(0));
