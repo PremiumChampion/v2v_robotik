@@ -123,14 +123,14 @@ namespace Movement
         {
             Vehicle::ROVER.set(255, 90 - TURN_DELTA / 2);
         }
+        if (!left && center && right)
+        {
+            Vehicle::ROVER.set(255, 90 + TURN_DELTA / 4);
+        }
 
         if (!left && !center && right)
         {
             Vehicle::ROVER.set(255, 90 + TURN_DELTA / 2);
-        }
-        if (!left && center && right)
-        {
-            Vehicle::ROVER.set(255, 90 + TURN_DELTA / 4);
         }
 
         if (left && !center && !right)
