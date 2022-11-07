@@ -16,14 +16,14 @@ namespace COM
 
         HHN_Client::Socket externalClient = HHN_Client::Socket();
         // Delete move broker to right place after everything is implemented correctly
-        Broker::Broker<String> broker(WIFI_MESSAGE_SIZE);
+        Broker::Broker<int> broker(WIFI_MESSAGE_SIZE);
 
         void setup()
         {
-                COM::broker.set(SYNCPLAY,String(SYNCSTATE::CONNECTION));
-                COM::broker.set(POLICE_INIT,"");
-                COM::broker.set(CRIMINAL_INIT,"");
-                COM::broker.set(POLICE_WON, String(0));
+                COM::broker.set(SYNCPLAY, SYNCSTATE::CONNECTION);
+                COM::broker.set(POLICE_INIT, 0);
+                COM::broker.set(CRIMINAL_INIT, 0);
+                COM::broker.set(POLICE_WON, 0);
                 Serial.println(COM::broker.get_transmission_data());
 #if ROLE == CHASED               // Chased-one
                 WLAN::setupAP(); // Create an accesspoint

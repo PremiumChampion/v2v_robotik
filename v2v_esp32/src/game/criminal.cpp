@@ -8,12 +8,19 @@ namespace Game
 {
     namespace Criminal
     {
-        INIT_STATE DEFAULT_STATE = GENERATING_POSITION;
+        INIT_STATE DEFAULT_STATE = RESETTING_WON_STATE;
         INIT_STATE state = DEFAULT_STATE;
         // function, that is called several times, until the whole initialization of the criminal is done
         // MUST NOT BLOCK THE FLOW
         void init()
         {
+            if (state == RESETTING_WON_STATE)
+            {
+                COM::broker.set(COM::POLICE_WON, 0);
+                state = GENERATING_POSITION;
+                Serial.println("CRIMINAL:GENERATING_POSITION");
+            }
+
             // Serial.println("STATE:" + String(state));
 #pragma region generate random position
             if (state == GENERATING_POSITION)
@@ -26,7 +33,7 @@ namespace Game
                     nextTile = random(16);
                 } while (nextTile == currentOtherPosition);
 
-                COM::broker.set(COM::CRIMINAL_POSITION, String(nextTile));
+                COM::broker.set(COM::CRIMINAL_POSITION, nextTile);
                 Service::Coordinator::setCurrentTarget(nextTile);
                 Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
@@ -39,6 +46,7 @@ namespace Game
                 // Service::Coordinator::calculateRoute(&generatedNextTile, &next_movement);
                 // Serial.println("generatedNextTile = " + String(generatedNextTile) + " next_movement = " + String(next_movement));
                 state = WAITING_FOR_CRIMINAL_MOVEMENT;
+                Serial.println("CRIMINAL:WAITING_FOR_CRIMINAL_MOVEMENT");
             }
 
             // Random number generator von 0-15
@@ -48,20 +56,21 @@ namespace Game
 #pragma region move to random position
             if (state == WAITING_FOR_CRIMINAL_MOVEMENT)
             {
-                int targetTile = COM::broker.get(COM::CRIMINAL_POSITION).toInt();
+                int targetTile = COM::broker.get(COM::CRIMINAL_POSITION);
 
                 int nextTile = 0;
                 Movement::MovementKind next_movement = Movement::Stop;
 
                 Service::Coordinator::calculateRoute(&nextTile, &next_movement);
-                
+
                 bool criminal_has_reached_starting_position = nextTile == targetTile && next_movement == Movement::Stop;
 
                 if (criminal_has_reached_starting_position)
                 {
                     // Set message in broker, that criminal is done moving
-                    COM::broker.set(COM::CRIMINAL_INIT, String("Done"));
+                    COM::broker.set(COM::CRIMINAL_INIT, 1);
                     state = WAITING_FOR_POLICE_MOVEMENT;
+                    Serial.println("CRIMINAL:WAITING_FOR_POLICE_MOVEMENT");
                 }
             }
             // Rufe die jeweiligen Methoden auf um zum Tile zu laufen
@@ -73,8 +82,9 @@ namespace Game
             // Arduino Broker
             if (state == WAITING_FOR_POLICE_MOVEMENT)
             {
-                if (COM::broker.get(COM::POLICE_INIT).equals("Done"))
+                if (COM::broker.get(COM::POLICE_INIT) == 1)
                 {
+                    Serial.println("CRIMINAL:WAITING_FOR_GAMESTART");
                     state = WAITING_FOR_GAMESTART;
                 }
             }
@@ -85,16 +95,17 @@ namespace Game
             // Start game -> setze ein FLag auf true
             if (state == WAITING_FOR_GAMESTART)
             {
-                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::CONNECTION)
+                if (COM::broker.get(COM::SYNCPLAY) == COM::CONNECTION)
                 {
-                    COM::broker.set(COM::SYNCPLAY, String(COM::ACKNOWLEDGE));
+                    COM::broker.set(COM::SYNCPLAY, COM::ACKNOWLEDGE);
                 }
 
-                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ESTABLISHED)
+                if (COM::broker.get(COM::SYNCPLAY) == COM::ESTABLISHED)
                 {
                     // state = next logical state
                     state = DEFAULT_STATE;
                     Service::Coordinator::setRunWithCollisionAvoidance(false);
+                    Serial.println("CRIMINAL:RUNNING");
                     setGameState(RUNNING);
                 }
             }
@@ -107,7 +118,7 @@ namespace Game
 #pragma region lost
 #pragma region wait for police to tell you that you lost
             // Signal kommt von Police -> darauf hören
-            if (COM::broker.get(COM::POLICE_WON).toInt())
+            if (COM::broker.get(COM::POLICE_WON) == 1)
             {
 #pragma endregion
 
@@ -121,16 +132,16 @@ namespace Game
             }
 #pragma endregion
 
-#pragma region not lost
-            if (!COM::broker.get(COM::POLICE_WON).toInt())
-            {
-                // criminal stays still when beeing chased
-#pragma region wait
-                // do nothing
-#pragma endregion
+// #pragma region not lost
+//             if (COM::broker.get(COM::POLICE_WON) == 0)
+//             {
+//                 // criminal stays still when beeing chased
+// #pragma region wait
+//                 // do nothing
+// #pragma endregion
 
-#pragma endregion
-            }
+// #pragma endregion
+//             }
         }
     } // namespace Criminal
 

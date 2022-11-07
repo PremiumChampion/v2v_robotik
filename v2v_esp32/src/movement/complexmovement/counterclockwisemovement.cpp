@@ -51,7 +51,12 @@ namespace Movement
             return;
         }
 
-        Vehicle::ROVER.set(0, 0);
+        if (this->startTime + this->turningTime + this->straightTime + 500 > millis())
+        {
+            Vehicle::ROVER.set(0, 0);
+            return;
+        }
+        Serial.println("COUNTERCLOCKWISE:Done");
         this->isDone = true;
     }
 

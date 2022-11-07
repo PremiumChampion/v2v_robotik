@@ -14,14 +14,14 @@ namespace COM
         if (this->broker->get_has_changes())
         {
             String transmissionData = this->broker->get_transmission_data();
-            Serial.println("WIFI-SEND:" + transmissionData);
+            // Serial.println("WIFI-SEND:" + transmissionData);
             this->client->send(transmissionData);
         }
 
         if (this->client->hasClientData())
         {
             String rcvData = this->client->receive();
-            Serial.println("WIFI-RCV:" + rcvData);
+            // Serial.println("WIFI-RCV:" + rcvData);
             this->broker->rcv_transmission_data(rcvData);
         }
     }
@@ -31,10 +31,11 @@ namespace COM
         COM::setup();
     }
 
-    TransferHandler::TransferHandler(HHN_Client::Socket *socket, Broker::Broker<String> *broker)
+    TransferHandler::TransferHandler(HHN_Client::Socket *socket, Broker::Broker<int> *broker)
     {
         this->client = socket;
         this->broker = broker;
+        // this->last_sync_time = 0;
     }
 
 } // namespace COM

@@ -50,7 +50,13 @@ namespace Movement
             return;
         }
 
-        Vehicle::ROVER.set(0, 0);
+        if (this->startTime + this->turningTime + this->backupTime + 500 > millis())
+        {
+            Vehicle::ROVER.set(0, 0);
+            return;
+        }
+
+        Serial.println("CLOCKWISE:Done");
         this->isDone = true;
 
         // switch (this->state)

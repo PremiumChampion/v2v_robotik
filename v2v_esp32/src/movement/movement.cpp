@@ -76,6 +76,7 @@ namespace Movement
         {
             Serial.print("Setting new directions:");
             Serial.println(newDirections);
+            MovementKind oldMovement = this->currentMovementKind;
             this->currentMovementKind = newDirections;
             switch (newDirections)
             {
@@ -89,7 +90,10 @@ namespace Movement
                 this->currentRightMovement = ClockWiseMovement();
                 break;
             case Stop:
-                this->currentStopMovement = StopMovement();
+                if (oldMovement != newDirections)
+                {
+                    this->currentStopMovement = StopMovement();
+                }
                 break;
             default:
                 this->currentStopMovement = StopMovement();

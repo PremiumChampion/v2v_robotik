@@ -7,7 +7,7 @@
 #define CHASER 0
 #define CHASED 1
 
-#define ROLE CHASER
+#define ROLE CHASED
 namespace COM
 {
     static int WIFI_MESSAGE_SIZE = 8;
@@ -49,5 +49,5 @@ namespace COM
     void setup();
 
     extern HHN_Client::Socket externalClient; // Socket externalClient = Socket();
-    extern Broker::Broker<String> broker;
+    extern Broker::Broker<int> broker;
 }

@@ -26,9 +26,10 @@ namespace Game
             if (state == WAITING_FOR_CRIMINAL_READY)
             {
                 // Check, if the criminal is done with his movement initialization
-                if (COM::broker.get(COM::CRIMINAL_INIT) == "Done")
+                if (COM::broker.get(COM::CRIMINAL_INIT) == 1)
                 {
                     state = GENERATING_POSITION;
+                    Serial.println("POLICE:GENERATING_POSITION");
                 }
             }
 #pragma endregion
@@ -44,11 +45,12 @@ namespace Game
                     nextTile = random(16);
                 } while (nextTile == currentOtherPosition);
 
-                COM::broker.set(COM::POLICE_POSITION, String(nextTile));
+                COM::broker.set(COM::POLICE_POSITION, nextTile);
                 Service::Coordinator::setCurrentTarget(nextTile);
                 Service::Coordinator::setRunWithCollisionAvoidance(true);
                 Service::Coordinator::setStopBeforeTarget(false);
                 state = WAITING_FOR_POLICE_MOVEMENT;
+                Serial.println("POLICE:WAITING_FOR_POLICE_MOVEMENT");
             }
 
             // Random number generator von 0-15
@@ -58,7 +60,7 @@ namespace Game
 #pragma region move to random position
             if (state == WAITING_FOR_POLICE_MOVEMENT)
             {
-                int targetTile = COM::broker.get(COM::POLICE_POSITION).toInt();
+                int targetTile = COM::broker.get(COM::POLICE_POSITION);
 
                 int nextTile = 0;
                 Movement::MovementKind next_movement = Movement::Stop;
@@ -69,8 +71,9 @@ namespace Game
 
                 if (police_has_reached_starting_position)
                 {
-                    COM::broker.set(COM::POLICE_INIT, String("Done"));
+                    COM::broker.set(COM::POLICE_INIT, 1);
                     state = WAITING_FOR_GAMESTART;
+                    Serial.println("POLICE:WAITING_FOR_GAMESTART");
                 }
             }
             // Rufe die jeweiligen Methoden auf um zum Tile zu laufen
@@ -80,9 +83,9 @@ namespace Game
 #pragma region start game
             if (state == WAITING_FOR_GAMESTART)
             {
-                if (COM::broker.get(COM::SYNCPLAY).toInt() == COM::ACKNOWLEDGE)
+                if (COM::broker.get(COM::SYNCPLAY) == COM::ACKNOWLEDGE)
                 {
-                    COM::broker.set(COM::SYNCPLAY, String(COM::ESTABLISHED));
+                    COM::broker.set(COM::SYNCPLAY, COM::ESTABLISHED);
                     state = DEFAULT_STATE;
                     setGameState(RUNNING);
                 }
@@ -90,7 +93,7 @@ namespace Game
 
 #pragma endregion
         }
-        
+
         void run()
         {
 #pragma region check for win condition
@@ -109,16 +112,13 @@ namespace Game
 #pragma region reset broker init vars
                 // COM::broker.set(COM::POLICE_POSITION, String());
                 // COM::broker.set(COM::CRIMINAL_POSITION, String());
-                COM::broker.set(COM::SYNCPLAY, String(COM::CONNECTION));
-                COM::broker.set(COM::POLICE_INIT, String());
-                COM::broker.set(COM::CRIMINAL_INIT, String());
-                // COM::broker.set(COM::CURRENT_CHASER_POSITON, String());
-                // COM::broker.set(COM::CURRENT_CHASED_POSITION, String());
-                COM::broker.set(COM::POLICE_WON, String(0));
+                COM::broker.set(COM::SYNCPLAY, COM::CONNECTION);
+                COM::broker.set(COM::POLICE_INIT, 0);
+                COM::broker.set(COM::CRIMINAL_INIT, 0);
 #pragma endregion
 
                 // Send Police has won flag
-                COM::broker.set(COM::POLICE_WON, String(1));
+                COM::broker.set(COM::POLICE_WON, 1);
 
 #pragma region switch role(optional)
 

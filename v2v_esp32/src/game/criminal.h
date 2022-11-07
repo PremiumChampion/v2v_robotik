@@ -5,6 +5,7 @@ namespace Game
     {
         enum INIT_STATE
         {
+            RESETTING_WON_STATE,
             GENERATING_POSITION,
             WAITING_FOR_CRIMINAL_MOVEMENT,
             WAITING_FOR_POLICE_MOVEMENT,

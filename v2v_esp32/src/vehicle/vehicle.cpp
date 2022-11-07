@@ -148,6 +148,7 @@ namespace Vehicle
             outDirection = Actors::MotorDirection::FORWARD;
 #pragma endregion
         // output value
+        
 
         motor->set(outSpeed, outDirection);
     }

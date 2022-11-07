@@ -30,15 +30,15 @@ namespace Service
             // update positions
             THIS_ROBOT.setCurrentPositionTile(thisRobotPositionTile); // comment out when not working w qr code scanner
 #endif
-            OTHER_ROBOT.setCurrentPositionTile(COM::broker.get(COM::getOtherPositionIndex()).toInt()); // uncomment when working with relative positioning
+            OTHER_ROBOT.setCurrentPositionTile(COM::broker.get(COM::getOtherPositionIndex())); // uncomment when working with relative positioning
         }
 
         void init()
         {
-            COM::broker.set(COM::getThisPositionIndex(), String(THIS_START_POSITION));
-            COM::broker.set(COM::getOtherPositionIndex(), String(OTHER_START_POSITION));
-            COM::broker.set(COM::CRIMINAL_POSITION, ROLE == CHASED ? String(THIS_START_POSITION) : String(OTHER_START_POSITION));
-            COM::broker.set(COM::POLICE_POSITION, ROLE == CHASER ? String(THIS_START_POSITION) : String(OTHER_START_POSITION));
+            COM::broker.set(COM::getThisPositionIndex(), THIS_START_POSITION);
+            COM::broker.set(COM::getOtherPositionIndex(), OTHER_START_POSITION);
+            COM::broker.set(COM::CRIMINAL_POSITION, ROLE == CHASED ? THIS_START_POSITION : OTHER_START_POSITION);
+            COM::broker.set(COM::POLICE_POSITION, ROLE == CHASER ? THIS_START_POSITION : OTHER_START_POSITION);
 
             Coordinator::setCurrentTarget(THIS_START_POSITION);
 

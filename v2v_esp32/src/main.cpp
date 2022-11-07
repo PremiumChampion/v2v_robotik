@@ -31,9 +31,7 @@ void setup()
 }
 void loop()
 {
-
-  // todo: run wifi transferhandler
-
+  delay(1);
   Movement::MOVEMENTS.run();
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
   Sensors::run();
@@ -43,6 +41,4 @@ void loop()
   // Service::Coordinator::run();
   Service::PositionSync::run();
   Game::run();
-
-  // sync sensor and actor data between arduino and esp.
 }

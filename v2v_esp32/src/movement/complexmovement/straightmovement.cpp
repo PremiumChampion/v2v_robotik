@@ -40,6 +40,28 @@ namespace Movement
         default:
             break;
         }
+        // this->checkLine();
+    }
+
+    void StraightMovement::checkLine()
+    {
+        bool left = Sensors::LINE_SENSOR.left();
+        bool center = Sensors::LINE_SENSOR.center();
+        bool right = Sensors::LINE_SENSOR.right();
+
+        if (!left && !center && !right)
+        {
+            this->debounce_start_ms = millis();
+        }
+        else
+        {
+            this->debounce_start_ms = 0;
+        }
+
+        if (debounce_start_ms + 100 < millis())
+        {
+            Vehicle::ROVER.set(0, 90);
+        }
     }
 
     void StraightMovement::startSegment()
@@ -64,22 +86,24 @@ namespace Movement
         bool center = Sensors::LINE_SENSOR.center();
         bool right = Sensors::LINE_SENSOR.right();
 
+        int turnDelta = this->state == FirstNarrowSegment ? TURN_DELTA : TURN_DELTA / 2;
+
         if (left && !center && !right)
         {
-            Vehicle::ROVER.set(255, 90 - TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 - turnDelta);
         }
         if (left && center && !right)
         {
-            Vehicle::ROVER.set(255, 90 - TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 - turnDelta / 2);
         }
 
         if (!left && !center && right)
         {
-            Vehicle::ROVER.set(255, 90 + TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 + turnDelta);
         }
         if (!left && center && right)
         {
-            Vehicle::ROVER.set(255, 90 + TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 + turnDelta / 2);
         }
 
         if (left && center && right)
@@ -97,21 +121,21 @@ namespace Movement
 
         if (left && center && !right)
         {
-            Vehicle::ROVER.set(255, 90 - TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 - TURN_DELTA / 2);
         }
 
         if (!left && !center && right)
         {
-            Vehicle::ROVER.set(255, 90 + (int)TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 + TURN_DELTA / 2);
         }
         if (!left && center && right)
         {
-            Vehicle::ROVER.set(255, 90 + TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 + TURN_DELTA / 4);
         }
 
         if (left && !center && !right)
         {
-            Vehicle::ROVER.set(255, 90 - TURN_DELTA);
+            Vehicle::ROVER.set(255, 90 - TURN_DELTA / 4);
         }
 
         if (!left && center && !right)
@@ -135,11 +159,12 @@ namespace Movement
         if (this->backupStartTime + this->backupTime_ms > millis())
         {
             Vehicle::ROVER.set(255, 270);
+            return;
         }
-        else
+        Vehicle::ROVER.set(0, 90);
+        if (this->backupStartTime + this->backupTime_ms + 500 < millis())
         {
-            Vehicle::ROVER.set(255, 0);
-            Serial.println("DONE");
+            Serial.println("Straight:Done");
             this->isDone = true;
         }
     }

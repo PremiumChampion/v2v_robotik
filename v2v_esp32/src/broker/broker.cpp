@@ -3,7 +3,6 @@
 
 namespace Broker
 {
-  
 
     template <class T>
     Broker<T>::Broker(const int message_count)

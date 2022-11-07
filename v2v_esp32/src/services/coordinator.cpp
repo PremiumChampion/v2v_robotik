@@ -82,7 +82,7 @@ namespace Service
             {
                 int newPosition = getTurningEntryForCompassDirection(currentDirection).calculateNewPosition(currentPosition);
 #if !WORKING_WITH_QR_SENSOR
-                COM::broker.set(COM::getThisPositionIndex(), String(newPosition)); //! comment when working with barcode scanner!!!
+                COM::broker.set(COM::getThisPositionIndex(), newPosition); //! comment when working with barcode scanner!!!
                 Service::THIS_ROBOT.setCurrentPositionTile(newPosition);           //! comment when working with barcode scanner!!!
 #endif
                 currentPosition = newPosition;
