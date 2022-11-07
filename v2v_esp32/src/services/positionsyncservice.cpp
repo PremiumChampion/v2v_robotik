@@ -1,3 +1,4 @@
+#include "coordinator.h"
 #include "positionsyncservice.h"
 #include "services/data/positioning.h"
 #include "sensors/sensors.h"
@@ -38,6 +39,8 @@ namespace Service
             COM::broker.set(COM::getOtherPositionIndex(), String(OTHER_START_POSITION));
             COM::broker.set(COM::CRIMINAL_POSITION, ROLE == CHASED ? String(THIS_START_POSITION) : String(OTHER_START_POSITION));
             COM::broker.set(COM::POLICE_POSITION, ROLE == CHASER ? String(THIS_START_POSITION) : String(OTHER_START_POSITION));
+
+            Coordinator::setCurrentTarget(THIS_START_POSITION);
 
             THIS_ROBOT.setCurrentPositionTile(THIS_START_POSITION);
             THIS_ROBOT.setCurrentDirection(NORTH);
