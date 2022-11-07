@@ -6,11 +6,11 @@ namespace Game
 
         enum INIT_STATE
         {
+            RESETTING_WON_STATE,
             WAITING_FOR_CRIMINAL_READY,
             GENERATING_POSITION,
             WAITING_FOR_POLICE_MOVEMENT,
             WAITING_FOR_GAMESTART
-
         };
 
         void init();

@@ -12,13 +12,18 @@ namespace Game
 {
     namespace Police
     {
-        INIT_STATE DEFAULT_STATE = WAITING_FOR_CRIMINAL_READY;
+        INIT_STATE DEFAULT_STATE = RESETTING_WON_STATE;
         INIT_STATE state = DEFAULT_STATE;
         // function, that is called several times, until the whole initialization of the police is done
         // MUST NOT BLOCK THE FLOW
         void init()
         {
-
+            if (state == RESETTING_WON_STATE)
+            {
+                COM::broker.set(COM::POLICE_WON, 0);
+                state = GENERATING_POSITION;
+                Serial.println("CRIMINAL:GENERATING_POSITION");
+            }
 #pragma region wait for criminal ready
             //Über WiFi Broker auf Nachricht warten
             // Platzhalter im messages array für ready Nachricht definieren
@@ -83,10 +88,17 @@ namespace Game
 #pragma region start game
             if (state == WAITING_FOR_GAMESTART)
             {
+                COM::broker.set(COM::SYNCPLAY, COM::CONNECTION);
+
                 if (COM::broker.get(COM::SYNCPLAY) == COM::ACKNOWLEDGE)
                 {
                     COM::broker.set(COM::SYNCPLAY, COM::ESTABLISHED);
+                    COM::broker.set(COM::POLICE_INIT, 0);
+                    COM::broker.set(COM::CRIMINAL_INIT, 0);
                     state = DEFAULT_STATE;
+                    Service::Coordinator::setStopBeforeTarget(true);
+                    Service::Coordinator::setRunWithCollisionAvoidance(false);
+                    Service::Coordinator::setCurrentTarget(Service::OTHER_ROBOT.getCurrentPositionTile());
                     setGameState(RUNNING);
                 }
             }
@@ -109,40 +121,10 @@ namespace Game
 #pragma region if won
             if (police_has_won)
             {
-#pragma region reset broker init vars
-                // COM::broker.set(COM::POLICE_POSITION, String());
-                // COM::broker.set(COM::CRIMINAL_POSITION, String());
-                COM::broker.set(COM::SYNCPLAY, COM::CONNECTION);
-                COM::broker.set(COM::POLICE_INIT, 0);
-                COM::broker.set(COM::CRIMINAL_INIT, 0);
-#pragma endregion
-
                 // Send Police has won flag
                 COM::broker.set(COM::POLICE_WON, 1);
-
-#pragma region switch role(optional)
-
                 Game::setCurrentRole(CHASED);
-                // Switch own role in loop.cpp with set currentRole
-                // Send switch role over the wifi broker to criminal
-                // Criminal sets his own role according to the taken role from police
-                // Check?
-#pragma endregion
-
-#pragma region reinit
                 setGameState(INITIALISING);
-#pragma endregion
-            }
-#pragma endregion
-
-#pragma region not won
-            if (!police_has_won)
-            {
-#pragma region navigate to OTHER_ROBOT
-                Service::Coordinator::setStopBeforeTarget(true);
-                Service::Coordinator::setRunWithCollisionAvoidance(false);
-                Service::Coordinator::setCurrentTarget(criminalPosition);
-#pragma endregion
             }
 #pragma endregion
         }

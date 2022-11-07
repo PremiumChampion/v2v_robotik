@@ -12,6 +12,7 @@ namespace Movement
         this->backupStartTime = 0;
         this->backupTime_ms = 100;
     }
+    
     void StraightMovement::run()
     {
         Vehicle::ROVER.setMaxMovementSpeed(MAX_STRAIGHT_MOVEMENT_SPEED);
