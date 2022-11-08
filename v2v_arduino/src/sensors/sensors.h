@@ -1,17 +1,19 @@
 #include "broker/broker.h"
 #include "barcode/barcodescannermodule.h"
 #include "line/line.h"
+#include "mpu6050/mpu6050.h"
 #include <SoftwareSerial.h>
 
 #pragma once
 
 namespace Sensors
 {
-    static const int SENSOR_TYPE_COUNT = 2;
+    static const int SENSOR_TYPE_COUNT = 3;
     enum Sensor
     {
         QR_CODE,
         LINE,
+        GYRO,
     };
 
     void run();
@@ -23,4 +25,5 @@ namespace Sensors
     extern QR::BarcodeScannerModule QR_CODE_SCANNER;
     extern Line::HHN_Line LINE_SENSOR;
     extern SoftwareSerial SERIAL_SCANNER_CONNECTION;
+    extern MPU6050::HHN_MPU6050 MPU;
 } // namespace Sensors

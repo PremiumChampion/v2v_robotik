@@ -8,7 +8,7 @@ namespace Game
 {
     namespace Criminal
     {
-        INIT_STATE DEFAULT_STATE = RESETTING_WON_STATE;
+        INIT_STATE DEFAULT_STATE = GENERATING_POSITION;
         INIT_STATE state = DEFAULT_STATE;
         // function, that is called several times, until the whole initialization of the criminal is done
         // MUST NOT BLOCK THE FLOW

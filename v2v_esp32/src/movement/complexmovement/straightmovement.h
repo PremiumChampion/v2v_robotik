@@ -1,7 +1,7 @@
 #include "movement/basicmovement.h"
 #pragma once
 
-#define TURN_DELTA 40
+#define TURN_DELTA 30
 
 namespace Movement
 {
@@ -22,6 +22,12 @@ namespace Movement
         unsigned long backupStartTime;
         unsigned int backupTime_ms;
         unsigned long debounce_start_ms;
+        unsigned long start_ms;
+        float heading;
+        int debouncetime_ms;
+        int straight_degrees;
+        
+
         void startSegment();
         void narrowSegment();
         void wideSegment();

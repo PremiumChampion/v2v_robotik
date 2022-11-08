@@ -31,7 +31,7 @@ void setup()
 }
 void loop()
 {
-  delayMicroseconds(200);
+  delay(1);
   Movement::MOVEMENTS.run();
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
   Sensors::run();
