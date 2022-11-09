@@ -23,11 +23,17 @@ void setup()
 
   // setup serial connection between arduino and esp.
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.init();
+  unsigned long startSync = millis();
+  while (startSync + 4000 > millis())
+  {
+    SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
+    Sensors::run();
+  }
 
   // setup communication between both esps.
-  // COM::WIFI_TRANSFER_HANDLER.init();
+  COM::WIFI_TRANSFER_HANDLER.init();
+  // Movement::MOVEMENTS.setNewDirections(Movement::Clockwise);
   Serial.println("Setup DONE");
-  Movement::MOVEMENTS.setNewDirections(Movement::Straight);
 }
 void loop()
 {
@@ -38,7 +44,7 @@ void loop()
 
   COM::WIFI_TRANSFER_HANDLER.run();
 
-  // Service::Coordinator::run();
+  Service::Coordinator::run();
   Service::PositionSync::run();
   Game::run();
 }

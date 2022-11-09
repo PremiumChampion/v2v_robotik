@@ -8,9 +8,7 @@ namespace Movement
     enum StraightMovementState
     {
         Start,
-        FirstNarrowSegment,
-        WideSegment,
-        SecondNarrowSegment,
+        StraightSegment,
         BackwardsSegment
     };
 
@@ -19,6 +17,7 @@ namespace Movement
     private:
         // bool isCompleted;
         int state;
+        unsigned long log_time;
         unsigned long backupStartTime;
         unsigned int backupTime_ms;
         unsigned long debounce_start_ms;
@@ -26,13 +25,12 @@ namespace Movement
         float heading;
         int debouncetime_ms;
         int straight_degrees;
-        
 
         void startSegment();
-        void narrowSegment();
-        void wideSegment();
+        void straightSegment();
         void backwardsSegment();
-        void checkLine();
+        int calculateAngleOfAttak();
+
     public:
         StraightMovement();
         void run();

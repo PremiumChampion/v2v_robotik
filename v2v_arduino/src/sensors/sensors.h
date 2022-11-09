@@ -25,5 +25,5 @@ namespace Sensors
     extern QR::BarcodeScannerModule QR_CODE_SCANNER;
     extern Line::HHN_Line LINE_SENSOR;
     extern SoftwareSerial SERIAL_SCANNER_CONNECTION;
-    extern MPU6050::HHN_MPU6050 MPU;
+    extern HHN_MPU6050::HHN_MPU6050 MPU;
 } // namespace Sensors

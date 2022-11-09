@@ -8,20 +8,11 @@ namespace Movement
 {
     CounterClockWiseMovement::CounterClockWiseMovement() : BasicMovement()
     {
-#if ROLE == CHASED
-        this->turningTime = 570;
-        this->turningSpeed = 90;
-        this->straightTime = 80;
-#endif
-#if ROLE == CHASER
-        this->turningTime = 650;
-        this->turningSpeed = 90;
-        this->straightTime = 50;
-#endif
         this->isDone = false;
-        this->startTime = 0;
+        this->startHeading = Sensors::MPU.getValue();
+        this->targetHeading = this->startHeading + 90;
+        this->state = CC_TurningState;
     }
-
     void CounterClockWiseMovement::run()
     {
         if (this->isDone)
@@ -29,35 +20,41 @@ namespace Movement
             return;
         }
 
-        Vehicle::ROVER.setMaxMovementSpeed(this->turningSpeed);
-
-        bool left = Sensors::LINE_SENSOR.left();
-        bool center = Sensors::LINE_SENSOR.center();
-        bool right = Sensors::LINE_SENSOR.right();
-
-        if (this->startTime == 0)
+        Vehicle::ROVER.setMaxMovementSpeed(MAX_TURNING_MOVEMENT_SPEED);
+        if (state == CC_TurningState)
         {
-            this->startTime = millis();
+
+            float currentheading = Sensors::MPU.getValue();
+            int speed = map(abs(targetHeading - currentheading), 0, 90, 50, 255);
+
+            if (this->targetHeading > currentheading)
+            {
+                Vehicle::ROVER.set(speed, 180);
+            }
+            if (currentheading > this->targetHeading)
+            {
+                Vehicle::ROVER.set(speed, 0);
+            }
+
+            if (currentheading + 0.2 > targetHeading && currentheading - 0.2 < targetHeading)
+            {
+               state = CC_BackwardsState; 
+            }
         }
 
-        if (this->startTime + this->turningTime > millis())
+        if (state == CC_BackwardsState)
         {
-            Vehicle::ROVER.set(255, 180);
-            return;
-        }
-        if (this->startTime + this->turningTime + this->straightTime > millis())
-        {
+            bool left = Sensors::LINE_SENSOR.left();
+            bool center = Sensors::LINE_SENSOR.center();
+            bool right = Sensors::LINE_SENSOR.right();
             Vehicle::ROVER.set(255, 270);
-            return;
+            if (left && center && right)
+            {
+                Vehicle::ROVER.set(0, 0);
+                this->isDone = true;
+                Serial.println("COUNTERCLOCKWISE:Done");
+            }
         }
-
-        if (this->startTime + this->turningTime + this->straightTime + 500 > millis())
-        {
-            Vehicle::ROVER.set(0, 0);
-            return;
-        }
-        Serial.println("COUNTERCLOCKWISE:Done");
-        this->isDone = true;
     }
 
 } // namespace Movement

@@ -12,16 +12,10 @@ namespace Movement
         this->isDone = false;
         this->backupStartTime = 0;
         this->start_ms = 0;
-        this->backupTime_ms = 250;
+        this->backupTime_ms = 0;
         this->debouncetime_ms = 15;
         this->heading = Sensors::MPU.getValue();
-
-#if (ROLE == CHASER)
-        this->straight_degrees = 85;
-#endif
-#if (ROLE == CHASED)
-        this->straight_degrees = 75;
-#endif
+        this->straight_degrees = 90;
     }
 
     void StraightMovement::run()
@@ -34,17 +28,19 @@ namespace Movement
             return;
         }
 
+        if (this->log_time + 500 < millis())
+        {
+            this->log_time = millis();
+            Serial.println(this->calculateAngleOfAttak());
+        }
+
         switch (this->state)
         {
         case Start:
             this->startSegment();
             break;
-        case FirstNarrowSegment:
-        case SecondNarrowSegment:
-            this->narrowSegment();
-            break;
-        case WideSegment:
-            this->wideSegment();
+        case StraightSegment:
+            this->straightSegment();
             break;
         case BackwardsSegment:
             this->backwardsSegment();
@@ -53,29 +49,6 @@ namespace Movement
             break;
         }
         // this->checkLine();
-    }
-
-    void StraightMovement::checkLine()
-    {
-        bool left = Sensors::LINE_SENSOR.left();
-        bool center = Sensors::LINE_SENSOR.center();
-        bool right = Sensors::LINE_SENSOR.right();
-
-        if (!left && !center && !right)
-        {
-            Serial.println("DebounceStart");
-            this->debounce_start_ms = millis();
-        }
-        else if (this->debounce_start_ms != 0)
-        {
-            Serial.println("DebounceReset");
-            this->debounce_start_ms = 0;
-        }
-
-        if (debounce_start_ms + 100 < millis())
-        {
-            Vehicle::ROVER.set(0, this->straight_degrees);
-        }
     }
 
     void StraightMovement::startSegment()
@@ -90,109 +63,43 @@ namespace Movement
             this->start_ms = millis();
         }
 
-        if (left && right && center)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees);
-        }
+        Vehicle::ROVER.set(255, this->calculateAngleOfAttak());
 
         if (!(left && right && center) && this->start_ms + 200 < millis())
         {
             Serial.println("FirstNarrowSegment");
-            this->state = FirstNarrowSegment;
+            this->state = StraightSegment;
         }
     }
-    void StraightMovement::narrowSegment()
+
+    int StraightMovement::calculateAngleOfAttak()
     {
         float currentHeading = Sensors::MPU.getValue();
+        return this->straight_degrees - ((int)(this->heading - currentHeading) * 6);
+    }
+
+    void StraightMovement::straightSegment()
+    {
         bool left = Sensors::LINE_SENSOR.left();
         bool center = Sensors::LINE_SENSOR.center();
         bool right = Sensors::LINE_SENSOR.right();
 
-        int turnDelta = TURN_DELTA;
+        Vehicle::ROVER.set(255, this->calculateAngleOfAttak());
 
-        if (left && !center && !right)
+        if (left && center && right)
         {
-            Vehicle::ROVER.set(255, this->straight_degrees + turnDelta);
-        }
-        if (left && center && !right)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees + turnDelta / 2);
-        }
-
-        if (!left && !center && right)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees - turnDelta);
-        }
-        if (!left && center && right)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees - turnDelta / 2);
-        }
-
-        if (this->state == FirstNarrowSegment)
-        {
-            if (left && center && right)
+            if (this->debounce_start_ms == 0)
             {
-                Serial.println("WideSegment");
-
-                this->state = SecondNarrowSegment;
+                this->debounce_start_ms = millis();
             }
-        }
-
-        if (this->state == SecondNarrowSegment)
-        {
-            if (left && center && right)
+            if (this->debounce_start_ms + this->debouncetime_ms < millis())
             {
-                // Serial.println("BackwardsSegment");
-                // this->state = BackwardsSegment;
-                if (this->debounce_start_ms == 0)
-                {
-                    Serial.println("DebounceStart");
-                    this->debounce_start_ms = millis();
-                }
-            }
-            else
-            {
-                this->debounce_start_ms = 0;
-            }
-
-            if (this->debounce_start_ms != 0 && this->debounce_start_ms + this->debouncetime_ms < millis())
-            {
-                Serial.println("DebounceSuccess");
-                Serial.println("BackwardsSegment");
                 this->state = BackwardsSegment;
             }
         }
-    }
-    void StraightMovement::wideSegment()
-    {
-        float currentHeading = Sensors::MPU.getValue();
-        bool left = Sensors::LINE_SENSOR.left();
-        bool center = Sensors::LINE_SENSOR.center();
-        bool right = Sensors::LINE_SENSOR.right();
-
-        if (left && center && !right)
+        else
         {
-            Vehicle::ROVER.set(255, this->straight_degrees + TURN_DELTA / 4);
-        }
-        if (left && !center && !right)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees + TURN_DELTA / 2);
-        }
-
-        if (!left && center && right)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees - TURN_DELTA / 4);
-        }
-        if (!left && !center && right)
-        {
-            Vehicle::ROVER.set(255, this->straight_degrees - TURN_DELTA / 2);
-        }
-
-        if (!left && center && !right)
-        {
-            Serial.println("SecondNarrowSegment");
-
-            this->state = SecondNarrowSegment;
+            this->debounce_start_ms = 0;
         }
     }
     void StraightMovement::backwardsSegment()

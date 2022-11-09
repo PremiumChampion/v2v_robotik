@@ -2,14 +2,17 @@
 #pragma once
 namespace Movement
 {
-
+    enum CounterClockWiseMovementState
+    {
+        CC_TurningState,
+        CC_BackwardsState
+    };
     class CounterClockWiseMovement : public BasicMovement
     {
     private:
-        int turningTime;
-        int turningSpeed;
-        int straightTime;
-        unsigned long startTime;
+        float startHeading;
+        float targetHeading;
+        CounterClockWiseMovementState state;
 
     public:
         CounterClockWiseMovement();
