@@ -16,5 +16,7 @@ namespace Service
         int getCurrentTarget();
         void setRunWithCollisionAvoidance(bool collisionAvoidanceEnabled);
         bool getRunWithCollisionAvoidance();
+
+        bool hasReachedStraightBeforeTarget();
     };
 } // namespace Service

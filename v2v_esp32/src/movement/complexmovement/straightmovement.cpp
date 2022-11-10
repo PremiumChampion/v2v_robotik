@@ -13,8 +13,10 @@ namespace Movement
         this->backupStartTime = 0;
         this->start_ms = 0;
         this->backupTime_ms = 0;
-        this->debouncetime_ms = 15;
-        this->heading = Sensors::MPU.getValue();
+        this->debouncetime_ms = 0;
+        int currentHeading = Sensors::MPU.getValue();
+        int result = currentHeading + (currentHeading < 0 ? -1 : 1) * 90 / 2;
+        this->heading = result - result % 90;
         this->straight_degrees = 90;
     }
 
@@ -27,7 +29,7 @@ namespace Movement
             Vehicle::ROVER.set(0, this->straight_degrees);
             return;
         }
-        
+
         switch (this->state)
         {
         case Start:
@@ -58,7 +60,7 @@ namespace Movement
 
         Vehicle::ROVER.set(255, this->calculateAngleOfAttak());
 
-        if (!(left && right && center) && this->start_ms + 200 < millis())
+        if (!(left && center && right) && this->start_ms + 1000 < millis())
         {
             this->state = StraightSegment;
         }
@@ -67,7 +69,7 @@ namespace Movement
     int StraightMovement::calculateAngleOfAttak()
     {
         float currentHeading = Sensors::MPU.getValue();
-        return this->straight_degrees - ((int)(this->heading - currentHeading) * 3);
+        return this->straight_degrees - ((int)(this->heading - currentHeading) * 6);
     }
 
     void StraightMovement::straightSegment()
@@ -106,13 +108,13 @@ namespace Movement
             this->backupStartTime = millis();
         }
 
-        if (this->backupStartTime + this->backupTime_ms > millis())
-        {
-            Vehicle::ROVER.set(255, 270);
-            return;
-        }
+        // if (this->backupStartTime + this->backupTime_ms > millis())
+        // {
+        //     Vehicle::ROVER.set(255, 270);
+        //     return;
+        // }
         Vehicle::ROVER.set(0, 90);
-        if (this->backupStartTime + this->backupTime_ms + 500 < millis())
+        if (this->backupStartTime + 500 < millis())
         {
             this->isDone = true;
         }

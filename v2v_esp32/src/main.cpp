@@ -16,8 +16,9 @@
 
 void setup()
 {
-  // for debugging
   Serial.begin(115200);
+
+  randomSeed(42);
 
   Service::PositionSync::init();
 
@@ -29,22 +30,21 @@ void setup()
     SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
     Sensors::run();
   }
-
+  // Movement::MOVEMENTS.setNewDirections(Movement::Straight);
   // setup communication between both esps.
-  COM::WIFI_TRANSFER_HANDLER.init();
-  // Movement::MOVEMENTS.setNewDirections(Movement::Clockwise);
-  Serial.println("Setup DONE");
+  // COM::WIFI_TRANSFER_HANDLER.init();
 }
 void loop()
 {
   delay(1);
+
   Movement::MOVEMENTS.run();
-  SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
   Sensors::run();
 
-  COM::WIFI_TRANSFER_HANDLER.run();
+  SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
+  // COM::WIFI_TRANSFER_HANDLER.run();
 
-  Service::Coordinator::run();
   Service::PositionSync::run();
   Game::run();
+  Service::Coordinator::run();
 }

@@ -74,8 +74,6 @@ namespace Movement
     {
         if (this->waitingForNewDirections())
         {
-            Serial.print("Setting new directions:");
-            Serial.println(newDirections);
             MovementKind oldMovement = this->currentMovementKind;
             this->currentMovementKind = newDirections;
             switch (newDirections)

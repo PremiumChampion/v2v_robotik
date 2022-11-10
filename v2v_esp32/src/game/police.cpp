@@ -71,7 +71,7 @@ namespace Game
                 Movement::MovementKind next_movement = Movement::Stop;
 
                 Service::Coordinator::calculateRoute(&nextTile, &next_movement);
-                // if nextTile equals to currenttarget and next movement is straight --> game won
+
                 bool police_has_reached_starting_position = nextTile == targetTile && next_movement == Movement::Stop;
 
                 if (police_has_reached_starting_position)
@@ -109,13 +109,8 @@ namespace Game
         void run()
         {
 #pragma region check for win condition
-            int nextTile = 0;
-            int criminalPosition = Service::OTHER_ROBOT.getCurrentPositionTile();
-            Movement::MovementKind next_movement = Movement::Stop;
-
-            Service::Coordinator::calculateRoute(&nextTile, &next_movement);
             // if nextTile gleich currenttarget and next movement straight --> game won
-            bool police_has_won = nextTile == criminalPosition && next_movement == Movement::Straight;
+            bool police_has_won = Service::Coordinator::hasReachedStraightBeforeTarget();
 #pragma endregion
 
 #pragma region if won
@@ -123,8 +118,11 @@ namespace Game
             {
                 // Send Police has won flag
                 COM::broker.set(COM::POLICE_WON, 1);
-                Game::setCurrentRole(CHASED);
+                COM::broker.set(COM::POLICE_INIT, 0);
+                COM::broker.set(COM::CRIMINAL_INIT, 0);
+                COM::broker.set(COM::SYNCPLAY, COM::CONNECTION);
                 setGameState(INITIALISING);
+                Game::setCurrentRole(CHASED);
             }
 #pragma endregion
         }

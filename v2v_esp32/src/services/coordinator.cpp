@@ -11,10 +11,11 @@ namespace Service
     namespace Coordinator
     {
         // target coordinate 0-15
-        int currentTarget = 0; 
+        int currentTarget = 0;
         bool stopBeforeTarget = false;
         void setCurrentTarget(int nextTarget)
         {
+            Serial.println("target:" + String(currentTarget) + "->" + String(nextTarget));
             currentTarget = nextTarget;
         }
         int getCurrentTarget()
@@ -23,6 +24,7 @@ namespace Service
         }
         void setStopBeforeTarget(bool nextStopBeforeTarget)
         {
+            Serial.println("stopBeforeTarget:" + String(stopBeforeTarget) + "->" + String(nextStopBeforeTarget));
             stopBeforeTarget = nextStopBeforeTarget;
         }
         bool getStopBeforeTarget()
@@ -33,6 +35,7 @@ namespace Service
         bool runWithCollisionAvoidance = true;
         void setRunWithCollisionAvoidance(bool collisionAvoidanceEnabled)
         {
+            Serial.println("runWithCollisionAvoidance:" + String(collisionAvoidanceEnabled) + "->" + String(runWithCollisionAvoidance));
             runWithCollisionAvoidance = collisionAvoidanceEnabled;
         }
         bool getRunWithCollisionAvoidance()
@@ -42,7 +45,7 @@ namespace Service
 
         void run()
         {
-            
+
 #pragma region check if new directions are needed
             if (!Movement::MOVEMENTS.waitingForNewDirections())
             {
@@ -53,13 +56,10 @@ namespace Service
 #pragma region variable section
             Direction currentDirection = THIS_ROBOT.getCurrentDirection();
             int currentPosition = THIS_ROBOT.getCurrentPositionTile();
-            // todo: we need to set the target position from the outside
-            // int targetPosition = OTHER_ROBOT.getCurrentPositionTile();
             int targetPosition = currentTarget;
 #pragma endregion
 
-#pragma region update position and turning value
-
+#pragma region update position and turning value after moving
             if (Movement::MOVEMENTS.getCurrentMovementKind() == Movement::MovementKind::Clockwise)
             {
                 Direction newDirectionClockwise = getTurningEntryForCompassDirection(currentDirection).getClockwise();
@@ -82,8 +82,8 @@ namespace Service
             {
                 int newPosition = getTurningEntryForCompassDirection(currentDirection).calculateNewPosition(currentPosition);
 #if !WORKING_WITH_QR_SENSOR
-                COM::broker.set(COM::getThisPositionIndex(), newPosition); //! comment when working with barcode scanner!!!
-                Service::THIS_ROBOT.setCurrentPositionTile(newPosition);           //! comment when working with barcode scanner!!!
+                COM::broker.set(COM::getThisPositionIndex(), newPosition);
+                Service::THIS_ROBOT.setCurrentPositionTile(newPosition);
 #endif
                 currentPosition = newPosition;
             }
@@ -95,8 +95,9 @@ namespace Service
             calculateRoute(&nextTile, &next_movement);
 
             // if nextTile gleich currenttarget and next movement straight --> game won
-            if (nextTile == targetPosition && next_movement == Movement::Straight && stopBeforeTarget)
+            if (hasReachedStraightBeforeTarget())
             {
+                Movement::MOVEMENTS.setNewDirections(Movement::Stop);
                 return;
             }
 
@@ -112,8 +113,6 @@ namespace Service
             Direction currentDirection = THIS_ROBOT.getCurrentDirection();
             int currentPosition = THIS_ROBOT.getCurrentPositionTile();
             int blockedPosition = OTHER_ROBOT.getCurrentPositionTile();
-            // todo: we need to set the target position from the outside
-            // int targetPosition = OTHER_ROBOT.getCurrentPositionTile();
             int targetPosition = currentTarget;
 #pragma endregion
 
@@ -133,6 +132,17 @@ namespace Service
 #pragma region calculate next movement
             *next_movement = Forwarding::calculateNextMovement(&THIS_ROBOT, *nextTile);
 #pragma endregion
+        }
+
+        bool hasReachedStraightBeforeTarget()
+        {
+            int nextTile = 0;
+            Movement::MovementKind next_movement = Movement::Stop;
+
+            calculateRoute(&nextTile, &next_movement);
+
+            // if nextTile gleich currenttarget and next movement straight --> game won
+            return (nextTile == currentTarget && next_movement == Movement::Straight && stopBeforeTarget);
         }
     } // namespace Coordinator
 } // namespace Service

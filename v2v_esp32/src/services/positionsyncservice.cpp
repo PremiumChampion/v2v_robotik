@@ -7,9 +7,7 @@
 #if ROLE == CHASER
 #define THIS_START_POSITION 15
 #define OTHER_START_POSITION 12
-#endif
-
-#if ROLE == CHASED
+#else
 #define THIS_START_POSITION 12
 #define OTHER_START_POSITION 15
 #endif
@@ -24,7 +22,7 @@ namespace Service
 #if WORKING_WITH_QR_SENSOR
             int thisRobotPositionTile = Sensors::BAR_CODE_SCANNER.getCurrentCodeValue();
 
-            // TODO: update position in broker
+            // update position in broker otherwise done in coordinator.cpp
             COM::broker.set(COM::getThisPositionIndex(), String(thisRobotPositionTile));
 
             // update positions

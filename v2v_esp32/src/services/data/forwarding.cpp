@@ -64,15 +64,14 @@ namespace Service
         // Calculate, if movement is either in x-axis or y-axis
         // direction(also either positive or negative direction)
         // Calculate, in which direction robot needs to turn, in relevance to its current facing direction
-        int currentTile = posObject->getCurrentPositionTile();         // 12
-        Direction currentDirection = posObject->getCurrentDirection(); // NORTH
-        // nextTile == 8
-        int nextTileX = nextTile % 4;      // 0
-        int nextTileY = nextTile / 4;      // 2
-        int currentX = currentTile % 4;    // 0
-        int currentY = currentTile / 4;    // 3
-        int deltaX = nextTileX - currentX; // 0
-        int deltaY = nextTileY - currentY; // -1
+        int currentTile = posObject->getCurrentPositionTile();
+        Direction currentDirection = posObject->getCurrentDirection();
+        int nextTileX = nextTile % 4;
+        int nextTileY = nextTile / 4;
+        int currentX = currentTile % 4;
+        int currentY = currentTile / 4;
+        int deltaX = nextTileX - currentX;
+        int deltaY = nextTileY - currentY;
 
         // if (deltaX == 0 && deltaY == 0)
         // {

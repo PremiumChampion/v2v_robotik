@@ -9,6 +9,8 @@ namespace Game
 
     void setCurrentRole(int newRole)
     {
+        Serial.println("currentRole:" + String(currentRole) + "->" + String(newRole));
+
         currentRole = newRole;
     }
     int getCurrentRole()
@@ -20,6 +22,7 @@ namespace Game
 
     void setGameState(GameState newGameState)
     {
+        Serial.println("currentGameState:" + String(currentGameState) + "->" + String(newGameState));
         currentGameState = newGameState;
     }
     GameState getGameState()

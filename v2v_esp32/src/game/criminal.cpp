@@ -10,6 +10,7 @@ namespace Game
     {
         INIT_STATE DEFAULT_STATE = GENERATING_POSITION;
         INIT_STATE state = DEFAULT_STATE;
+
         // function, that is called several times, until the whole initialization of the criminal is done
         // MUST NOT BLOCK THE FLOW
         void init()
@@ -26,9 +27,7 @@ namespace Game
                 } while (nextTile == currentOtherPosition);
 
                 COM::broker.set(COM::CRIMINAL_POSITION, nextTile);
-                Service::Coordinator::setCurrentTarget(nextTile);
-                Service::Coordinator::setRunWithCollisionAvoidance(true);
-                Service::Coordinator::setStopBeforeTarget(false);
+
                 state = WAITING_FOR_CRIMINAL_MOVEMENT;
                 Serial.println("CRIMINAL:WAITING_FOR_CRIMINAL_MOVEMENT");
             }
@@ -41,6 +40,9 @@ namespace Game
             if (state == WAITING_FOR_CRIMINAL_MOVEMENT)
             {
                 int targetTile = COM::broker.get(COM::CRIMINAL_POSITION);
+                Service::Coordinator::setRunWithCollisionAvoidance(true);
+                Service::Coordinator::setStopBeforeTarget(false);
+                Service::Coordinator::setCurrentTarget(targetTile);
 
                 int nextTile = 0;
                 Movement::MovementKind next_movement = Movement::Stop;
@@ -102,9 +104,11 @@ namespace Game
             // Signal kommt von Police -> darauf hören
             if (COM::broker.get(COM::POLICE_WON) == 1)
             {
-
-                Game::setCurrentRole(CHASER);
                 setGameState(INITIALISING);
+                COM::broker.set(COM::CRIMINAL_INIT, 0);
+                COM::broker.set(COM::POLICE_INIT, 0);
+                COM::broker.set(COM::SYNCPLAY, COM::CONNECTION);
+                Game::setCurrentRole(CHASER);
             }
 #pragma endregion
         }
