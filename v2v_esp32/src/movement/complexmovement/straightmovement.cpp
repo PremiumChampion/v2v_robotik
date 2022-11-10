@@ -27,13 +27,7 @@ namespace Movement
             Vehicle::ROVER.set(0, this->straight_degrees);
             return;
         }
-
-        if (this->log_time + 500 < millis())
-        {
-            this->log_time = millis();
-            Serial.println(this->calculateAngleOfAttak());
-        }
-
+        
         switch (this->state)
         {
         case Start:
@@ -48,7 +42,6 @@ namespace Movement
         default:
             break;
         }
-        // this->checkLine();
     }
 
     void StraightMovement::startSegment()
@@ -67,7 +60,6 @@ namespace Movement
 
         if (!(left && right && center) && this->start_ms + 200 < millis())
         {
-            Serial.println("FirstNarrowSegment");
             this->state = StraightSegment;
         }
     }
@@ -75,7 +67,7 @@ namespace Movement
     int StraightMovement::calculateAngleOfAttak()
     {
         float currentHeading = Sensors::MPU.getValue();
-        return this->straight_degrees - ((int)(this->heading - currentHeading) * 6);
+        return this->straight_degrees - ((int)(this->heading - currentHeading) * 3);
     }
 
     void StraightMovement::straightSegment()
@@ -122,7 +114,6 @@ namespace Movement
         Vehicle::ROVER.set(0, 90);
         if (this->backupStartTime + this->backupTime_ms + 500 < millis())
         {
-            Serial.println("Straight:Done");
             this->isDone = true;
         }
     }

@@ -6,7 +6,7 @@ namespace Sensors
     Broker::Broker<int> MESSAGE_BROKER(SENSOR_TYPE_COUNT);
     SoftwareSerial SERIAL_SCANNER_CONNECTION(12, 13);
     QR::BarcodeScannerModule QR_CODE_SCANNER = QR::BarcodeScannerModule(&SERIAL_SCANNER_CONNECTION);
-    Line::HHN_Line LINE_SENSOR = Line::HHN_Line(16, 15, 14);
+    Line::HHN_Line LINE_SENSOR = Line::HHN_Line(A2, A1, A0);
     HHN_MPU6050::HHN_MPU6050 MPU = HHN_MPU6050::HHN_MPU6050();
 
     void run()
