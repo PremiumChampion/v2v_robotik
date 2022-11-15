@@ -38,6 +38,7 @@ namespace COM
         CONNECTION,
         ACKNOWLEDGE,
         ESTABLISHED,
+        DISCARDED,
     };
 
     WIFI_MESSAGE getThisPositionIndex();

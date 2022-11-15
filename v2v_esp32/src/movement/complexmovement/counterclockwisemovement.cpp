@@ -29,7 +29,7 @@ namespace Movement
         {
 
             float currentheading = Sensors::MPU.getValue();
-            int speed = map(abs(currentheading - targetHeading), 0, 180, 35, 200);
+            int speed = map(abs(currentheading - targetHeading), 0, 180, 30, 200);
 
             if (this->targetHeading > currentheading)
             {
@@ -42,6 +42,7 @@ namespace Movement
 
             if (currentheading == targetHeading)
             {
+                Vehicle::ROVER.set(0, 90);
                 state = CC_BackwardsState;
             }
         }
@@ -75,7 +76,7 @@ namespace Movement
                     }
                 }
             }
-            if (this->backupStartTime != 0 && this->backupStartTime + 500 < millis())
+            if (this->backupStartTime != 0 && this->backupStartTime + 1000 < millis())
             {
                 this->isDone = true;
             }

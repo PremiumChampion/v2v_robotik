@@ -69,7 +69,7 @@ namespace Movement
     int StraightMovement::calculateAngleOfAttak()
     {
         float currentHeading = Sensors::MPU.getValue();
-        return this->straight_degrees - ((int)(this->heading - currentHeading) * 3);
+        return this->straight_degrees - ((this->heading - currentHeading) * 2);
     }
 
     void StraightMovement::straightSegment()
@@ -82,14 +82,7 @@ namespace Movement
 
         if (left && center && right)
         {
-            // if (this->debounce_start_ms == 0)
-            // {
-            //     this->debounce_start_ms = millis();
-            // }
-            // if (this->debounce_start_ms + this->debouncetime_ms <= millis())
-            // {
-                this->state = BackwardsSegment;
-            // }
+            this->state = BackwardsSegment;
         }
         else
         {
@@ -103,26 +96,11 @@ namespace Movement
         bool center = Sensors::LINE_SENSOR.center();
         bool right = Sensors::LINE_SENSOR.right();
 
-        // if (left && !right)
-        // {
-        //     Vehicle::ROVER.set(40, 240);
-        // }
-        // else if (!left && right)
-        // {
-        //     Vehicle::ROVER.set(40, 300);
-        // }
-        // else if (!(left && center && right))
-        // {
-        //     Vehicle::ROVER.set(40, 270);
-        // }
-        // else if (left && center && right)
-        // {
         Vehicle::ROVER.set(0, 90);
         if (this->backupStartTime == 0)
         {
             this->backupStartTime = millis();
         }
-        // }
 
         if (this->backupStartTime != 0 && this->backupStartTime + 1000 < millis())
         {

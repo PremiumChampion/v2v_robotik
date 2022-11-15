@@ -61,8 +61,8 @@
 
 * [x] WiFi Broker
 
-    * [ ] Figure out which state needs to be synced
-    * [ ] Sync positioning services
+    * [x] Figure out which state needs to be synced
+    * [x] Sync positioning services
 
 * [x] WiFi-Transmisstion-Handler (handles reading/publishing state changes syncing those to the ESP´s)
 

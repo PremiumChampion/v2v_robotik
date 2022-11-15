@@ -12,6 +12,7 @@ namespace Movement
     private:
         float targetHeading;
         unsigned long backupStartTime;
+        unsigned long debounceStartTime;
         ClockWiseMovementState state;
 
     public:

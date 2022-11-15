@@ -43,6 +43,11 @@ namespace Service
         // the next y coordinate
         int nextY = fromY;
 
+        if (deltaTargetX == 0 && deltaTargetY == 0)
+        {
+            return target;
+        }
+
         // value for calculating the next tile in the x direction
         // -1 or 0 or +1
         int moveX = 0;
@@ -234,7 +239,7 @@ namespace Service
     }
 
     int getRelativeRegion(int deltaX, int deltaY)
-    {   
+    {
         // regions:
         //  0   0   1   2   2
         //  0   0   1   2   2
@@ -299,7 +304,7 @@ namespace Service
             return currentPos;
         }
 
-        if (deltaX <= deltaY || deltaY == 0)
+        if (deltaX != 0)
         {
             nextX = nextX + (deltaX > 0 ? 1 : -1);
         }
@@ -309,7 +314,6 @@ namespace Service
         }
 
         int nextPos = nextY * 4 + nextX;
-
         return nextPos;
     }
 } // namespace Services

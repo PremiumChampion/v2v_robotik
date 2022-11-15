@@ -55,7 +55,7 @@ namespace COM
 
         void brokerInit()
         {
-                COM::broker.set(SYNCPLAY, SYNCSTATE::CONNECTION);
+                COM::broker.set(SYNCPLAY, SYNCSTATE::DISCARDED);
                 COM::broker.set(POLICE_INIT, 0);
                 COM::broker.set(CRIMINAL_INIT, 0);
                 COM::broker.set(POLICE_WON, 0);

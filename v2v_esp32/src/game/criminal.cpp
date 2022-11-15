@@ -11,10 +11,36 @@ namespace Game
         INIT_STATE DEFAULT_STATE = GENERATING_POSITION;
         INIT_STATE state = DEFAULT_STATE;
 
+        unsigned long last_log_time = 0;
+        unsigned long reset_pause_start = 0;
+
         // function, that is called several times, until the whole initialization of the criminal is done
         // MUST NOT BLOCK THE FLOW
         void init()
         {
+            if (last_log_time + 500 < millis())
+            {
+                last_log_time = millis();
+                switch (state)
+                {
+                case GENERATING_POSITION:
+                    Serial.println("CRIMINAL:STATE:GENERATING_POSITION");
+                    break;
+                case WAITING_FOR_CRIMINAL_MOVEMENT:
+                    Serial.println("CRIMINAL:STATE:WAITING_FOR_CRIMINAL_MOVEMENT");
+                    break;
+                case WAITING_FOR_POLICE_MOVEMENT:
+                    Serial.println("CRIMINAL:STATE:WAITING_FOR_POLICE_MOVEMENT");
+                    break;
+                case WAITING_FOR_GAMESTART:
+                    Serial.println("CRIMINAL:STATE:WAITING_FOR_GAMESTART");
+                    break;
+                default:
+                    Serial.println("CRIMINAL:STATE:" + String(state));
+                    break;
+                }
+            }
+
 #pragma region generate random position
             if (state == GENERATING_POSITION)
             {
@@ -23,7 +49,6 @@ namespace Game
 
                 do
                 {
-                    // nextTile = 3;
                     nextTile = random(16);
                 } while (nextTile == currentOtherPosition);
 
@@ -82,6 +107,7 @@ namespace Game
             // Start game -> setze ein FLag auf true
             if (state == WAITING_FOR_GAMESTART)
             {
+
                 if (COM::broker.get(COM::SYNCPLAY) == COM::CONNECTION)
                 {
                     COM::broker.set(COM::SYNCPLAY, COM::ACKNOWLEDGE);
@@ -92,7 +118,7 @@ namespace Game
                     // state = next logical state
                     state = DEFAULT_STATE;
                     Serial.println("CRIMINAL:RUNNING");
-                    setGameState(RUNNING);
+                    Game::setGameState(RUNNING);
                 }
             }
 
@@ -101,15 +127,27 @@ namespace Game
 
         void run()
         {
+            if (last_log_time + 500 < millis())
+            {
+                last_log_time = millis();
+                Serial.println("CRIMINAL:RUNNING");
+            }
+
 #pragma region wait for police to tell you that you lost
             // Signal kommt von Police -> darauf hören
-            if (COM::broker.get(COM::POLICE_WON) == 1)
+            if (COM::broker.get(COM::POLICE_WON) == 1 && reset_pause_start == 0)
             {
-                setGameState(INITIALISING);
+                Serial.println("CRIMINAL:POLICE_WON");
                 COM::broker.set(COM::CRIMINAL_INIT, 0);
                 COM::broker.set(COM::POLICE_INIT, 0);
-                COM::broker.set(COM::SYNCPLAY, COM::CONNECTION);
+                COM::broker.set(COM::SYNCPLAY, COM::DISCARDED);
+                reset_pause_start = millis();
+            }
+            if (reset_pause_start != 0 && reset_pause_start + 5000 < millis())
+            {
                 Game::setCurrentRole(CHASER);
+                Game::setGameState(INITIALISING);
+                reset_pause_start = 0;
             }
 #pragma endregion
         }
