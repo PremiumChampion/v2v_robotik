@@ -20,10 +20,6 @@ namespace COM
 
         void setup()
         {
-                COM::broker.set(SYNCPLAY, SYNCSTATE::CONNECTION);
-                COM::broker.set(POLICE_INIT, 0);
-                COM::broker.set(CRIMINAL_INIT, 0);
-                COM::broker.set(POLICE_WON, 0);
                 Serial.println(COM::broker.get_transmission_data());
 #if ROLE == CHASED               // Chased-one
                 WLAN::setupAP(); // Create an accesspoint
@@ -56,5 +52,13 @@ namespace COM
                 return CURRENT_CHASED_POSITION;
         }
 #endif
+
+        void brokerInit()
+        {
+                COM::broker.set(SYNCPLAY, SYNCSTATE::CONNECTION);
+                COM::broker.set(POLICE_INIT, 0);
+                COM::broker.set(CRIMINAL_INIT, 0);
+                COM::broker.set(POLICE_WON, 0);
+        }
 
 } // namespace COM

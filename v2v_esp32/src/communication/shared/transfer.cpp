@@ -29,6 +29,7 @@ namespace COM
     void TransferHandler::init()
     {
         COM::setup();
+        this->run();
     }
 
     TransferHandler::TransferHandler(HHN_Client::Socket *socket, Broker::Broker<int> *broker)

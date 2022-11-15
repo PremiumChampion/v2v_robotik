@@ -21,8 +21,8 @@ namespace Game
             if (state == RESETTING_WON_STATE)
             {
                 COM::broker.set(COM::POLICE_WON, 0);
-                state = GENERATING_POSITION;
-                Serial.println("CRIMINAL:GENERATING_POSITION");
+                state = WAITING_FOR_CRIMINAL_READY;
+                Serial.println("CRIMINAL:WAITING_FOR_CRIMINAL_READY");
             }
 #pragma region wait for criminal ready
             //Über WiFi Broker auf Nachricht warten

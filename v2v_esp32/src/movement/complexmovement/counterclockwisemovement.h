@@ -10,8 +10,8 @@ namespace Movement
     class CounterClockWiseMovement : public BasicMovement
     {
     private:
-        float startHeading;
         float targetHeading;
+        unsigned long backupStartTime;
         CounterClockWiseMovementState state;
 
     public:

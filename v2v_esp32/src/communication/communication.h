@@ -33,7 +33,8 @@ namespace COM
         POLICE_WON,
     };
 
-    enum SYNCSTATE{
+    enum SYNCSTATE
+    {
         CONNECTION,
         ACKNOWLEDGE,
         ESTABLISHED,
@@ -47,7 +48,7 @@ namespace COM
 #endif
 
     void setup();
-
+    void brokerInit();
     extern HHN_Client::Socket externalClient; // Socket externalClient = Socket();
     extern Broker::Broker<int> broker;
 }

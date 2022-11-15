@@ -80,7 +80,7 @@ namespace SerialCommunication
 
             unsigned long currentTime = millis();
 
-            if (this->lastReceiveTime + 10 < currentTime)
+            if (this->lastReceiveTime + 3 < currentTime)
                 this->rcv_data();
             else
                 this->mode = IDLE;

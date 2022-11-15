@@ -10,8 +10,8 @@ namespace Movement
     class ClockWiseMovement : public BasicMovement
     {
     private:
-        float startHeading;
         float targetHeading;
+        unsigned long backupStartTime;
         ClockWiseMovementState state;
 
     public:

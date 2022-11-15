@@ -9,8 +9,10 @@ namespace Movement
     ClockWiseMovement::ClockWiseMovement() : BasicMovement()
     {
         this->isDone = false;
-        this->startHeading = Sensors::MPU.getValue();
-        this->targetHeading = this->startHeading - 180;
+        int currentHeading = Sensors::MPU.getValue();
+        int result = currentHeading + (currentHeading < 0 ? -1 : 1) * 90 / 2;
+        this->targetHeading = (result - result % 90) - 180;
+        this->backupStartTime = 0;
         this->state = TurningState;
     }
     void ClockWiseMovement::run()
@@ -25,7 +27,7 @@ namespace Movement
         {
 
             float currentheading = Sensors::MPU.getValue();
-            int speed = map(abs(currentheading - targetHeading), 0, 90, 40, 255);
+            int speed = map(abs(currentheading - targetHeading), 0, 180, 35, 200);
 
             if (this->targetHeading > currentheading)
             {
@@ -47,12 +49,34 @@ namespace Movement
             bool left = Sensors::LINE_SENSOR.left();
             bool center = Sensors::LINE_SENSOR.center();
             bool right = Sensors::LINE_SENSOR.right();
-            Vehicle::ROVER.set(128, 270);
-            if (left && center && right)
+
+            if (backupStartTime == 0)
             {
-                Vehicle::ROVER.set(0, 0);
+                if (left && !right)
+                {
+                    Vehicle::ROVER.set(40, 240);
+                }
+                else if (!left && right)
+                {
+                    Vehicle::ROVER.set(40, 300);
+                }
+                else if (!(left && center && right))
+                {
+                    Vehicle::ROVER.set(40, 270);
+                }
+                else if (left && center && right)
+                {
+                    Vehicle::ROVER.set(0, 90);
+                    if (this->backupStartTime == 0)
+                    {
+                        this->backupStartTime = millis();
+                    }
+                }
+            }
+
+            if (this->backupStartTime != 0 && this->backupStartTime + 1000 < millis())
+            {
                 this->isDone = true;
-                Serial.println("CLOCKWISE:Done");
             }
         }
     }

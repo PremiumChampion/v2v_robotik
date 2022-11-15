@@ -32,17 +32,16 @@ void setup()
   }
   // Movement::MOVEMENTS.setNewDirections(Movement::Straight);
   // setup communication between both esps.
-  // COM::WIFI_TRANSFER_HANDLER.init();
+  COM::brokerInit();
+  COM::WIFI_TRANSFER_HANDLER.init();
 }
 void loop()
 {
-  delay(1);
-
   Movement::MOVEMENTS.run();
   Sensors::run();
 
   SerialCommunication::SENSOR_ACTOR_TRANSFER_HANDLER.run();
-  // COM::WIFI_TRANSFER_HANDLER.run();
+  COM::WIFI_TRANSFER_HANDLER.run();
 
   Service::PositionSync::run();
   Game::run();

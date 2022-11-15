@@ -29,17 +29,20 @@ namespace Sensors
 
         for (int i = 0; i < this->levelingArraySize; i++)
         {
-            if(this->leftLevelingValues[i]== true){
+            if (this->leftLevelingValues[i] == true)
+            {
                 leftPosCount++;
             }
-            if(this->centerLevelingValues[i]== true){
+            if (this->centerLevelingValues[i] == true)
+            {
                 centerPosCount++;
             }
-            if(this->rightLevelingValues[i]== true){
+            if (this->rightLevelingValues[i] == true)
+            {
                 rightPosCount++;
             }
         }
-        
+
         this->leftValue = leftPosCount >= this->levelingArraySize / 2;
         this->centerValue = centerPosCount >= this->levelingArraySize / 2;
         this->rightValue = rightPosCount >= this->levelingArraySize / 2;

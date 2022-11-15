@@ -23,6 +23,7 @@ namespace Game
 
                 do
                 {
+                    // nextTile = 3;
                     nextTile = random(16);
                 } while (nextTile == currentOtherPosition);
 
