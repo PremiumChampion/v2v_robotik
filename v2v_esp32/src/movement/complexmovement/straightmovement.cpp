@@ -69,7 +69,22 @@ namespace Movement
     int StraightMovement::calculateAngleOfAttak()
     {
         float currentHeading = Sensors::MPU.getValue();
-        return this->straight_degrees - ((this->heading - currentHeading) * 2);
+
+        int delta = (this->heading - currentHeading) * 6;
+
+        if (delta > 90)
+        {
+            delta = 90;
+        }
+        if (delta < -90)
+        {
+            delta = -90;
+        }
+
+        int result = delta + (delta < 0 ? -1 : 1) * 10 / 2;
+        delta = result - result % 10;
+
+        return this->straight_degrees + delta;
     }
 
     void StraightMovement::straightSegment()

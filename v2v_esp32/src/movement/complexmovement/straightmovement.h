@@ -25,6 +25,8 @@ namespace Movement
         float heading;
         int debouncetime_ms;
         int straight_degrees;
+        bool correcting;
+        int correctingDegres;
 
         void startSegment();
         void straightSegment();

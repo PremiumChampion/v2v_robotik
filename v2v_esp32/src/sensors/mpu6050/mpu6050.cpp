@@ -11,10 +11,10 @@ namespace Sensors
     void HHN_MPU6050::run()
     {
 // #if ROLE == CHASED
-//         this->value = (MESSAGE_BROKER.get(GYRO) - (millis() / 5000)) / 10;
+        this->value = MESSAGE_BROKER.get(GYRO) / 10;
 // #endif
 // #if ROLE == CHASER
-        this->value = MESSAGE_BROKER.get(GYRO) / 10;
+//         this->value = (MESSAGE_BROKER.get(GYRO) - (millis() / 5000)) / 10;
 // #endif
     }
 
